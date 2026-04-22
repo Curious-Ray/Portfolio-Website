@@ -1074,3 +1074,18 @@ window.addEventListener('load', () => {
     }
   });
 })();
+
+// ── 13. NEUTRALIZE AI EXPLORER LINKS ─────────────────────────────────────
+(function neutralizeAiExplorerLinks() {
+  const aiSection = document.getElementById('ai');
+  if (!aiSection) return;
+
+  aiSection.querySelectorAll('a[href]').forEach((link) => {
+    link.dataset.href = link.getAttribute('href') || '';
+    link.removeAttribute('href');
+    link.removeAttribute('target');
+    link.removeAttribute('rel');
+    link.setAttribute('aria-disabled', 'true');
+    link.setAttribute('tabindex', '-1');
+  });
+})();
