@@ -232,6 +232,11 @@
       flex-shrink: 0;
     }
     .pl-price-card .btn { width: 100%; }
+    .pl-price-card__strike {
+      color: var(--text-muted);
+      text-decoration-color: var(--text-muted);
+      margin-right: 4px;
+    }
 
     /* FAQ */
     .pl-faq {
@@ -337,10 +342,10 @@
         Paste your prompts. Hit start. Walk away. Freepik Automation queues your entire batch and generates them one after another in your own Freepik account — no more babysitting the generate button for hours.
       </p>
       <div class="pl-hero__ctas">
-        <a href="#pricing" class="btn btn--primary">Get Freepik Automation →</a>
+        <a href="#pricing" class="btn btn--primary">Claim free access →</a>
         <a href="#how" class="btn btn--ghost">See how it works</a>
       </div>
-      <p class="pl-hero__meta">One-time payment · Works with your existing Freepik account · 7-day refund</p>
+      <p class="pl-hero__meta">Free for early users · Regular price $15 lifetime · Works with your existing Freepik account</p>
 
       <div class="pl-hero__demo">
         <img src="assets/hero-demo.png" alt="Freepik Automation extension running alongside Freepik's video generator — a queue of prompts processing one after another while the user walks away." loading="eager" />
@@ -436,27 +441,27 @@
   <section class="section" id="pricing">
     <div class="container">
       <p class="section__label" style="text-align:center;">// PRICING</p>
-      <h2 class="section__title" style="text-align:center;">One price. <em class="accent">No subscriptions.</em></h2>
+      <h2 class="section__title" style="text-align:center;">Free for early users.<br /><em class="accent">$15 lifetime after that.</em></h2>
 
       <div class="pl-pricing">
         <div class="pl-price-card">
-          <p class="pl-price-card__label">LIFETIME LICENSE</p>
-          <p class="pl-price-card__amount"><sup>$</sup>29</p>
-          <p class="pl-price-card__period">one-time payment · 1 user</p>
+          <p class="pl-price-card__label">LAUNCH OFFER · EARLY ACCESS</p>
+          <p class="pl-price-card__amount">FREE</p>
+          <p class="pl-price-card__period"><s class="pl-price-card__strike">$15 lifetime</s>&nbsp;&nbsp;free for early users</p>
 
           <ul class="pl-price-card__features">
             <li>Unlimited batch generations</li>
             <li>All current features</li>
             <li>Lifetime updates</li>
             <li>Email support</li>
-            <li>7-day money-back guarantee</li>
+            <li>Locked in free — no charge, ever</li>
           </ul>
 
-          <!-- Paddle checkout button — replace href with your real Paddle product link once account is verified -->
-          <a href="#" class="btn btn--primary" id="buy-button" data-paddle-product="REPLACE_WITH_PADDLE_PRODUCT_ID">
-            Get it now →
+          <!-- Install link — point this at the Chrome Web Store listing once published -->
+          <a href="#" class="btn btn--primary" id="buy-button">
+            Install on Chrome →
           </a>
-          <p class="pl-hero__meta" style="margin-top:16px;">Secure checkout via Paddle · Cards, PayPal, Apple Pay, Google Pay</p>
+          <p class="pl-hero__meta" style="margin-top:16px;">No payment required during launch · Paid customers later checkout via Dodo Payments</p>
         </div>
       </div>
     </div>
@@ -480,8 +485,18 @@
         </details>
 
         <details class="pl-faq__item">
-          <summary class="pl-faq__q">Is this one-time or a subscription?</summary>
-          <p class="pl-faq__a">One-time payment. $29 gets you a lifetime license for one user, with all future updates included. No subscription, no auto-renewal, no hidden fees.</p>
+          <summary class="pl-faq__q">Is it really free?</summary>
+          <p class="pl-faq__a">Yes — 100% free for early users. No credit card, no trial that expires, no upsell. You install from the Chrome Web Store and use the full product. The only catch: once I have enough users to consider the product battle-tested, the price flips to <strong>$15 lifetime</strong> for <em>new</em> customers. Everyone who installed during the free launch stays free forever.</p>
+        </details>
+
+        <details class="pl-faq__item">
+          <summary class="pl-faq__q">Why is it free right now?</summary>
+          <p class="pl-faq__a">I'm early. I need real users shipping real videos with this to find rough edges faster than I ever could alone. Your feedback during launch is worth more than $15 to me. Once it's rock-solid and there's a user base, the price goes up for new customers — but you'll be grandfathered in at free for life.</p>
+        </details>
+
+        <details class="pl-faq__item">
+          <summary class="pl-faq__q">Is it one-time or a subscription?</summary>
+          <p class="pl-faq__a">Neither currently — it's free. When paid pricing turns on, it will be a <strong>one-time $15 lifetime license</strong>. Never a subscription, never auto-renew, never a per-video charge.</p>
         </details>
 
         <details class="pl-faq__item">
@@ -491,7 +506,7 @@
 
         <details class="pl-faq__item">
           <summary class="pl-faq__q">What's the refund policy?</summary>
-          <p class="pl-faq__a">7-day money-back guarantee, no questions asked. If it doesn't work for you, email thapadeepak726@gmail.com within 7 days of purchase and I'll refund via Paddle.</p>
+          <p class="pl-faq__a">Free users: nothing to refund — just uninstall from Chrome if it doesn't work for you. Once paid pricing kicks in ($15 lifetime), all new purchases will include a <strong>7-day money-back guarantee</strong>, no questions asked. Email thapadeepak726@gmail.com and I'll process the refund via Dodo Payments.</p>
         </details>
 
         <details class="pl-faq__item">
@@ -526,7 +541,7 @@
       </div>
       <p>© <span id="year"></span> Deepak Thapa · Freepik Automation is an independent Chrome extension and is not affiliated with Freepik Company.</p>
       <p class="pl-footer__legal">
-        "Freepik" is a trademark of Freepik Company S.L. Freepik Automation is a third-party browser extension designed to automate user actions on freepik.com and is sold independently. Purchases are processed by Paddle.com Market Ltd., our authorized reseller.
+        "Freepik" is a trademark of Freepik Company S.L. Freepik Automation is a third-party browser extension designed to automate user actions on freepik.com and is sold independently. Purchases are processed by Dodo Payments, our authorized reseller and merchant of record.
       </p>
     </div>
   </footer>
