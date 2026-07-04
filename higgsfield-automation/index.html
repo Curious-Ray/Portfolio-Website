@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Higgsfield Automation - Batch-run Higgsfield prompts</title>
+  <meta name="description" content="Higgsfield Automation is a Chrome extension for batch-running Higgsfield image and video prompts, importing spreadsheets, retrying failures, and auto-downloading results in your browser session." />
+
+  <meta property="og:title" content="Higgsfield Automation - Batch-run Higgsfield prompts" />
+  <meta property="og:description" content="Import prompts, choose a Higgsfield mode, and let the extension queue, retry, and download the batch in your browser." />
+  <meta property="og:image" content="assets/marquee.png" />
+  <meta property="og:type" content="product" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Higgsfield Automation - Batch-run Higgsfield prompts" />
+  <meta name="twitter:description" content="Batch-run Higgsfield prompts and auto-download results in your Chrome browser session." />
+  <meta name="theme-color" content="#070906" />
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+  <link rel="stylesheet" href="../style.css" />
+
+  <script>/* Flag GSAP mode before first paint so the CSS is ready immediately. */
+    document.documentElement.className += ' engine-gsap';</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@500;700&family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Higgsfield Automation - Bulk Image and Video Generator",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome",
+    "browserRequirements": "Requires Google Chrome 114 or newer",
+    "description": "Higgsfield Automation batch-runs user-provided image and video prompts in the Higgsfield browser session the user opens in Chrome. It imports prompts from spreadsheets or text files, supports Text to Video, Frame to Video, Text to Image, and Image to Image, retries failed starts, and downloads generated outputs.",
+    "downloadUrl": "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc",
+    "softwareVersion": "1.0.3",
+    "offers": {
+      "@type": "Offer",
+      "url": "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc"
+    },
+    "featureList": [
+      "Bulk prompt queue",
+      "Spreadsheet and text prompt import",
+      "Text to Video, Frame to Video, Text to Image, and Image to Image modes",
+      "Auto-downloads into a named folder",
+      "Prompt-based filename options",
+      "Concurrency, pacing, retries, and CSV run reports",
+      "Prompt chaining with previous outputs",
+      "Reference image matching by prompt or filename"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is Higgsfield Automation affiliated with Higgsfield?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Higgsfield Automation is an independent Chrome extension and is not affiliated with or endorsed by Higgsfield." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Higgsfield Automation store my Higgsfield password?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. It uses the Higgsfield page already open in your Chrome browser session and does not store or transmit your Higgsfield login credentials." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I import prompts from a spreadsheet?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The extension can import .xlsx, .xls, .csv, and .txt prompt files and detect the likely prompt column." }
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    /* ============================================================
+       PALETTE — lime is the brand SIGNAL, not the wallpaper.
+       Neutrals carry the page; lime appears only on CTAs, active
+       states, key numbers, and motion highlights. Cyan is the rare
+       second accent (used once: the gallery lens ring).
+       ============================================================ */
+    :root {
+      --bg:        #070906;
+      --surface:   #11160f;
+      --elevated:  #171c14;
+      --ink:       #f3f7ec;
+      --muted:     #aeb8a4;
+      --soft:      #828e78;
+      --line:      rgba(255, 255, 255, 0.07);
+      --line-2:    rgba(255, 255, 255, 0.12);
+      --lime:      #d8ff05;
+      --lime-soft: #ecff73;
+      --cyan:      #65e7ff;
+      --lime-ink:  #0a0f00;
+      --glow:      rgba(216, 255, 5, 0.5);
+
+      --shadow:    0 34px 90px -34px rgba(0, 0, 0, 0.9);
+      --radius:    14px;
+      --radius-sm: 10px;
+
+      --font-display: "Space Grotesk", Inter, system-ui, sans-serif;
+      --font-body:    Inter, system-ui, sans-serif;
+      --font-mono:    "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      --container: 1200px;
+      --pad: clamp(20px, 5vw, 60px);
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { background: var(--bg); -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(120% 70% at 84% -8%, rgba(216, 255, 5, 0.055), transparent 55%),
+        var(--bg);
+      color: var(--ink);
+      font-family: var(--font-body);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    :focus-visible { outline: 2px solid var(--lime); outline-offset: 4px; border-radius: 4px; }
+    ::selection { background: var(--lime); color: var(--lime-ink); }
+
+    .container { width: min(var(--container), calc(100% - var(--pad) * 2)); margin: 0 auto; position: relative; }
+    .section { position: relative; padding: clamp(78px, 11vw, 140px) 0; }
+    .section--tight { padding: clamp(52px, 8vw, 92px) 0; }
+
+    h1, h2, h3, p { margin: 0; }
+    h1, h2, h3 { font-family: var(--font-display); }
+
+    /* eyebrow — neutral now (no lime) */
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 11px;
+      margin: 0 0 20px; color: var(--muted);
+      font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 24px; height: 1px; background: var(--soft); }
+
+    .section-title {
+      max-width: 18ch; font-size: clamp(33px, 5vw, 62px);
+      line-height: 1.0; font-weight: 700; letter-spacing: -0.02em; text-wrap: balance;
+    }
+    .section-copy { max-width: 60ch; margin-top: 20px; color: var(--muted); font-size: clamp(16px, 1.5vw, 18px); }
+
+    /* ---------- buttons ---------- */
+    .button-row { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      min-height: 50px; padding: 0 24px; border: 1px solid transparent; border-radius: 999px;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.02em;
+      white-space: nowrap; cursor: pointer;
+      transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn:active { transform: translateY(0); }
+    .btn--primary {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, #ffffff, #edf2e4);
+      color: #0a0f00;
+      box-shadow:
+        0 10px 26px -10px rgba(0, 0, 0, 0.75),
+        0 2px 5px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.85),
+        inset 0 -1px 0 rgba(10, 15, 0, 0.14);
+    }
+    .btn--primary:hover {
+      box-shadow:
+        0 16px 38px -12px rgba(216, 255, 5, 0.5),
+        0 0 0 1px rgba(216, 255, 5, 0.4),
+        0 2px 6px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+    .btn--primary .btn__dot {
+      position: relative; z-index: 1;
+      width: 7px; height: 7px; border-radius: 50%; background: #0a0f00; color: #0a0f00;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(10, 15, 0, 0.08);
+    }
+    /* particle emitter canvas sits behind the label + dot, clipped to the pill */
+    .btn__particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+    .btn--primary .btn__label { position: relative; z-index: 1; }
+
+    /* in-context text links (privacy / guide) — deliberately not buttons */
+    .text-links { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 28px; }
+    .text-links a {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: var(--ink); font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+      letter-spacing: 0.02em; border-bottom: 1px solid var(--line-2); padding: 5px 0 4px;
+      transition: color 0.25s var(--ease), border-color 0.25s var(--ease);
+    }
+    .text-links a::after { content: "\2197"; color: var(--muted); font-size: 14px; transition: color 0.25s var(--ease); }
+    .text-links a:hover { color: var(--lime); border-color: var(--lime); }
+    .text-links a:hover::after { color: var(--lime); }
+
+    /* ---------- nav ---------- */
+    .nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 100; border-bottom: 1px solid transparent;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), backdrop-filter 0.3s var(--ease);
+    }
+    .nav.is-scrolled {
+      background: rgba(7, 9, 6, 0.72); border-color: var(--line-2);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4);
+    }
+    .nav__inner {
+      width: min(var(--container), calc(100% - var(--pad) * 2)); min-height: 74px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .nav__brand { display: inline-flex; align-items: center; gap: 12px; font-family: var(--font-mono); font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .nav__brand img { width: 34px; height: 34px; border-radius: 9px; }
+    .nav__links { display: flex; align-items: center; gap: 28px; color: var(--muted); font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.03em; }
+    .nav__links a:not(.btn) { position: relative; transition: color 0.25s var(--ease); }
+    .nav__links a:not(.btn)::after { content: ""; position: absolute; left: 0; bottom: -6px; width: 0; height: 1px; background: var(--lime); transition: width 0.3s var(--ease); }
+    .nav__links a:not(.btn):hover { color: var(--ink); }
+    .nav__links a:not(.btn):hover::after { width: 100%; }
+    .nav__progress { position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; background: linear-gradient(90deg, var(--lime), var(--cyan)); transform: scaleX(0); transform-origin: 0 50%; box-shadow: 0 0 12px var(--glow); }
+
+    /* ---------- hero ---------- */
+    .hero { position: relative; min-height: min(880px, 94svh); padding: 160px 0 92px; display: grid; align-items: center; justify-items: center; overflow: hidden; isolation: isolate; }
+    .hero__wall {
+      position: absolute; inset: -6% 0 -6% auto; width: 56%; z-index: -3;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-content: center; padding-left: 2vw;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 38%, #000 100%);
+      mask-image: linear-gradient(90deg, transparent, #000 38%, #000 100%);
+      opacity: 0.42; will-change: transform;
+    }
+    .hero__wall .col { display: grid; gap: 14px; }
+    .hero__wall .col:nth-child(2) { margin-top: -46px; }
+    .hero__wall img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--line); object-fit: cover; }
+    /* Hero wall looping vertical scroll */
+    @keyframes wall-scroll-up   { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+    @keyframes wall-scroll-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+    @keyframes bot-float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+    .hero__wall .col:nth-child(1) { animation: wall-scroll-up   28s linear infinite; }
+    .hero__wall .col:nth-child(2) { animation: wall-scroll-down 32s linear infinite; }
+    .hero__wall .col:nth-child(3) { animation: wall-scroll-up   24s linear infinite; }
+    .hero__scrim {
+      position: absolute; inset: 0; z-index: -2; pointer-events: none;
+      background:
+        linear-gradient(90deg, var(--bg) 8%, rgba(7,9,6,0.74) 44%, rgba(7,9,6,0.2) 76%, rgba(7,9,6,0.6) 100%),
+        linear-gradient(180deg, rgba(7,9,6,0.3), transparent 22%, transparent 68%, var(--bg) 100%);
+    }
+    .hero__beam { position: absolute; left: -10%; right: -10%; bottom: 22%; z-index: -1; height: 1px; background: linear-gradient(90deg, transparent, var(--lime-soft), transparent); box-shadow: 0 0 26px var(--glow); transform: rotate(-6deg); opacity: 0.7; }
+    .hero__content { width: min(880px, 100%); position: relative; z-index: 2; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .hero__label {
+      display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; padding: 8px 14px;
+      border: 1px solid var(--line-2); border-radius: 999px; background: rgba(7, 9, 6, 0.6);
+      color: var(--muted); font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.04em;
+      -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+    }
+    .hero__label img { width: 20px; height: 20px; border-radius: 5px; }
+    .hero__label b { color: var(--ink); font-weight: 700; }
+    .hero h1 { font-size: clamp(44px, 8vw, 108px); line-height: 0.92; font-weight: 700; letter-spacing: -0.03em; }
+    .hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.12em; }
+    .hero h1 .line i { display: block; font-style: normal; }
+    .hero h1 em { font-style: normal; color: var(--lime); text-shadow: 0 0 48px rgba(216, 255, 5, 0.3); }
+    .hero__copy { max-width: 54ch; margin-top: 24px; color: #d7e4cd; font-size: clamp(17px, 1.9vw, 21px); line-height: 1.5; text-align: center; }
+    .hero__actions { margin-top: 32px; }
+    .hero__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 28px 0 0; padding: 0; list-style: none; }
+    .hero__meta li {
+      display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px;
+      border: 1px solid var(--line); border-radius: 999px; background: rgba(0, 0, 0, 0.26);
+      color: #d3e0c9; font-family: var(--font-mono); font-size: 12px; font-weight: 700;
+    }
+    .hero__meta li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--soft); }
+
+    /* ---------- how it works (pinned sequence) ---------- */
+    .sequence { background: linear-gradient(180deg, rgba(17, 22, 15, 0.5), rgba(7, 9, 6, 0)); border-top: 1px solid var(--line); }
+    .sequence__grid { display: grid; grid-template-columns: minmax(0, 1.06fr) minmax(340px, 0.94fr); gap: clamp(30px, 5vw, 70px); align-items: start; }
+    .sequence__visual { position: sticky; top: clamp(104px, 8vw, 148px); min-width: 0; }
+    .sequence__visual .eyebrow { margin-bottom: 14px; }
+    .sequence__visual .section-title { margin-bottom: 10px; }
+    .sequence__visual .section-copy { margin-bottom: 36px; }
+    .device { position: relative; border: 1px solid var(--line-2); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); box-shadow: var(--shadow); overflow: hidden; }
+    .device__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 0 16px; border-bottom: 1px solid var(--line); color: var(--soft); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .device__dots { display: inline-flex; gap: 6px; }
+    .device__dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); }
+    .device__dots i:first-child { background: var(--lime); box-shadow: 0 0 10px var(--glow); }
+    .device__status { display: inline-flex; align-items: center; gap: 8px; color: var(--lime); }
+    .device__status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 12px var(--glow); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    .device__stage { position: relative; aspect-ratio: 16 / 10; background: #020302; overflow: hidden; }
+    .device__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 0.7s var(--ease), transform 1.1s var(--ease); }
+    .device__stage img.is-active { opacity: 1; transform: scale(1); }
+    .device__caption { position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 16px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.58); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+    .device__caption b { color: var(--lime); font-weight: 700; }
+    .sequence__steps { display: grid; gap: 20px; padding-top: var(--steps-offset, 200px); padding-bottom: 0; }
+    .step { min-height: 54vh; display: flex; align-items: flex-start; padding-top: 4vh; opacity: 0.5; transition: opacity 0.5s var(--ease); }
+    .step:first-child { min-height: 54vh; padding-top: 4vh; }
+    .step:last-child { min-height: auto; }
+    .step.is-active { opacity: 1; }
+    .step__inner { width: 100%; padding: clamp(26px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.022); transition: border-color 0.5s var(--ease), background 0.5s var(--ease); }
+    .step.is-active .step__inner { border-color: rgba(216, 255, 5, 0.28); background: rgba(216, 255, 5, 0.03); }
+    .step__index { display: inline-flex; margin-bottom: 16px; color: var(--soft); font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.5s var(--ease); }
+    .step.is-active .step__index { color: var(--lime); }
+    .step h3 { font-size: clamp(27px, 3.4vw, 42px); line-height: 1.03; letter-spacing: -0.02em; }
+    .step p { margin-top: 14px; color: var(--muted); font-size: 17px; }
+    .step__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .tag { display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--muted); font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
+    .step.is-active .tag { border-color: rgba(216, 255, 5, 0.24); color: var(--lime-soft); }
+
+    /* ---------- modes ---------- */
+    .modes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 44px; }
+    .mode-card { --mx: 50%; --my: 50%; position: relative; min-height: 220px; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01)), var(--surface); overflow: hidden; transition: transform 0.4s var(--ease), border-color 0.4s var(--ease); }
+    .mode-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(circle 180px at var(--mx) var(--my), rgba(216, 255, 5, 0.16), transparent 70%); transition: opacity 0.4s var(--ease); }
+    .mode-card:hover { transform: translateY(-6px); border-color: rgba(216, 255, 5, 0.2); }
+    .mode-card:hover::before { opacity: 1; }
+    .mode-card__tag { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border: 1px solid var(--line-2); border-radius: 12px; color: var(--ink); font-family: var(--font-mono); font-size: 13px; font-weight: 700; transition: color 0.4s var(--ease), border-color 0.4s var(--ease); }
+    .mode-card:hover .mode-card__tag { color: var(--lime); border-color: rgba(216, 255, 5, 0.4); }
+    .mode-card h3 { position: relative; margin-top: 22px; font-size: 23px; line-height: 1.05; letter-spacing: -0.01em; }
+    .mode-card p { position: relative; margin-top: 12px; color: var(--muted); font-size: 15px; }
+
+    /* ---------- gallery (scrolling wall) ---------- */
+    .gallery { position: relative; overflow: hidden; background: #05070420; border-block: 1px solid var(--line); }
+    .gallery__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.82fr); gap: 30px; align-items: end; margin-bottom: 38px; }
+    .gallery__note { margin-top: 16px; color: var(--soft); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.02em; }
+    .wall { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; height: 520px; overflow: hidden;
+      -webkit-mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .wall .wall-col { display: grid; gap: 14px; align-content: start; }
+    .wall .wall-col img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--line); object-fit: cover; }
+    @keyframes gallery-scroll-up   { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
+    @keyframes gallery-scroll-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+    .wall .wall-col:nth-child(1) { animation: gallery-scroll-up   22s linear infinite; }
+    .wall .wall-col:nth-child(2) { animation: gallery-scroll-down 26s linear infinite; }
+    .wall .wall-col:nth-child(3) { animation: gallery-scroll-up   20s linear infinite; }
+    .wall .wall-col:nth-child(4) { animation: gallery-scroll-down 24s linear infinite; }
+
+    /* ---------- trust ---------- */
+    .trust { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); gap: clamp(34px, 7vw, 80px); align-items: center; }
+    .bot-wrap { position: relative; min-height: 480px; display: grid; place-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: radial-gradient(90% 70% at 30% 20%, rgba(216, 255, 5, 0.1), transparent 55%), var(--surface); }
+    .bot-wrap::before, .bot-wrap::after { content: ""; position: absolute; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, rgba(216, 255, 5, 0.45), transparent); }
+    .bot-wrap::before { top: 28%; transform: rotate(-12deg); }
+    .bot-wrap::after { bottom: 26%; transform: rotate(9deg); }
+    .bot-wrap img { position: relative; z-index: 2; width: min(82%, 440px); filter: drop-shadow(0 30px 54px rgba(216, 255, 5, 0.14)); animation: bot-float 6s ease-in-out infinite; }
+    .trust-facts { display: grid; gap: 0; margin-top: 30px; }
+    .trust-fact { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 16px; align-items: center; padding: 18px 0; border-top: 1px solid var(--line); font-size: 17px; color: var(--ink); }
+    .trust-fact:last-child { border-bottom: 1px solid var(--line); }
+    .trust-fact svg { width: 20px; height: 20px; }
+    .trust-fact svg path {
+      stroke: var(--lime);
+      stroke-dasharray: 24;
+      stroke-dashoffset: 24;
+      transition: stroke-dashoffset 0.6s var(--ease);
+      transition-delay: calc(var(--d, 0ms) + 150ms);
+    }
+    .engine-gsap .trust-fact svg path {
+      transition: none;
+    }
+    .js:not(.engine-gsap) .trust-fact.rise.is-in svg path {
+      stroke-dashoffset: 0;
+    }
+
+    /* ---------- faq ---------- */
+    .faq { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(34px, 7vw, 82px); align-items: start; }
+    .faq-list { display: grid; border-top: 1px solid var(--line-2); }
+    .faq-list details { border-bottom: 1px solid var(--line-2); padding: 22px 0; }
+    .faq-list summary { display: flex; align-items: center; justify-content: space-between; gap: 22px; color: var(--ink); cursor: pointer; list-style: none; font-family: var(--font-display); font-size: clamp(18px, 2.1vw, 22px); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
+    .faq-list summary::-webkit-details-marker { display: none; }
+    .faq-list summary::after { content: "+"; flex: 0 0 auto; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--line-2); border-radius: 50%; color: var(--muted); font-family: var(--font-mono); font-size: 16px; transition: transform 0.35s var(--ease), color 0.35s var(--ease), border-color 0.35s var(--ease); }
+    .faq-list details[open] summary::after { content: "\2013"; transform: rotate(180deg); color: var(--lime); border-color: rgba(216, 255, 5, 0.4); }
+    .faq-list p { max-width: 66ch; margin-top: 14px; color: var(--muted); font-size: 16px; }
+
+    /* ---------- cta ---------- */
+    .cta { position: relative; overflow: hidden; padding: clamp(72px, 12vw, 128px) 0; border-top: 1px solid var(--line-2); }
+    .cta__bg { position: absolute; inset: 0; z-index: -2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; opacity: 0.16; -webkit-mask-image: radial-gradient(120% 120% at 82% 50%, #000, transparent 68%); mask-image: radial-gradient(120% 120% at 82% 50%, #000, transparent 68%); }
+    .cta__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, var(--bg) 22%, rgba(7,9,6,0.72) 56%, rgba(7,9,6,0.42) 100%); }
+    .cta__inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 30px; align-items: end; position: relative; }
+    .cta h2 { max-width: 16ch; font-size: clamp(37px, 6.2vw, 74px); line-height: 0.98; font-weight: 700; letter-spacing: -0.03em; }
+    .cta h2 em { font-style: normal; color: var(--lime); }
+    .cta p { max-width: 50ch; margin-top: 20px; color: var(--muted); font-size: 18px; }
+
+    /* ---------- footer ---------- */
+    .footer { padding: 38px 0; border-top: 1px solid var(--line); color: var(--soft); font-family: var(--font-mono); font-size: 12px; }
+    .footer__inner { display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+    .footer__links { display: flex; align-items: center; flex-wrap: wrap; gap: 18px; }
+    .footer a { color: var(--muted); transition: color 0.25s var(--ease); }
+    .footer a:hover { color: var(--lime); }
+
+    /* ---------- reduced motion + fallback ---------- */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+    }
+
+    /* ---------- responsive ---------- */
+    @media (max-width: 1040px) {
+      .modes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .sequence__grid, .trust, .faq, .cta__inner, .gallery__head { grid-template-columns: 1fr; }
+      .sequence__visual { position: relative; top: auto; }
+      .step { min-height: auto; }
+      .hero__wall { width: 68%; opacity: 0.3; }
+      .wall { grid-template-columns: repeat(4, 1fr); height: 440px; }
+      .bot-wrap { min-height: 400px; }
+    }
+    @media (max-width: 720px) {
+      :root { --pad: 20px; }
+      .nav__inner { min-height: 64px; }
+      .nav__links a:not(.btn) { display: none; }
+      .nav__brand span { display: none; }
+      .btn { min-height: 46px; padding: 0 18px; font-size: 12px; }
+      .hero { min-height: 88svh; padding: 132px 0 82px; }
+      .hero__wall { inset: 0; width: 100%; opacity: 0.16; grid-template-columns: repeat(2, 1fr); -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 80%, transparent); mask-image: linear-gradient(180deg, transparent, #000 30%, #000 80%, transparent); }
+      .hero__wall .col:nth-child(3) { display: none; }
+      .hero__scrim { background: linear-gradient(180deg, rgba(7,9,6,0.5), rgba(7,9,6,0.86) 46%, var(--bg)); }
+      .modes { grid-template-columns: 1fr; }
+      .wall { grid-template-columns: repeat(2, 1fr); height: 360px; }
+      .wall .wall-col:nth-child(3) { display: none; }
+      .wall .wall-col:nth-child(4) { display: none; }
+      .device__caption { position: static; margin: 0; border-radius: 0; border-inline: 0; border-bottom: 0; }
+      .footer__inner { display: grid; }
+    }
+
+
+
+    /* ---- Native Scroll Reveal & Hero animations ---- */
+    .engine-gsap .rise { transition: none; }
+
+    .js:not(.engine-gsap) .rise {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--d, 0ms);
+      will-change: opacity, transform;
+    }
+    .js:not(.engine-gsap) .trust-fact.rise,
+    .js:not(.engine-gsap) .faq-details.rise {
+      transform: translateX(-16px);
+    }
+    .js:not(.engine-gsap) .rise.is-in {
+      opacity: 1;
+      transform: none;
+    }
+
+    html.js:not(.engine-gsap) [data-hero-line] {
+      transform: translateY(115%);
+      animation: pl-hero-line-slide 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    @keyframes pl-hero-line-slide { to { transform: none; } }
+
+    html.js:not(.engine-gsap) .hero__label,
+    html.js:not(.engine-gsap) .hero__copy,
+    html.js:not(.engine-gsap) .hero__actions,
+    html.js:not(.engine-gsap) .hero__meta {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: pl-hero-fade-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    html.js:not(.engine-gsap) .hero__label { animation-delay: 100ms; }
+    html.js:not(.engine-gsap) .hero__copy { animation-delay: 200ms; }
+    html.js:not(.engine-gsap) .hero__actions { animation-delay: 300ms; }
+    html.js:not(.engine-gsap) .hero__meta { animation-delay: 400ms; }
+
+    @keyframes pl-hero-fade-rise { to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+  <nav class="nav" id="nav" aria-label="Primary">
+    <div class="nav__inner">
+      <a href="../" class="nav__brand" aria-label="Back to Deepak Thapa">
+        <img src="assets/logo.png" alt="" />
+        <span>Higgsfield Automation</span>
+      </a>
+      <div class="nav__links">
+        <a href="#workflow">How it works</a>
+        <a href="#modes">Modes</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#privacy">Privacy</a>
+        <a href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener" class="btn btn--primary"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label">Install</span></a>
+      </div>
+    </div>
+    <div class="nav__progress" id="progress"></div>
+  </nav>
+
+  <main>
+    <!-- HERO -->
+    <section class="hero" id="top">
+      <div class="hero__wall" id="hero-wall" aria-hidden="true">
+        <div class="col">
+          <img src="assets/civitai/gen-03.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-09.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-03.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-09.jpg" alt="" loading="eager" />
+        </div>
+        <div class="col">
+          <img src="assets/civitai/gen-13.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-07.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-11.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-13.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-07.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-11.jpg" alt="" loading="eager" />
+        </div>
+        <div class="col">
+          <img src="assets/civitai/gen-12.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-04.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-12.jpg" alt="" loading="eager" />
+          <img src="assets/civitai/gen-04.jpg" alt="" loading="eager" />
+        </div>
+      </div>
+      <div class="hero__scrim" aria-hidden="true"></div>
+      <div class="hero__beam" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero__content">
+          <div class="hero__label" data-hero>
+            <img src="assets/logo.png" alt="" />
+            Chrome extension for <b>higgsfield.ai</b>
+          </div>
+          <h1>
+            <span class="line"><i data-hero-line>Batch every</i></span>
+            <span class="line"><i data-hero-line>Higgsfield prompt.</i></span>
+            <span class="line"><i data-hero-line><em>Automatically.</em></i></span>
+          </h1>
+          <p class="hero__copy" data-hero>
+            Import prompts, choose a Higgsfield mode, and let the extension queue, retry, and download the batch in your browser.
+          </p>
+          <div class="button-row hero__actions" data-hero>
+            <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label">Install on Chrome</span></a>
+          </div>
+          <ul class="hero__meta" data-hero>
+            <li>Live on Chrome Web Store</li>
+            <li>No analytics or telemetry</li>
+            <li>Runs in your own session</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="sequence section" id="workflow">
+      <div class="container sequence__grid rise">
+        <div class="sequence__visual">
+          <p class="eyebrow">How it works</p>
+          <h2 class="section-title">From prompt list to finished folder.</h2>
+          <p class="section-copy">Four steps, one side panel. Scroll to watch the extension move through a batch.</p>
+          <div class="device" id="workflow-device">
+            <div class="device__bar">
+              <span class="device__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span>Higgsfield Automation</span>
+              <span class="device__status">Live</span>
+            </div>
+            <div class="device__stage">
+              <img src="assets/shot-1-bulk-sm.png" srcset="assets/shot-1-bulk-sm.png 640w, assets/shot-1-bulk.png 1280w" sizes="(max-width: 900px) 100vw, 52vw" alt="Higgsfield Automation bulk generation screen" class="is-active" data-shot="0" />
+              <img src="assets/shot-2-batch-sm.png" srcset="assets/shot-2-batch-sm.png 640w, assets/shot-2-batch.png 1280w" sizes="(max-width: 900px) 100vw, 52vw" alt="Higgsfield Automation batch size control screen" data-shot="1" loading="lazy" />
+              <img src="assets/shot-3-queue-sm.png" srcset="assets/shot-3-queue-sm.png 640w, assets/shot-3-queue.png 1280w" sizes="(max-width: 900px) 100vw, 52vw" alt="Higgsfield Automation safe prompt queue screen" data-shot="2" loading="lazy" />
+              <img src="assets/shot-5-downloads-sm.png" srcset="assets/shot-5-downloads-sm.png 640w, assets/shot-5-downloads.png 1280w" sizes="(max-width: 900px) 100vw, 52vw" alt="Higgsfield Automation organized downloads and reports screen" data-shot="3" loading="lazy" />
+            </div>
+            <div class="device__caption">
+              <span id="device-caption">Import prompt sources</span>
+              <b id="device-step">01 / 04</b>
+            </div>
+          </div>
+        </div>
+
+        <div class="sequence__steps" id="sequence-steps">
+          <article class="step is-active" data-step="0" data-caption="Import prompt sources">
+            <div class="step__inner">
+              <span class="step__index">01 / Source</span>
+              <h3>Start with a list.</h3>
+              <p>Paste blocks, drop a text file, or import a spreadsheet — it finds the prompt column for you.</p>
+              <div class="step__tags"><span class="tag">XLSX</span><span class="tag">CSV</span><span class="tag">TXT</span></div>
+            </div>
+          </article>
+          <article class="step" data-step="1" data-caption="Choose the generation mode">
+            <div class="step__inner">
+              <span class="step__index">02 / Mode</span>
+              <h3>Pick the Higgsfield workflow.</h3>
+              <p>Text-only prompts, image references, first/last frames, or still image generation.</p>
+              <div class="step__tags"><span class="tag">T2V</span><span class="tag">F2V</span><span class="tag">T2I</span><span class="tag">I2I</span></div>
+            </div>
+          </article>
+          <article class="step" data-step="2" data-caption="Run the queue with pacing">
+            <div class="step__inner">
+              <span class="step__index">03 / Queue</span>
+              <h3>Let it run while you move on.</h3>
+              <p>Set concurrency, pacing, outputs per prompt, and retries. Cancel mid-run anytime.</p>
+              <div class="step__tags"><span class="tag">Concurrency</span><span class="tag">Delay</span><span class="tag">Retries</span><span class="tag">Live log</span></div>
+            </div>
+          </article>
+          <article class="step" data-step="3" data-caption="Download organized outputs">
+            <div class="step__inner">
+              <span class="step__index">04 / Output</span>
+              <h3>Finish with files you can find.</h3>
+              <p>Auto-download to a named folder with prompt-based filenames and a CSV run report.</p>
+              <div class="step__tags"><span class="tag">Folder name</span><span class="tag">Prompt filenames</span><span class="tag">CSV report</span></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- MODES -->
+    <section class="section" id="modes">
+      <div class="container rise">
+        <p class="eyebrow">Generation modes</p>
+        <h2 class="section-title">One panel for the workflows you repeat.</h2>
+      </div>
+      <div class="container">
+        <div class="modes">
+          <article class="mode-card rise" style="--d: 0ms;">
+            <span class="mode-card__tag">T2V</span>
+            <h3>Text to Video</h3>
+            <p>Prompt-only video batches, with multiple variations per prompt.</p>
+          </article>
+          <article class="mode-card rise" style="--d: 100ms;">
+            <span class="mode-card__tag">F2V</span>
+            <h3>Frame to Video</h3>
+            <p>Map start or start/end frames to prompts in the queue.</p>
+          </article>
+          <article class="mode-card rise" style="--d: 200ms;">
+            <span class="mode-card__tag">T2I</span>
+            <h3>Text to Image</h3>
+            <p>Batch image generation with clean, prompt-based folder naming.</p>
+          </article>
+          <article class="mode-card rise" style="--d: 300ms;">
+            <span class="mode-card__tag">I2I</span>
+            <h3>Image to Image</h3>
+            <p>Match references by order or filename, then run the batch.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY (lens) -->
+    <section class="gallery section" id="gallery">
+      <div class="container gallery__head rise">
+        <div>
+          <p class="eyebrow">Made at volume</p>
+          <h2 class="section-title">One prompt becomes fifty.</h2>
+        </div>
+        <div>
+          <p class="section-copy" style="margin-top:0;">The extension is built for creators shipping at this scale.</p>
+          <p class="gallery__note">Top all-time frames from the Civitai community — shown for scale, not made by this extension.</p>
+        </div>
+      </div>
+      <div class="container">
+        <div class="wall" id="gallery-wall">
+          <div class="wall-col">
+            <img src="assets/civitai/gen-01.jpg" alt="AI-generated character portrait" loading="eager" />
+            <img src="assets/civitai/gen-05.jpg" alt="AI-generated scene" loading="eager" />
+            <img src="assets/civitai/gen-09.jpg" alt="AI-generated fantasy scene" loading="eager" />
+            <img src="assets/civitai/gen-13.jpg" alt="AI-generated stylized portrait" loading="eager" />
+            <!-- duplicate for seamless loop -->
+            <img src="assets/civitai/gen-01.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-05.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-09.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-13.jpg" alt="" loading="eager" aria-hidden="true" />
+          </div>
+          <div class="wall-col">
+            <img src="assets/civitai/gen-02.jpg" alt="AI-generated character" loading="eager" />
+            <img src="assets/civitai/gen-06.jpg" alt="AI-generated illustration" loading="eager" />
+            <img src="assets/civitai/gen-10.jpg" alt="AI-generated concept art" loading="eager" />
+            <img src="assets/civitai/gen-14.jpg" alt="AI-generated portrait" loading="eager" />
+            <!-- duplicate for seamless loop -->
+            <img src="assets/civitai/gen-02.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-06.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-10.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-14.jpg" alt="" loading="eager" aria-hidden="true" />
+          </div>
+          <div class="wall-col">
+            <img src="assets/civitai/gen-03.jpg" alt="AI-generated portrait" loading="eager" />
+            <img src="assets/civitai/gen-07.jpg" alt="AI-generated illustration" loading="eager" />
+            <img src="assets/civitai/gen-11.jpg" alt="AI-generated art" loading="eager" />
+            <!-- duplicate for seamless loop -->
+            <img src="assets/civitai/gen-03.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-07.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-11.jpg" alt="" loading="eager" aria-hidden="true" />
+          </div>
+          <div class="wall-col">
+            <img src="assets/civitai/gen-04.jpg" alt="AI-generated cinematic scene" loading="eager" />
+            <img src="assets/civitai/gen-08.jpg" alt="AI-generated creature" loading="eager" />
+            <img src="assets/civitai/gen-12.jpg" alt="AI-generated concept art" loading="eager" />
+            <!-- duplicate for seamless loop -->
+            <img src="assets/civitai/gen-04.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-08.jpg" alt="" loading="eager" aria-hidden="true" />
+            <img src="assets/civitai/gen-12.jpg" alt="" loading="eager" aria-hidden="true" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST -->
+    <section class="section" id="privacy">
+      <div class="container trust">
+        <div class="bot-wrap rise" aria-hidden="true">
+          <img src="assets/higgsbot.png" alt="" loading="lazy" />
+        </div>
+        <div>
+          <p class="eyebrow rise" style="--d: 0ms;">Trust model</p>
+          <h2 class="section-title rise" style="--d: 100ms;">Automation that stays in your browser.</h2>
+          <div class="trust-facts">
+            <div class="trust-fact rise" style="--d: 200ms;"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Runs in your Higgsfield browser session</span></div>
+            <div class="trust-fact rise" style="--d: 300ms;"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>No Higgsfield password storage</span></div>
+            <div class="trust-fact rise" style="--d: 400ms;"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>No analytics or ad tracking</span></div>
+            <div class="trust-fact rise" style="--d: 500ms;"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Firebase only for extension sign-in</span></div>
+          </div>
+          <div class="text-links rise" style="--d: 600ms;">
+            <a href="https://higgsfield-automation.pages.dev/privacy.html" target="_blank" rel="noopener">Read privacy policy</a>
+            <a href="https://higgsfield-automation.pages.dev/guide.html" target="_blank" rel="noopener">Open user guide</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" id="faq">
+      <div class="container faq">
+        <div class="rise">
+          <p class="eyebrow">FAQ</p>
+          <h2 class="section-title">Clear answers before install.</h2>
+        </div>
+        <div class="faq-list">
+          <details open class="faq-details rise" style="--d: 0ms;">
+            <summary>What browsers are supported?</summary>
+            <p>The Chrome Web Store listing requires Google Chrome 114 or newer. Other Chromium browsers work if they support installing Chrome Web Store extensions.</p>
+          </details>
+          <details class="faq-details rise" style="--d: 100ms;">
+            <summary>Do I choose the Higgsfield model in the extension?</summary>
+            <p>No — you set the model, aspect ratio, duration, and resolution on higgsfield.ai. The extension runs against the page and settings you have selected.</p>
+          </details>
+          <details class="faq-details rise" style="--d: 200ms;">
+            <summary>Can it chain prompts together?</summary>
+            <p>Yes. Start a prompt with "&gt;&gt;" to feed the previous output into the next — useful for continuous shots or iterative edits.</p>
+          </details>
+          <details class="faq-details rise" style="--d: 300ms;">
+            <summary>Does it work without a Higgsfield account?</summary>
+            <p>No. You need a higgsfield.ai account signed in in your browser. The extension does not create an account or log in for you.</p>
+          </details>
+          <details class="faq-details rise" style="--d: 400ms;">
+            <summary>Is this official Higgsfield software?</summary>
+            <p>No. It is an independent Chrome extension by Deepak Thapa, not affiliated with or endorsed by Higgsfield.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="install">
+      <div class="cta__bg" aria-hidden="true">
+        <img src="assets/civitai/gen-09.jpg" alt="" loading="lazy" />
+        <img src="assets/civitai/gen-13.jpg" alt="" loading="lazy" />
+        <img src="assets/civitai/gen-05.jpg" alt="" loading="lazy" />
+        <img src="assets/civitai/gen-11.jpg" alt="" loading="lazy" />
+      </div>
+      <div class="cta__scrim" aria-hidden="true"></div>
+      <div class="container cta__inner">
+        <div class="rise">
+          <h2>Turn the repetitive Higgsfield tab into a <em>queue.</em></h2>
+          <p>Install the extension, open higgsfield.ai, import your prompts, and run the batch in your own session.</p>
+        </div>
+        <div class="button-row rise">
+          <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label">Install on Chrome</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>Copyright <span id="year"></span> Deepak Thapa. Independent Chrome extension. Not affiliated with Higgsfield.</p>
+      <div class="footer__links">
+        <a href="https://deepakthapa.dev">deepakthapa.dev</a>
+        <a href="https://higgsfield-automation.pages.dev/guide.html" target="_blank" rel="noopener">Guide</a>
+        <a href="https://higgsfield-automation.pages.dev/privacy.html" target="_blank" rel="noopener">Privacy</a>
+        <a href="mailto:thapadeepak726@gmail.com">Support</a>
+        <a href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener">Chrome Web Store</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      /* ---- always start at the top on refresh ---- */
+      if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+      window.scrollTo(0, 0);
+
+      var CWS = 'https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc';
+      var doc = document, root = doc.documentElement, win = window;
+      var reduce = win.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var isNarrow = win.matchMedia('(max-width: 900px)').matches;
+      var isTouch = win.matchMedia('(hover: none)').matches;
+      root.classList.add('js');
+
+      var y = doc.getElementById('year');
+      if (y) y.textContent = new Date().getFullYear();
+
+      /* ---- nav frost + scroll progress + hero parallax (native, always on) ---- */
+      var nav = doc.getElementById('nav'), prog = doc.getElementById('progress'), wall = doc.getElementById('hero-wall');
+      var ticking = false;
+      function onScroll() {
+        var sy = win.scrollY || root.scrollTop;
+        if (nav) nav.classList.toggle('is-scrolled', sy > 16);
+        if (prog) { var h = doc.body.scrollHeight - win.innerHeight; prog.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, sy / h) : 0) + ')'; }
+        if (wall && !reduce && !window.__lenisParallax && sy < win.innerHeight * 1.3) wall.style.transform = 'translateY(' + (sy * 0.07) + 'px)';
+        ticking = false;
+      }
+      function requestScroll() { if (!ticking) { win.requestAnimationFrame(onScroll); ticking = true; } }
+      win.addEventListener('scroll', requestScroll, { passive: true });
+      win.addEventListener('resize', requestScroll, { passive: true });
+      onScroll();
+
+      /* ---- workflow step -> device image (shared by GSAP + fallback) ---- */
+      var steps = [].slice.call(doc.querySelectorAll('.step'));
+      var shots = [].slice.call(doc.querySelectorAll('[data-shot]'));
+      var cap = doc.getElementById('device-caption'), cnt = doc.getElementById('device-step');
+      var total = steps.length;
+      function setShot(i) {
+        shots.forEach(function (s) { s.classList.toggle('is-active', Number(s.getAttribute('data-shot')) === i); });
+        steps.forEach(function (s) { s.classList.toggle('is-active', Number(s.getAttribute('data-step')) === i); });
+        var a = steps[i];
+        if (cap && a) cap.textContent = a.getAttribute('data-caption') || '';
+        if (cnt) cnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+      }
+      if (total) setShot(0);
+
+      /* ---- align first step card center with device card center ---- */
+      var device = doc.getElementById('workflow-device');
+      var stepsEl = doc.getElementById('sequence-steps');
+      function alignSteps() {
+        if (!device || !stepsEl || !steps[0]) return;
+        var grid = stepsEl.parentElement;
+        if (!grid) return;
+        var gridRect = grid.getBoundingClientRect();
+        var devRect = device.getBoundingClientRect();
+        /* device center relative to the grid top */
+        var devCenter = (devRect.top + devRect.height / 2) - gridRect.top;
+        /* first step card height (the .step__inner) */
+        var firstInner = steps[0].querySelector('.step__inner');
+        var cardH = firstInner ? firstInner.getBoundingClientRect().height : 160;
+        /* padding-top for steps so the first card center = devCenter */
+        /* the first step has padding-top: 4vh; cardH/2 below that is the card center */
+        var fourVh = win.innerHeight * 0.04;
+        var offset = Math.max(0, devCenter - fourVh - cardH / 2);
+        stepsEl.style.setProperty('--steps-offset', Math.round(offset) + 'px');
+      }
+      alignSteps();
+      win.addEventListener('resize', alignSteps, { passive: true });
+
+      /* ---- mode cards: cursor-following glow ---- */
+      var modeCards = [].slice.call(doc.querySelectorAll('.mode-card'));
+      modeCards.forEach(function (card) {
+        card.addEventListener('pointermove', function (e) {
+          var r = card.getBoundingClientRect();
+          card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+          card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+        });
+      });
+
+      /* ---- signature motion: GSAP timeline + ScrollTrigger + Lenis ---- */
+      if (reduce) return;
+
+      loadScripts([
+        'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+        'https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js'
+      ], initMotion, initFallback);
+
+      function initMotion() {
+        if (!win.gsap || !win.ScrollTrigger) { initFallback(); return; }
+        try {
+          gsap.registerPlugin(ScrollTrigger);
+
+          /* Lenis smooth scroll (desktop only) */
+          if (win.Lenis && !isNarrow) {
+            var lenis = new Lenis({ lerp: 0.09, wheelMultiplier: 0.95, smoothWheel: true });
+            lenis.on('scroll', ScrollTrigger.update);
+            gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+            gsap.ticker.lagSmoothing(0);
+          }
+
+          /* 1 — hero entrance timeline */
+          var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+          tl.from('[data-hero-line]', { yPercent: 115, duration: 0.9, stagger: 0.09 })
+            .from('.hero__label', { y: 18, autoAlpha: 0, duration: 0.7 }, 0.1)
+            .from('.hero__copy', { y: 18, autoAlpha: 0, duration: 0.7 }, '-=0.55')
+            .from('.hero__actions', { y: 14, autoAlpha: 0, duration: 0.6 }, '-=0.45')
+            .from('.hero__meta', { y: 14, autoAlpha: 0, duration: 0.6 }, '-=0.45')
+            .from('.hero__wall', { autoAlpha: 0, duration: 1.3 }, 0.2);
+
+          /* 2 — hero parallax on scroll (hand off from native handler) */
+          window.__lenisParallax = true;
+          gsap.to('.hero__wall', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+          /* 3 — one subtle rise on section headers only */
+          gsap.utils.toArray('.rise:not(.mode-card):not(.trust-fact):not(.faq-details)').forEach(function (el) {
+            gsap.from(el, { y: 26, autoAlpha: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 86%', once: true } });
+          });
+
+          /* Modes card stagger */
+          gsap.from('#modes .mode-card', {
+            y: 26,
+            autoAlpha: 0,
+            duration: 0.8,
+            stagger: 0.08,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: '#modes .modes', start: 'top 86%', once: true }
+          });
+
+          /* Trust section stagger + checkmarks drawing */
+          gsap.from('#privacy .trust-fact', {
+            x: -16,
+            autoAlpha: 0,
+            duration: 0.6,
+            stagger: 0.08,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: '#privacy .trust-facts', start: 'top 86%', once: true }
+          });
+          gsap.fromTo('#privacy .trust-fact svg path',
+            { strokeDasharray: 24, strokeDashoffset: 24 },
+            {
+              strokeDashoffset: 0,
+              duration: 0.5,
+              stagger: 0.08,
+              ease: 'power2.out',
+              scrollTrigger: { trigger: '#privacy .trust-facts', start: 'top 86%', once: true }
+            }
+          );
+
+          /* FAQ details stagger */
+          gsap.from('#faq .faq-details', {
+            x: -16,
+            autoAlpha: 0,
+            duration: 0.7,
+            stagger: 0.08,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: '#faq .faq-list', start: 'top 86%', once: true }
+          });
+
+          /* 4 — pinned workflow sequence: swap device image per step */
+          steps.forEach(function (step) {
+            ScrollTrigger.create({
+              trigger: step, start: 'top center', end: 'bottom center',
+              onEnter: function () { setShot(Number(step.getAttribute('data-step'))); },
+              onEnterBack: function () { setShot(Number(step.getAttribute('data-step'))); }
+            });
+          });
+
+          ScrollTrigger.refresh();
+        } catch (err) { initFallback(); }
+      }
+
+
+      function initFallback() {
+        /* no GSAP: reveal everything, drive steps with IntersectionObserver */
+        [].slice.call(doc.querySelectorAll('.rise')).forEach(function (el) { el.style.opacity = '1'; });
+        if ('IntersectionObserver' in win && !isNarrow) {
+          var io = new IntersectionObserver(function (es) {
+            es.forEach(function (e) { if (e.isIntersecting) setShot(Number(e.target.getAttribute('data-step'))); });
+          }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+          steps.forEach(function (s) { io.observe(s); });
+        } else {
+          steps.forEach(function (s) { s.classList.add('is-active'); });
+        }
+      }
+
+
+
+      function loadScripts(urls, done, fail) {
+        var remaining = urls.length, failed = false;
+        var timer = win.setTimeout(function () { if (!failed) { failed = true; fail(); } }, 4500);
+        urls.forEach(function (url) {
+          var s = doc.createElement('script'); s.src = url; s.async = false;
+          s.onload = function () { if (failed) return; remaining -= 1; if (remaining === 0) { win.clearTimeout(timer); done(); } };
+          s.onerror = function () { if (!failed) { failed = true; win.clearTimeout(timer); fail(); } };
+          doc.head.appendChild(s);
+        });
+      }
+
+      win.HIGGSFIELD_AUTOMATION_CHROME_WEB_STORE_URL = CWS;
+    })();
+  </script>
+
+  <script>
+    /* Install-button particles: tiny dark motes shed from the black dot,
+       radiating in random directions, fading toward the pill's edge. */
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var buttons = [].slice.call(document.querySelectorAll('.btn--primary'));
+      if (!buttons.length || !document.createElement('canvas').getContext) return;
+      var dpr = Math.min(2, window.devicePixelRatio || 1);
+      var emitters = [];
+
+      buttons.forEach(function (btn) {
+        var dot = btn.querySelector('.btn__dot');
+        var canvas = document.createElement('canvas');
+        canvas.className = 'btn__particles';
+        canvas.setAttribute('aria-hidden', 'true');
+        btn.insertBefore(canvas, btn.firstChild);
+        var em = { btn: btn, dot: dot, canvas: canvas, ctx: canvas.getContext('2d'), parts: [], w: 0, h: 0, ox: 0, oy: 0, maxD: 20, hover: false };
+        function measure() {
+          var r = btn.getBoundingClientRect();
+          if (!r.width) return;
+          em.w = r.width; em.h = r.height;
+          canvas.width = Math.round(r.width * dpr);
+          canvas.height = Math.round(r.height * dpr);
+          canvas.style.width = r.width + 'px';
+          canvas.style.height = r.height + 'px';
+          if (dot) { var d = dot.getBoundingClientRect(); em.ox = d.left - r.left + d.width / 2; em.oy = d.top - r.top + d.height / 2; }
+          else { em.ox = r.width * 0.16; em.oy = r.height / 2; }
+          em.maxD = Math.max(14, r.height * 0.46);
+          em.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        em.measure = measure;
+        measure();
+        btn.addEventListener('mouseenter', function () { em.hover = true; });
+        btn.addEventListener('mouseleave', function () { em.hover = false; });
+        emitters.push(em);
+      });
+
+      window.addEventListener('resize', function () { emitters.forEach(function (e) { e.measure(); }); }, { passive: true });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { emitters.forEach(function (e) { e.measure(); }); });
+
+      function spawn(em) {
+        var a = Math.random() * Math.PI * 2, sp = 10 + Math.random() * 16;
+        return { x: em.ox, y: em.oy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 0, max: 0.9 + Math.random() * 0.8, size: 0.7 + Math.random() * 1.0 };
+      }
+
+      var last = performance.now(), raf;
+      function frame(now) {
+        var dt = Math.min(0.05, (now - last) / 1000); last = now;
+        for (var e = 0; e < emitters.length; e++) {
+          var em = emitters[e], ctx = em.ctx;
+          if (!em.w) { continue; }
+          ctx.clearRect(0, 0, em.w, em.h);
+          var target = em.hover ? 24 : 13, boost = em.hover ? 1.5 : 1, maxA = em.hover ? 0.85 : 0.6;
+          while (em.parts.length < target) em.parts.push(spawn(em));
+          for (var i = em.parts.length - 1; i >= 0; i--) {
+            var p = em.parts[i];
+            p.life += dt;
+            var t = p.life / p.max;
+            if (t >= 1) { em.parts.splice(i, 1); continue; }
+            p.x += p.vx * dt * boost; p.y += p.vy * dt * boost;
+            var d = Math.sqrt((p.x - em.ox) * (p.x - em.ox) + (p.y - em.oy) * (p.y - em.oy));
+            var alpha = Math.min(1 - Math.min(1, d / em.maxD), 1 - t) * maxA;
+            if (alpha <= 0.01) continue;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(0,0,0,' + alpha.toFixed(3) + ')';
+            ctx.fill();
+          }
+        }
+        raf = requestAnimationFrame(frame);
+      }
+      raf = requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>

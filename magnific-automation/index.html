@@ -3,525 +3,1306 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Magnific Automation — Bulk AI image & video generator on autopilot</title>
-  <meta name="description" content="A Chrome extension that auto-generates and downloads AI images and videos in bulk on Magnific. Paste your prompts, walk away, come back to a finished library." />
+  <title>Magnific Automation — Queue Magnific prompts on autopilot</title>
+  <meta name="description" content="A Chrome extension that queues 10-500 Magnific image and video prompts in one unattended browser run. Paste your prompts, start the queue, and keep your Magnific account in your own session." />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Magnific Automation — Bulk AI image & video generator" />
-  <meta property="og:description" content="A Chrome extension that auto-generates and downloads AI images and videos in bulk on Magnific. Stop babysitting the generate button." />
-  <meta property="og:image" content="../apple-touch-icon.png" />
+  <meta property="og:title" content="Magnific Automation — Queue Magnific prompts on autopilot" />
+  <meta property="og:description" content="Queue 10-500 Magnific image and video prompts in one unattended browser run. Stop babysitting the generate button." />
+  <meta property="og:image" content="assets/marquee.png" />
   <meta property="og:type" content="product" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Magnific Automation — Bulk AI image & video generator" />
-  <meta name="twitter:description" content="Auto-generate and download AI images and videos in bulk on Magnific." />
-  <meta name="twitter:image" content="../apple-touch-icon.png" />
-  <meta name="theme-color" content="#000000" />
+  <meta name="twitter:title" content="Magnific Automation — Queue Magnific prompts on autopilot" />
+  <meta name="twitter:description" content="Queue 10-500 Magnific image and video prompts in one unattended browser run." />
+  <meta name="twitter:image" content="assets/marquee.png" />
+  <meta name="theme-color" content="#FBFCFF" />
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png" />
+  <link rel="icon" href="assets/wolf-icon.png" />
+  <link rel="shortcut icon" type="image/png" href="assets/wolf-icon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/wolf-icon.png" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Geist+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
-  <!-- Shared theme -->
+  <!-- Shared theme (base tokens, buttons, layout) -->
   <link rel="stylesheet" href="../style.css" />
 
-  <!-- Page-specific styles (only what's not already in the main theme) -->
+  <!-- ===================================================================
+       PAGE-SPECIFIC STYLES
+       Everything is prefixed .pl-* and scoped to this page.
+       We RE-THEME the shared stylesheet by overriding its CSS variables
+       below: change --bg / --accent / etc. once and every reused class
+       (.btn, .section, .container, .accent, .tag) recolors automatically.
+       =================================================================== -->
   <style>
-    /* Compact nav for the product page — logo + single CTA */
-    .pl-nav {
+    /* ---- 1. Re-theme: light / white with blue + cyan accents (autopik-style) ----
+       Dark navy screenshots sit on white as crisp elevated cards. */
+    :root {
+      --bg: #FBFCFF;               /* soft near-white — more premium than flat #fff */
+      --bg-2: #f4f7fb;             /* light band for section rhythm */
+      --bg-card: #ffffff;
+      --bg-elev: #ffffff;
+      --border: #D9E2EC;
+      --border-strong: #c3ceda;
+      --accent: #2563EB;           /* primary blue — reserved for CTAs */
+      --accent-2: #22D3EE;         /* cyan highlight */
+      --success: #10B981;          /* proof / running / complete / verified accent */
+      --success-tint: rgba(16, 185, 129, 0.10);
+      --panel-dark: #0B1220;       /* dark product-UI panels */
+      --font-display: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;  /* product sans (was Playfair) */
+      --accent-ink: #ffffff;       /* text on the blue button */
+      --accent-glow: rgba(37, 99, 235, 0.28);
+      --border-tag: rgba(37, 99, 235, 0.28);
+      --bg-tag: rgba(37, 99, 235, 0.07);
+      --text-primary: #101828;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --text-card: #475569;
+      --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.05), 0 14px 30px -16px rgba(16, 24, 40, 0.18);
+      --shadow-frame: 0 24px 55px -22px rgba(37, 99, 235, 0.32), 0 10px 24px -16px rgba(16, 24, 40, 0.22);
+    }
+
+    body { background: var(--bg); }
+    ::selection { background: rgba(37, 99, 235, 0.16); color: var(--text-primary); }
+
+    /* Fixed atmospheric background — faint blue/cyan tints over white */
+    .pl-bg {
       position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      background: rgba(0, 0, 0, 0.85);
-      -webkit-backdrop-filter: blur(12px);
-      backdrop-filter: blur(12px);
+      inset: 0;
+      z-index: -1;
+      background:
+        radial-gradient(900px 520px at 82% -6%, rgba(37, 99, 235, 0.10), transparent 60%),
+        radial-gradient(820px 520px at 8% 4%, rgba(6, 182, 212, 0.09), transparent 55%),
+        var(--bg);
+    }
+    .pl-bg::after { /* faint grid texture */
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(15, 23, 42, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.028) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(1200px 800px at 50% 0%, #000 0%, transparent 72%);
+      mask-image: radial-gradient(1200px 800px at 50% 0%, #000 0%, transparent 72%);
+    }
+
+    /* light grey section band (alternating rhythm) */
+    .pl-band { background: var(--bg-2); }
+    .pl-proof-band { padding: 30px 0 64px; }   /* grey band wrapping the trust + proof intro — restores section rhythm */
+
+    /* ---- 2. Scroll-reveal engine (the "everything loads as you scroll" effect) ----
+       Elements start hidden + shifted; JS adds .is-in when they enter the viewport,
+       and these transitions animate them in. --d = per-element stagger delay. */
+    /* CRITICAL: .reveal is VISIBLE by default. It only becomes hidden-then-animated when the
+       <html class="js"> flag is present (added by the script below). So if JS never runs / errors,
+       every section stays fully visible — the page can never look blank. */
+    .reveal {
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+      transition-delay: var(--d, 0ms);
+      will-change: opacity, transform;
+    }
+    /* Restrained fade + rise + soft blur-in — the quiet Linear/Vercel register. */
+    .js .reveal        { opacity: 0; transform: translateY(20px); filter: blur(5px); }
+    .js .reveal--left  { transform: translateX(-34px); }
+    .js .reveal--right { transform: translateX(34px); }
+    .js .reveal--zoom  { transform: scale(0.965); filter: blur(4px); }
+    .js .reveal.is-in  { opacity: 1; transform: none; filter: none; }
+    /* Large media / panels skip the blur so big screenshots stay crisp and cheap to composite. */
+    .js .reveal:is(.pl-hero__visual, .pl-hero__shot, .pl-feature__media, .pl-frame,
+                   .pl-video-panel, .pl-proof-panel, .pl-compare, .pl-gallery) { filter: none; }
+
+    /* autopik hero 1:1 — decoded from their bundle: every left-column item animates
+       initial:{opacity:0, x:-20} → {opacity:1, x:0} with Framer's default SPRING, staggered 0.1s.
+       The smoothness IS the tiny 20px distance + spring settle (our old -500px sweep was the problem).
+       cubic-bezier(0.34,1.3,0.5,1) approximates the spring's gentle overshoot; --d gives the 0.1s stagger. */
+    .js .pl-hero__copy .reveal              { transition-duration: 0.55s; transition-timing-function: cubic-bezier(0.34, 1.3, 0.5, 1); }
+    .js .pl-hero__copy .reveal:not(.is-in)  { opacity: 0; transform: translateX(-20px); filter: none; }
+    .js .pl-hero__visual.reveal             { transition-duration: 0.6s; transition-timing-function: cubic-bezier(0.34, 1.3, 0.5, 1); }
+    .js .pl-hero__visual.reveal:not(.is-in) { opacity: 0; transform: translateY(24px); filter: none; }
+
+    /* COPIED FROM autopik — comparison rows use the "Who Can Benefit" card motion EXACTLY: rise
+       translateY(20px)→0 over 0.6s with easeOut (JS staggers them 0.1s apart = the reference's
+       staggerChildren). The video panel copies the demo "expand": scale .95→1 over 1s, 300ms delay. */
+    .js .pl-compare__row.reveal        { transform: translateY(20px); filter: none; transition-duration: 0.6s; transition-timing-function: cubic-bezier(0, 0, 0.58, 1); }
+    .js .pl-compare__row.reveal.is-in  { transform: none; }
+    /* COPIED FROM autopik's video zoom (Framer scale .9→1, opacity 0→1, ~0.6s). Same zoom on the final CTA card. */
+    .js .pl-video-panel.reveal,
+    .js .pl-cta-band.reveal            { transform: scale(0.9); filter: none; transition-duration: 0.65s; transition-timing-function: cubic-bezier(0, 0, 0.58, 1); }
+    .js .pl-video-panel.reveal.is-in,
+    .js .pl-cta-band.reveal.is-in      { transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .js .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
+      .pl-badge__dot,
+      .pl-hero__wolf,
+      .pl-frame::before {
+        animation: none !important;
+      }
+      .pl-frame::before { opacity: 0 !important; }
+    }
+
+    /* Feature screenshots drift on scroll — native scroll-driven parallax (Chromium), applied to the
+       `translate` property so it layers cleanly on top of the reveal's `transform`. Degrades to a
+       static frame anywhere `animation-timeline` isn't supported. */
+    @keyframes pl-drift     { from { translate: 0 16px; } to { translate: 0 -16px; } }
+    @keyframes pl-drift-rev { from { translate: 0 -16px; } to { translate: 0 16px; } }
+    @media (prefers-reduced-motion: no-preference) {
+      @supports (animation-timeline: view()) {
+        @media (min-width: 901px) {
+          html:not(.engine-gsap) .pl-feature__media .pl-frame {
+            animation: pl-drift linear both;
+            animation-timeline: view();
+            animation-range: entry 0% exit 100%;
+          }
+          html:not(.engine-gsap) .pl-feature:nth-child(even) .pl-feature__media .pl-frame { animation-name: pl-drift-rev; }
+        }
+      }
+    }
+
+    /* GSAP mode — fast first paint. The hero animates in immediately via CSS (it never waits for the
+       GSAP CDN); everything below stays visible on load, and once GSAP is ready it hides only the
+       off-screen items to reveal them on scroll. So a slow/blocked CDN just leaves a visible page. */
+    .engine-gsap .reveal { transition: none; }   /* GSAP drives its own tweens — no CSS-transition tug-of-war */
+    @keyframes pl-hero-slide { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: none; } }
+    @keyframes pl-hero-rise  { from { opacity: 0; transform: translateY(24px); }  to { opacity: 1; transform: none; } }
+    /* autopik hero 1:1 — every left-column item slides from a tiny -20px with a soft spring settle. */
+    .engine-gsap .pl-hero__copy .reveal {
+      opacity: 0;
+      animation: pl-hero-slide 0.55s cubic-bezier(0.34, 1.3, 0.5, 1) both;
+      animation-delay: var(--d, 0ms);
+    }
+    /* The right visual rises gently. */
+    .engine-gsap .pl-hero__visual.reveal {
+      opacity: 0;
+      animation: pl-hero-rise 0.6s cubic-bezier(0.34, 1.3, 0.5, 1) both;
+      animation-delay: var(--d, 0ms);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .engine-gsap .pl-hero .reveal { animation: none !important; opacity: 1 !important; transform: none !important; }
+    }
+
+    /* ---- Engine toggle: compare the native "Animate & Scroll" engine with the GSAP + Lenis
+       "Cinematic" engine (momentum scroll, scrubbed parallax). Persists + reloads to apply. ---- */
+    .pl-engine-toggle {
+      position: fixed; right: 18px; bottom: max(18px, env(safe-area-inset-bottom)); z-index: 200;
+      display: flex; align-items: center; gap: 3px; padding: 5px;
+      border-radius: 999px; background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(37, 99, 235, 0.35);
+      -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      box-shadow: 0 14px 34px -14px rgba(2, 6, 23, 0.7);
+      font-family: var(--font-mono); font-size: 12px;
+    }
+    .pl-engine-toggle__label { color: #94a3b8; padding: 0 6px 0 10px; letter-spacing: 0.03em; }
+    .pl-engine-toggle__opt {
+      padding: 7px 13px; border: 0; border-radius: 999px; background: transparent;
+      color: #cbd5e1; font: inherit; cursor: pointer; white-space: nowrap;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+    .pl-engine-toggle__opt:hover { color: #fff; }
+    .pl-engine-toggle__opt.is-active {
+      background: linear-gradient(180deg, #3b82f6, #2563eb); color: #fff; font-weight: 700;
+      box-shadow: 0 6px 16px -6px var(--accent-glow);
+    }
+    @media (max-width: 560px) {
+      .pl-engine-toggle { left: 12px; right: 12px; justify-content: center; font-size: 11px; }
+      .pl-engine-toggle__label { display: none; }
+    }
+
+    /* ---- 3. Cyan CTA button (shared .btn--primary is white; this one pops) ---- */
+    .btn--cyan {
+      background: linear-gradient(180deg, #3b82f6, #2563eb);
+      color: var(--accent-ink);
+      box-shadow: 0 12px 26px -8px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    }
+    .btn--cyan:hover { background: linear-gradient(180deg, #2f74ea, #1d4fd0); }
+    /* light-theme ghost button: dark text on white */
+    .btn--ghost { background: #fff; border: 1px solid var(--border-strong); color: var(--text-primary); }
+    .btn--ghost:hover { background: #f1f5f9; border-color: var(--accent); color: var(--accent); }
+
+    /* Visual hierarchy — one loud action per screen. While the hero's large "Install free" owns the
+       first viewport, the nav's Install stays a quieter outline so it doesn't compete. Once you scroll
+       past the hero, the nav button fills to solid blue as the persistent primary CTA. */
+    .pl-nav .btn--cyan {
+      background: transparent; color: var(--accent);
+      border: 1px solid var(--border-tag); box-shadow: none;
+    }
+    .pl-nav .btn--cyan:hover {
+      background: rgba(37, 99, 235, 0.08); border-color: var(--accent); color: var(--accent);
+    }
+    .pl-nav.scrolled .btn--cyan {
+      background: linear-gradient(180deg, #3b82f6, #2563eb); color: var(--accent-ink);
+      border-color: transparent; box-shadow: 0 8px 20px -8px var(--accent-glow);
+    }
+    .pl-nav.scrolled .btn--cyan:hover {
+      background: linear-gradient(180deg, #2f74ea, #1d4fd0); color: var(--accent-ink);
+    }
+
+    /* ---- 4. NAV ---- */
+    .pl-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      transition: background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
+      border-bottom: 1px solid transparent;
+    }
+    /* autopik-style: the nav drops down from the top on first load. */
+    @keyframes pl-nav-drop { from { transform: translateY(-100%); } to { transform: translateY(0); } }
+    .pl-nav { animation: pl-nav-drop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    @media (prefers-reduced-motion: reduce) { .pl-nav { animation: none; } }
+    .pl-nav.scrolled {
+      background: rgba(255, 255, 255, 0.82);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
     .pl-nav__inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      max-width: var(--container-max);
-      margin: 0 auto;
-      padding: 16px var(--container-px);
+      display: flex; align-items: center; justify-content: space-between;
+      max-width: var(--container-max); margin: 0 auto;
+      padding: 14px var(--container-px);
     }
     .pl-nav__brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--text-primary);
+      display: flex; align-items: center; gap: 11px;
+      font-family: var(--font-mono); font-size: 14px; font-weight: 700;
+      letter-spacing: 0.04em; color: var(--text-primary);
     }
-    .pl-nav__brand-mark {
-      width: 28px; height: 28px;
-      border-radius: 6px;
-      background: var(--accent);
-      display: grid; place-items: center;
-      color: #000;
-      font-size: 16px;
-      font-weight: 700;
-    }
+    .pl-nav__brand img { width: 30px; height: 30px; border-radius: 8px; }
     .pl-nav__links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-      font-family: var(--font-mono);
-      font-size: 13px;
+      display: flex; align-items: center; gap: 30px;
+      font-family: var(--font-mono); font-size: 13px;
     }
-    .pl-nav__links a {
-      color: var(--text-secondary);
-      transition: color var(--transition);
-    }
-    .pl-nav__links a:hover { color: var(--text-primary); }
+    .pl-nav__links a:not(.btn) { color: var(--text-secondary); transition: color var(--transition); }
+    .pl-nav__links a:not(.btn):hover { color: var(--text-primary); }
+    .pl-nav__progress { position: absolute; bottom: -1px; left: 0; height: 2px; width: 0%; background: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
 
-    /* Hero */
-    .pl-hero {
-      padding: 140px 0 80px;
-      text-align: center;
+    /* ---- 5. HERO ---- */
+    .pl-hero { padding: 150px 0 90px; overflow-x: clip; }  /* contain the tilt + glow so they never cause horizontal scroll */
+    .pl-hero__grid {
+      display: grid; grid-template-columns: 1.05fr 0.95fr;
+      gap: 56px; align-items: center;
     }
-    .pl-hero__badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 14px;
-      border: 1px solid var(--border-tag);
-      background: var(--bg-tag);
-      color: var(--accent);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      border-radius: var(--radius-tag);
-      margin-bottom: 24px;
+    .pl-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border: 1px solid var(--border-tag); background: var(--bg-tag);
+      color: var(--accent); font-family: var(--font-mono); font-size: 12px;
+      border-radius: 56px; margin-bottom: 22px;
     }
+    .pl-badge__dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); animation: pl-pulse 2s infinite; }
+    @keyframes pl-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
     .pl-hero__title {
-      font-family: var(--font-display);
-      font-size: clamp(40px, 5.5vw, 72px);
-      font-weight: 400;
-      line-height: 1.08;
-      margin-bottom: 24px;
+      font-family: var(--font-display); font-weight: 600;
+      font-size: clamp(40px, 5.2vw, 66px); line-height: 1.04; margin-bottom: 22px;
+      letter-spacing: -0.03em;
     }
-    .pl-hero__subtitle {
-      max-width: 640px;
-      margin: 0 auto 40px;
-      font-size: 18px;
-      color: var(--text-secondary);
-      line-height: 1.6;
+    .pl-hero__title .accent {
+      background: linear-gradient(90deg, #2563eb, #22d3ee);
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
     }
-    .pl-hero__ctas {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 48px;
+    .pl-hero__sub {
+      max-width: 540px; font-size: 18px; color: var(--text-secondary);
+      line-height: 1.6; margin-bottom: 30px;
     }
-    .pl-hero__meta {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--text-muted);
+    .pl-hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 26px; }
+    .pl-hero__meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
+
+    /* stat pills row — single line: all three share the width and shrink to fit (never wrap). */
+    .pl-stats { display: flex; gap: 12px; flex-wrap: nowrap; margin-top: 34px; }
+    .pl-stat {
+      flex: 1 1 0; min-width: 0;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 16px 18px; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 14px; box-shadow: var(--shadow-card);
     }
-    .pl-hero__demo {
-      max-width: 1100px;
-      margin: 64px auto 0;
-      border: 1px solid var(--border);
-      border-radius: var(--radius-card);
-      overflow: hidden;
-      background: var(--bg-card);
-      box-shadow: 0 40px 80px -30px rgba(70, 255, 122, 0.12);
+    .pl-stat__ic { font-size: 20px; line-height: 1; flex-shrink: 0; }
+    .pl-stat__k { font-family: var(--font-mono); font-size: 15px; color: var(--text-primary); font-weight: 700; white-space: nowrap; }
+
+    /* hero visual: wolf + floating screenshot */
+    .pl-hero__visual { position: relative; }
+    .pl-hero__shot {
+      position: relative; border: 1px solid var(--border-strong); border-radius: 16px;
+      overflow: hidden; background: var(--bg-card);
+      box-shadow: var(--shadow-frame);
+      transform: perspective(1400px) rotateY(-8deg) rotateX(2deg);
     }
-    .pl-hero__demo img {
-      display: block;
-      width: 100%;
-      height: auto;
+    .pl-hero__shot img { width: 100%; display: block; }
+    .pl-hero__wolf {
+      position: absolute; width: 190px; right: -26px; bottom: -34px;
+      filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.55));
+      animation: pl-float 5s ease-in-out infinite;
+    }
+    @keyframes pl-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    .pl-hero__glow {
+      position: absolute; inset: -12% -6%; z-index: -1; border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(37, 99, 235, 0.18), transparent 70%);
+      filter: blur(10px);
     }
 
-    /* Problem / how-it-works / features shared card style */
-    .pl-grid {
+    /* autopik-style fan of example AI images (replaces the single screenshot; Civitai placeholders).
+       Each card's base transform lives in --t so :hover can just append scale() and keep the angle. */
+    .pl-hero__fan { position: relative; height: 480px; display: grid; place-items: center; }
+    .pl-hero__card {
+      position: absolute; width: 216px; aspect-ratio: 3 / 4; object-fit: cover;
+      border-radius: 20px; border: 5px solid #fff; background: #eef2f8;
+      box-shadow: 0 26px 55px -20px rgba(37, 99, 235, 0.38), 0 12px 26px -16px rgba(16, 24, 40, 0.32);
+      transform: var(--t);
+      transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.24, 1), box-shadow 0.4s ease;
+      cursor: pointer;
+    }
+    .pl-hero__card--c { --t: rotate(-2deg) translateY(-12px);        z-index: 3; }
+    .pl-hero__card--l { --t: rotate(-13deg) translate(-104px, 20px); z-index: 1; }
+    .pl-hero__card--r { --t: rotate(11deg)  translate(104px, 12px);  z-index: 2; }
+    /* Hover: the card grows and jumps to the FRONT, keeping its inclined angle (base --t + scale). */
+    .pl-hero__card:hover {
+      transform: var(--t) scale(1.14);
+      z-index: 10;
+      box-shadow: 0 40px 78px -18px rgba(37, 99, 235, 0.5), 0 20px 36px -14px rgba(16, 24, 40, 0.42);
+    }
+    .pl-hero__wolf-badge {
+      position: absolute; width: 152px; height: 152px; bottom: -8px;
+      left: 50%; margin-left: -76px; z-index: 5;   /* margin-left centers it so pl-float's transform doesn't fight */
+      border-radius: 26px;
+      box-shadow: 0 18px 34px -12px rgba(16, 24, 40, 0.42);
+      animation: pl-float 5s ease-in-out infinite;
+      pointer-events: none;   /* never block hovering the cards behind it */
+    }
+    @media (max-width: 720px) {
+      .pl-hero__fan { height: 400px; }
+      .pl-hero__card { width: 176px; border-width: 4px; }
+      .pl-hero__card--l { --t: rotate(-13deg) translate(-86px, 16px); }
+      .pl-hero__card--r { --t: rotate(11deg)  translate(86px, 10px); }
+      .pl-hero__wolf-badge { width: 122px; height: 122px; margin-left: -61px; }
+    }
+
+    /* ---- trust strip ---- */
+    .pl-trust {
+      display: flex; align-items: center; justify-content: center; gap: 26px; flex-wrap: wrap;
+      padding: 26px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono); font-size: 13px; color: var(--text-muted);
+    }
+    .pl-trust b { color: var(--text-secondary); font-weight: 500; }
+
+    /* ---- proof + demo, moved high on the page ---- */
+    .pl-proof-stack {
       display: grid;
-      gap: 20px;
+      grid-template-columns: 0.92fr 1.08fr;
+      gap: 28px;
+      align-items: center;   /* center the (shorter) video card vertically against the tall proof card */
+      margin-top: 34px;
     }
-    .pl-grid--3 { grid-template-columns: repeat(3, 1fr); }
-    .pl-grid--2 { grid-template-columns: repeat(2, 1fr); }
-    @media (max-width: 900px) {
-      .pl-grid--3, .pl-grid--2 { grid-template-columns: 1fr; }
-    }
-
-    .pl-card {
-      padding: 28px;
-      background: var(--bg-card);
+    .pl-proof-panel,
+    .pl-video-panel {
       border: 1px solid var(--border);
-      border-radius: var(--radius-card);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.90);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
     }
-    .pl-card__num {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--accent);
+    .pl-proof-panel { padding: 28px; }
+    .pl-proof-title {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1.12;
+      font-weight: 400;
       margin-bottom: 12px;
     }
-    .pl-card__title {
-      font-family: var(--font-display);
-      font-size: 24px;
-      font-weight: 400;
-      margin-bottom: 10px;
-      line-height: 1.2;
+    .pl-proof-copy {
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 20px;
     }
-    .pl-card__body {
-      color: var(--text-card);
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    /* Pricing */
-    .pl-pricing {
+    .pl-proof-list {
       display: grid;
-      place-items: center;
-    }
-    .pl-price-card {
-      max-width: 420px;
-      width: 100%;
-      padding: 40px;
-      background: var(--bg-card);
-      border: 1px solid var(--border-tag);
-      border-radius: var(--radius-card);
-      text-align: center;
-    }
-    .pl-price-card__label {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-    .pl-price-card__amount {
-      font-family: var(--font-display);
-      font-size: 64px;
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .pl-price-card__amount sup {
-      font-size: 28px;
-      vertical-align: top;
-      margin-right: 6px;
-    }
-    .pl-price-card__period {
-      color: var(--text-muted);
-      font-size: 14px;
-      margin-bottom: 24px;
-    }
-    .pl-price-card__features {
+      gap: 12px;
       list-style: none;
-      text-align: left;
-      margin: 24px 0 32px;
+      padding: 0;
+      margin: 0;
     }
-    .pl-price-card__features li {
-      padding: 8px 0;
-      color: var(--text-card);
-      font-size: 15px;
-      display: flex;
-      align-items: flex-start;
+    .pl-proof-list li {
+      display: grid;
+      grid-template-columns: 24px 1fr;
       gap: 10px;
+      align-items: start;
+      color: var(--text-secondary);
+      line-height: 1.55;
     }
-    .pl-price-card__features li::before {
-      content: "✓";
+    .pl-proof-list b { color: var(--text-primary); }
+    .pl-proof-ic {
+      display: inline-grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--bg-tag);
       color: var(--accent);
+      font-size: 13px;
       font-weight: 700;
-      flex-shrink: 0;
     }
-    .pl-price-card .btn { width: 100%; }
-    .pl-price-card__strike {
-      color: var(--text-muted);
-      text-decoration-color: var(--text-muted);
-      margin-right: 4px;
+    .pl-video-panel { display: flex; flex-direction: column; }
+    .pl-video-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #0f172a;
     }
-
-    /* FAQ */
-    .pl-faq {
-      max-width: 760px;
-      margin: 0 auto;
+    .pl-video-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
     }
-    .pl-faq__item {
-      border-bottom: 1px solid var(--border);
-      padding: 24px 0;
-    }
-    .pl-faq__item:first-child { border-top: 1px solid var(--border); }
-    .pl-faq__q {
-      font-family: var(--font-display);
-      font-size: 20px;
-      font-weight: 400;
-      cursor: pointer;
+    .pl-video-caption {
+      padding: 18px 20px 20px;
       display: flex;
       justify-content: space-between;
+      gap: 18px;
       align-items: center;
-      gap: 20px;
-      list-style: none;
-    }
-    .pl-faq__q::-webkit-details-marker { display: none; }
-    .pl-faq__q::after {
-      content: "+";
-      font-family: var(--font-mono);
-      font-size: 24px;
-      color: var(--accent);
-      transition: transform var(--transition);
-    }
-    .pl-faq__item[open] .pl-faq__q::after { content: "−"; }
-    .pl-faq__a {
-      margin-top: 12px;
-      color: var(--text-card);
-      line-height: 1.7;
-      font-size: 15px;
-    }
-
-    /* Footer */
-    .pl-footer {
-      border-top: 1px solid var(--border);
-      padding: 48px 0;
-      text-align: center;
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      font-size: 13px;
-    }
-    .pl-footer__links {
-      display: flex;
-      justify-content: center;
-      gap: 28px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-    .pl-footer__links a {
       color: var(--text-secondary);
-      transition: color var(--transition);
+      font-size: 14px;
+      line-height: 1.5;
     }
-    .pl-footer__links a:hover { color: var(--accent); }
-    .pl-footer__legal {
-      max-width: 640px;
-      margin: 12px auto 0;
-      color: var(--text-muted);
-      font-family: var(--font-body);
-      font-size: 12px;
-      line-height: 1.6;
+    .pl-video-caption b { color: var(--text-primary); }
+    .pl-proof-ctas,
+    .pl-section-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;   /* center the "Install free on Chrome" button horizontally */
+      margin-top: 22px;
+    }
+    .pl-section-cta {
+      justify-content: center;
+      margin-top: 24px;
     }
 
-    /* Mobile adjustments */
-    @media (max-width: 720px) {
-      :root { --container-px: 24px; }
-      .pl-hero { padding: 110px 0 60px; }
-      .pl-nav__links { display: none; }
-      .pl-nav__links--cta-only { display: flex; gap: 0; }
-      .pl-nav__links--cta-only a:not(.btn) { display: none; }
+    /* ---- generic card grids ---- */
+    .pl-grid { display: grid; gap: 20px; }
+    .pl-grid--3 { grid-template-columns: repeat(3, 1fr); }
+    .pl-grid--2 { grid-template-columns: repeat(2, 1fr); }
+    .pl-card {
+      padding: 28px; background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: var(--radius-card); box-shadow: var(--shadow-card);
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
     }
+    .pl-card:hover { border-color: var(--border-tag); transform: translateY(-3px); box-shadow: 0 1px 2px rgba(16,24,40,0.05), 0 22px 44px -20px rgba(37,99,235,0.28); }
+    .pl-card__num { font-family: var(--font-mono); font-size: 13px; color: var(--accent); margin-bottom: 12px; }
+    .pl-card__ic { font-size: 26px; margin-bottom: 14px; display: block; }
+    .pl-card__title { font-family: var(--font-display); font-size: 23px; font-weight: 400; margin-bottom: 10px; line-height: 1.22; }
+    .pl-card__body { color: var(--text-card); font-size: 15px; line-height: 1.62; }
+
+    /* ---- zigzag feature rows ---- */
+    .pl-feature {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+      padding: 46px 0;
+    }
+    .pl-feature:nth-child(even) .pl-feature__media { order: 2; }
+    .pl-feature__eyebrow { font-family: var(--font-mono); font-size: 13px; color: var(--accent); margin-bottom: 14px; letter-spacing: 0.06em; }
+    .pl-feature__title { font-family: var(--font-display); font-size: clamp(26px, 3vw, 38px); font-weight: 400; line-height: 1.16; margin-bottom: 16px; }
+    .pl-feature__body { color: var(--text-secondary); font-size: 16px; line-height: 1.65; margin-bottom: 22px; }
+    .pl-feature__list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .pl-feature__list li { display: flex; gap: 10px; align-items: flex-start; color: var(--text-card); font-size: 15px; }
+    .pl-feature__list li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+    /* image frame with shimmer skeleton while loading */
+    .pl-frame {
+      position: relative; border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; background: #e9eef5;   /* light skeleton shown until image decodes */
+      box-shadow: var(--shadow-frame);
+    }
+    .pl-frame::before { /* moving shimmer over the skeleton */
+      content: ""; position: absolute; inset: 0; z-index: 1;
+      background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, 0.75) 50%, transparent 80%);
+      transform: translateX(-100%); animation: pl-shimmer 1.6s infinite;
+    }
+    .pl-frame.loaded::before { animation: none; opacity: 0; }
+    @keyframes pl-shimmer { 100% { transform: translateX(100%); } }
+    .pl-frame img { width: 100%; display: block; position: relative; z-index: 2; opacity: 0; transition: opacity 0.6s ease; }
+    .pl-frame img.loaded { opacity: 1; }
+
+    /* ---- how it works (3 steps with connector) ---- */
+    .pl-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; position: relative; }
+    .pl-step { text-align: center; padding: 0 12px; }
+    .pl-step__n {
+      width: 56px; height: 56px; margin: 0 auto 18px; border-radius: 50%;
+      display: grid; place-items: center; font-family: var(--font-mono); font-weight: 700; font-size: 20px;
+      color: var(--accent-ink); background: linear-gradient(180deg, #3b82f6, #2563eb);
+      box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.10), 0 10px 24px -8px var(--accent-glow);
+    }
+    .pl-step__title { font-family: var(--font-display); font-size: 22px; font-weight: 400; margin-bottom: 8px; }
+    .pl-step__body { color: var(--text-card); font-size: 15px; line-height: 1.6; }
+
+    /* ---- personas ---- */
+    .pl-personas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .pl-persona {
+      padding: 24px; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .pl-persona:hover { border-color: var(--border-tag); transform: translateY(-3px); }
+    .pl-persona__ic { font-size: 24px; margin-bottom: 12px; }
+    .pl-persona__title { font-family: var(--font-display); font-size: 19px; font-weight: 500; margin-bottom: 6px; }
+    .pl-persona__body { color: var(--text-card); font-size: 14px; line-height: 1.55; }
+
+    /* ---- comparison table ---- */
+    .pl-compare {
+      border: 1px solid var(--border); border-radius: var(--radius-card); overflow: hidden;
+      background: var(--bg-card); box-shadow: var(--shadow-card);
+    }
+    .pl-compare__row { display: grid; grid-template-columns: 1.2fr 1fr 1fr; }
+    .pl-compare__row + .pl-compare__row { border-top: 1px solid var(--border); }
+    .pl-compare__cell { padding: 18px 22px; font-size: 15px; }
+    .pl-compare__cell--head { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); background: var(--bg-2); }
+    .pl-compare__head .pl-compare__cell--head:last-child { border-left: 1px solid var(--border-tag); }
+    .pl-compare__cell--label { color: var(--text-primary); font-weight: 500; }
+    .pl-compare__cell--bad { color: var(--text-card); }
+    .pl-compare__cell--good { color: var(--text-primary); font-weight: 500; border-left: 1px solid var(--border-tag); background: rgba(37, 99, 235, 0.05); }
+    .pl-compare__cell--good::before { content: "✓ "; color: var(--accent); font-weight: 700; }
+    .pl-compare__cell--bad::before { content: "✕ "; color: #ff6b6b; }
+    .pl-compare__head .pl-compare__cell--good::before, .pl-compare__head .pl-compare__cell--bad::before { content: ""; }
+    .pl-result {
+      margin-top: 20px; text-align: center; padding: 20px;
+      border: 1px solid var(--border-tag); border-radius: var(--radius-card);
+      background: linear-gradient(90deg, rgba(37, 99, 235, 0.08), rgba(6, 182, 212, 0.08));
+      font-family: var(--font-mono); font-size: 15px; color: var(--text-primary);
+    }
+
+    /* ---- gallery / Civitai-inspired batch ideas ---- */
+    .pl-gallery { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+    .pl-gallery__tile {
+      position: relative; aspect-ratio: 1 / 1; border-radius: 12px; overflow: hidden;
+      border: 1px solid rgba(15, 23, 42, 0.14);
+      background: #0f172a;
+      margin: 0;
+      box-shadow: 0 18px 44px rgba(15, 23, 42, 0.16);
+      isolation: isolate;
+    }
+    .pl-gallery__tile img {
+      position: absolute; inset: 0; z-index: 0;
+      width: 100%; height: 100%; object-fit: cover;
+      transform: scale(1.025);
+      transition: transform 0.75s var(--ease-out), filter 0.75s var(--ease-out);
+    }
+    .pl-gallery__tile:hover img { transform: scale(1.075); filter: saturate(1.08) contrast(1.04); }
+    .pl-gallery__tile::before {
+      content: ""; position: absolute; inset: 0; z-index: 1;
+      background:
+        linear-gradient(180deg, rgba(8, 13, 24, 0.08) 10%, rgba(8, 13, 24, 0.2) 42%, rgba(8, 13, 24, 0.86) 100%),
+        linear-gradient(145deg, rgba(255, 255, 255, 0.2), transparent 42%);
+    }
+    .pl-gallery__tile figcaption {
+      position: absolute; inset: auto 0 0; z-index: 2;
+      padding: 18px;
+    }
+    .pl-gallery__tile span {
+      display: block;
+      font-family: var(--font-mono); font-size: 12px; color: rgba(226, 232, 240, 0.78);
+      text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .pl-gallery__tile b {
+      display: block;
+      color: #ffffff;
+      font-size: 17px;
+      line-height: 1.18;
+      margin-top: 6px;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+    }
+    .pl-gallery__note { text-align: center; margin-top: 18px; font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
+
+    /* (pricing styles removed — the Pricing section was deleted) */
+
+    /* ---- FAQ ---- */
+    .pl-faq { max-width: 760px; margin: 0 auto; }
+    .pl-faq__item { border-bottom: 1px solid var(--border); box-sizing: border-box; }
+    .pl-faq__item:first-child { border-top: 1px solid var(--border); }
+    .pl-faq__q {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      color: var(--text-primary);
+      position: relative;
+      font-family: var(--font-display); font-size: 20px; font-weight: 400; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center; gap: 20px;
+      padding: 22px 32px 22px 0;
+      user-select: none;
+    }
+
+    /* Elegant CSS-only Plus icon using pseudo-elements */
+    .pl-faq__q::before,
+    .pl-faq__q::after {
+      content: "";
+      position: absolute;
+      right: 4px;
+      background-color: var(--accent);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    /* Horizontal bar */
+    .pl-faq__q::before {
+      width: 14px;
+      height: 2px;
+      top: calc(50% - 1px);
+    }
+    /* Vertical bar */
+    .pl-faq__q::after {
+      width: 2px;
+      height: 14px;
+      top: calc(50% - 7px);
+      right: 10px; /* Align center with the horizontal bar */
+    }
+
+    /* Rotate/fade to make a minus sign */
+    .pl-faq__q[aria-expanded="true"]::before {
+      transform: rotate(180deg);
+    }
+    .pl-faq__q[aria-expanded="true"]::after {
+      transform: rotate(90deg);
+      opacity: 0;
+    }
+
+    /* FAQ animation wrappers */
+    .pl-faq__a-wrapper {
+      transition: height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .js .pl-faq__a-wrapper,
+    .engine-gsap .pl-faq__a-wrapper {
+      height: 0;
+      overflow: hidden;
+    }
+
+    .pl-faq__a {
+      color: var(--text-card); line-height: 1.7; font-size: 15px;
+      margin: 0;
+      padding-bottom: 22px;
+      transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .js .pl-faq__a,
+    .engine-gsap .pl-faq__a {
+      opacity: 0;
+      transform: translateY(10px);
+      filter: blur(3px);
+    }
+    .pl-faq__item.is-open .pl-faq__a {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    /* ---- final CTA ---- */
+    .pl-cta-band {
+      position: relative; overflow: hidden; text-align: center;
+      border: 1px solid var(--border-tag); border-radius: 22px; padding: 60px 30px;
+      background: linear-gradient(160deg, rgba(37, 99, 235, 0.08), rgba(6, 182, 212, 0.07)), var(--bg-card);
+      box-shadow: var(--shadow-card);
+    }
+    .pl-cta-band__wolf { width: 96px; margin: 0 auto 20px; filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5)); }
+    .pl-cta-band__title { font-family: var(--font-display); font-size: clamp(30px, 4vw, 48px); font-weight: 400; margin-bottom: 16px; line-height: 1.12; }
+    .pl-cta-band__sub { color: var(--text-secondary); max-width: 500px; margin: 0 auto 28px; font-size: 17px; }
+
+    /* ---- footer ---- */
+    .pl-footer { border-top: 1px solid var(--border); padding: 48px 0; text-align: center; color: var(--text-muted); font-family: var(--font-mono); font-size: 13px; }
+    .pl-footer__links { display: flex; justify-content: center; gap: 26px; margin-bottom: 16px; flex-wrap: wrap; }
+    .pl-footer__links a { color: var(--text-secondary); transition: color var(--transition); }
+    .pl-footer__links a:hover { color: var(--accent); }
+    .pl-footer__legal { max-width: 640px; margin: 12px auto 0; color: var(--text-muted); font-family: var(--font-body); font-size: 12px; line-height: 1.6; }
+
+    /* ---- responsive ---- */
+    @media (max-width: 900px) {
+      .pl-hero__grid { grid-template-columns: 1fr; gap: 48px; }
+      .pl-hero__sub { max-width: none; }
+      .pl-grid--3, .pl-grid--2, .pl-steps, .pl-personas { grid-template-columns: 1fr; }
+      .pl-proof-stack { grid-template-columns: 1fr; }
+      .pl-video-caption { align-items: flex-start; flex-direction: column; }
+      .pl-feature { grid-template-columns: 1fr; gap: 28px; padding: 30px 0; }
+      .pl-feature:nth-child(even) .pl-feature__media { order: 0; }
+      .pl-gallery { grid-template-columns: repeat(2, 1fr); }
+      .pl-gallery__tile figcaption { padding: 14px; }
+      .pl-gallery__tile b { font-size: 15px; }
+      .pl-compare__cell { padding: 14px 16px; font-size: 14px; }
+      /* on stacked layouts, reveal by rising (not sliding sideways) — cleaner + no horizontal overflow */
+      .js .reveal--left, .js .reveal--right { transform: translateY(30px); }
+      .js .pl-hero__copy .reveal:not(.is-in)   { transform: translateY(16px); }
+      .js .pl-hero__visual.reveal:not(.is-in)  { transform: translateY(16px) scale(0.94); }
+    }
+    @media (max-width: 720px) {
+      :root { --container-px: 22px; }
+      /* lighter motion on phones: no blur (cheaper to paint), slightly quicker settle */
+      .js .reveal, .js .reveal--zoom { filter: none; }
+      .js .reveal { transition-duration: 0.6s; }
+      .pl-hero { padding: 120px 0 60px; }
+      .pl-nav__links a:not(.btn) { display: none; }
+      .pl-hero__title { font-size: clamp(34px, 9vw, 46px); }
+      .pl-hero__wolf { width: 130px; right: -8px; bottom: -22px; }
+      .pl-compare { border: 0; background: transparent; box-shadow: none; display: grid; gap: 12px; }
+      .pl-compare__head { display: none; }
+      .pl-compare__row {
+        grid-template-columns: 1fr;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        overflow: hidden;
+        background: var(--bg-card);
+      }
+      .pl-compare__row + .pl-compare__row { border-top: 1px solid var(--border); }
+      .pl-compare__cell--good { border-left: 0; }
+    }
+    /* ============ PINNED PRODUCT STORY (paste → queue → downloads) ============
+       Reduce the gap between features and the pinned product story. */
+    #features { padding-bottom: 40px; }
+    /* A sticky dark product panel that scrubs through 3 beats as you scroll. Driven by a tiny
+       scroll handler that sets [data-beat] on #product-story — no GSAP dependency, works for every
+       visitor. No-JS / reduced-motion / mobile fall back to a readable stacked view. */
+    #product-story { padding: 0 0 0; }
+    .pl-story__scroll { position: relative; height: 300vh; }
+    .pl-story__pin { position: sticky; top: 0; min-height: 100vh; display: flex; align-items: center; }
+    .pl-story__inner { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 56px; align-items: center; width: 100%; }
+    .pl-story__eyebrow { font-family: var(--font-mono); font-size: 13px; color: var(--accent); letter-spacing: 0.06em; margin-bottom: 14px; }
+    .pl-story__title { font-family: var(--font-display); font-weight: 600; font-size: clamp(28px, 3.4vw, 42px); line-height: 1.08; letter-spacing: -0.02em; margin-bottom: 28px; }
+    .pl-story__steps { list-style: none; display: grid; gap: 14px; margin: 0; padding: 0; }
+    .pl-story__step { display: grid; grid-template-columns: 30px 1fr; gap: 14px; align-items: start; opacity: 0.4; transition: opacity 0.4s ease; }
+    .pl-story__step-n { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: 13px; font-weight: 700; border: 1px solid var(--border-strong); color: var(--text-muted); transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease; }
+    .pl-story__step-t { display: block; font-weight: 600; color: var(--text-primary); font-size: 17px; }
+    .pl-story__step-d { display: block; color: var(--text-secondary); font-size: 14px; line-height: 1.5; margin-top: 2px; }
+    #product-story[data-beat="1"] .pl-story__step:nth-child(1),
+    #product-story[data-beat="2"] .pl-story__step:nth-child(2),
+    #product-story[data-beat="3"] .pl-story__step:nth-child(3) { opacity: 1; }
+    #product-story[data-beat="1"] .pl-story__step:nth-child(1) .pl-story__step-n,
+    #product-story[data-beat="2"] .pl-story__step:nth-child(2) .pl-story__step-n,
+    #product-story[data-beat="3"] .pl-story__step:nth-child(3) .pl-story__step-n { border-color: transparent; background: var(--accent); color: #fff; }
+
+    .pl-panel { position: relative; border-radius: 16px; background: var(--panel-dark); border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 30px 70px -30px rgba(11,18,32,0.55); overflow: hidden; }
+    .pl-panel__bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .pl-panel__dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.16); }
+    .pl-panel__title { margin-left: 8px; font-family: var(--font-mono); font-size: 12px; color: #7d8aa3; }
+    .pl-panel__badge { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: #7d8aa3; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 3px 10px; border-radius: 999px; transition: color 0.4s ease; }
+    .pl-panel__body { position: relative; height: 480px; overflow: hidden; display: flex; flex-direction: column; }
+    .pl-beat { position: absolute; inset: 0; padding: 20px; opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; pointer-events: none; overflow-y: auto; display: flex; flex-direction: column; }
+    #product-story[data-beat="1"] .pl-beat--1,
+    #product-story[data-beat="2"] .pl-beat--2,
+    #product-story[data-beat="3"] .pl-beat--3,
+    #product-story:not([data-beat]) .pl-beat--1 { opacity: 1; transform: none; }
+
+    .pl-prompt-list { font-family: var(--font-mono); font-size: 13px; color: #c3cee0; display: grid; gap: 6px; height: 100%; grid-template-rows: repeat(4, 1fr) auto; }
+    .pl-prompt-row {
+      display: grid; grid-template-columns: 1fr 48px; gap: 10px; align-items: center;
+      padding: 8px 12px; border-radius: 10px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+      /* Scroll-driven entrance: starts hidden, JS reveals as you scroll */
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .pl-prompt-row.is-visible { opacity: 1; transform: none; }
+    .pl-prompt-row__text {
+      display: flex; align-items: center; gap: 10px; line-height: 1.4;
+      overflow: hidden;
+    }
+    .pl-prompt-row__typed {
+      display: inline;
+      /* Typing effect: clip-path reveals text left-to-right */
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .pl-prompt-row.is-visible .pl-prompt-row__typed { clip-path: inset(0 0 0 0); }
+    .pl-pl-num { color: #56637d; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+    .pl-prompt-row__thumb {
+      width: 48px; height: 48px; border-radius: 8px; object-fit: cover;
+      border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;
+      /* Image reveal: clip from left to right */
+      clip-path: inset(0 100% 0 0);
+      transition: clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+    }
+    .pl-prompt-row.is-visible .pl-prompt-row__thumb { clip-path: inset(0 0 0 0); }
+    .pl-run-btn {
+      margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: linear-gradient(180deg,#3b82f6,#2563eb); color: #fff;
+      font-family: var(--font-mono); font-size: 13px; font-weight: 700;
+      padding: 12px 16px; border-radius: 10px; width: 100%;
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+    }
+    .pl-run-btn.is-visible { opacity: 1; transform: none; }
+    .pl-caret { display: inline-block; width: 8px; height: 15px; background: var(--accent-2); margin-left: 2px; vertical-align: text-bottom; animation: pl-caret 1.1s steps(1) infinite; }
+    @keyframes pl-caret { 50% { opacity: 0; } }
+
+    .pl-queue { display: grid; gap: 6px; height: 100%; grid-template-rows: repeat(5, 1fr) auto; }
+    .pl-qrow {
+      display: grid; grid-template-columns: 22px 1fr auto; gap: 10px; align-items: center;
+      font-family: var(--font-mono); font-size: 12px; color: #aeb9cf;
+      padding: 8px 12px; border-radius: 10px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+      transition: border-color 0.4s ease, color 0.3s ease, background 0.4s ease, opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .js .pl-qrow,
+    .engine-gsap .pl-qrow {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    .js .pl-qrow.is-visible,
+    .engine-gsap .pl-qrow.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+    .pl-qrow__ic { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; position: relative; }
+    .pl-qrow__ic .pl-ic-check, .pl-qrow__ic .pl-ic-wait { transition: opacity 0.3s ease; }
+    .pl-qrow__ic .pl-ic-check { position: absolute; inset: 0; display: grid; place-items: center; opacity: 0; }
+    .pl-qrow__ic .pl-ic-wait  { opacity: 1; }
+    .pl-qrow[data-state="done"] .pl-qrow__ic .pl-ic-check { opacity: 1; }
+    .pl-qrow[data-state="done"] .pl-qrow__ic .pl-ic-wait  { opacity: 0; }
+    .pl-qrow[data-state="done"] .pl-qrow__ic { background: var(--success-tint); color: var(--success); box-shadow: 0 0 0 2px rgba(34,197,94,0.35), 0 0 12px rgba(34,197,94,0.4); }
+    .pl-qrow[data-state="done"] .pl-qrow__st { color: var(--success); }
+    .pl-qrow[data-state="done"] .pl-qrow__st::after { content: 'done'; }
+    .pl-qrow[data-state="wait"] .pl-qrow__ic { border: 1px solid rgba(255,255,255,0.16); }
+    .pl-qrow[data-state="wait"] .pl-qrow__st::after { content: 'queued'; }
+    .pl-qrow__st { font-size: 11px; color: #7d8aa3; }
+    .pl-spin { width: 13px; height: 13px; border: 2px solid rgba(34,211,238,0.25); border-top-color: var(--accent-2); border-radius: 50%; animation: pl-spin 0.8s linear infinite; }
+    @keyframes pl-spin { to { transform: rotate(360deg); } }
+    .pl-qprog { margin-top: auto; }
+    .pl-qprog__bar { height: 5px; border-radius: 999px; background: rgba(255,255,255,0.08); overflow: hidden; }
+    .pl-qprog__fill { height: 100%; width: 0%; border-radius: 999px; background: linear-gradient(90deg, var(--accent), var(--success)); transition: width 0.5s ease; }
+    .pl-qprog__t { font-family: var(--font-mono); font-size: 11px; color: #7d8aa3; margin-top: 6px; transition: opacity 0.3s ease; }
+
+    /* ---- beat 3: download image grid ---- */
+    .pl-dl-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 6px; height: 100%; }
+    .pl-dl-card { position: relative; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.04); }
+    .pl-dl-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .pl-dl-card__overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 50%); display: flex; align-items: flex-end; padding: 6px 8px; }
+    .pl-dl-card__name { font-family: var(--font-mono); font-size: 9px; color: rgba(255,255,255,0.75); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .pl-dl-card__video-badge { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 28px; height: 28px; border-radius: 50%; background: rgba(0,0,0,0.55); border: 1.5px solid rgba(255,255,255,0.5); display: grid; place-items: center; backdrop-filter: blur(4px); }
+    .pl-dl-card__video-badge::after { content: ''; display: block; width: 0; height: 0; border-left: 9px solid #fff; border-top: 5px solid transparent; border-bottom: 5px solid transparent; margin-left: 2px; }
+    .pl-dl-foot { margin-top: auto; display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: #7d8aa3; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .pl-dl-foot b { color: var(--success); }
+
+    .pl-story__rail { margin-top: 22px; height: 4px; border-radius: 999px; background: var(--border); overflow: hidden; }
+    .pl-story__rail-fill { height: 100%; width: calc(var(--p, 0) * 100%); background: linear-gradient(90deg, var(--accent), var(--accent-2)); border-radius: 999px; }
+
+    @media (max-width: 900px) {
+      #product-story { padding: 24px 0 8px; }
+      .pl-story__scroll { height: auto; }
+      .pl-story__pin { position: static; min-height: 0; display: block; }
+      .pl-story__inner { grid-template-columns: 1fr; gap: 26px; }
+      .pl-panel__body { height: auto; overflow: visible; }
+      .pl-beat { position: relative; opacity: 1; transform: none; border-top: 1px solid rgba(255,255,255,0.06); }
+      .pl-beat:first-child { border-top: 0; }
+      .pl-story__step { opacity: 1; }
+      .pl-story__rail { display: none; }
+      .pl-dl-grid { grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(4, 1fr); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pl-caret, .pl-spin { animation: none; }
+      .pl-beat { transition: none; }
+    }
+    /* ---- Accessibility & craft polish (ship pass) ---- */
+    /* Visible keyboard focus everywhere (prevents the 1.4.11 / 2.4.7 / 2.4.13 triple failure). */
+    a:focus-visible, button:focus-visible, summary:focus-visible, [tabindex]:focus-visible {
+      outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px;
+    }
+    /* Nav anchors must not hide their target heading under the fixed nav. */
+    section[id] { scroll-margin-top: 84px; }
+    /* Uppercase eyebrows need ≥0.06em tracking or they read cramped/amateur. */
+    .section__label { letter-spacing: 0.07em; }
   </style>
+  <script>/* Flag GSAP mode before first paint so the hero's CSS entrance is ready immediately. */
+    try { if (localStorage.getItem('mag-engine') === 'gsap') document.documentElement.className += ' engine-gsap'; } catch (e) {}</script>
 </head>
 <body>
+  <div class="pl-bg" aria-hidden="true"></div>
 
   <!-- NAV -->
-  <nav class="pl-nav">
+  <nav class="pl-nav" id="nav">
     <div class="pl-nav__inner">
-      <a href="../" class="pl-nav__brand">
-        <span class="pl-nav__brand-mark">M</span>
+      <a href="#" class="pl-nav__brand" onclick="event.preventDefault();window.scrollTo({top:0,behavior:'smooth'})">
+        <img src="assets/wolf-icon.png" alt="" />
         MAGNIFIC&nbsp;AUTOMATION
       </a>
-      <div class="pl-nav__links pl-nav__links--cta-only">
+      <div class="pl-nav__links">
+        <a href="#features">Features</a>
         <a href="#how">How it works</a>
-        <a href="#pricing">Pricing</a>
         <a href="#faq">FAQ</a>
-        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--primary btn--sm">Install →</a>
+        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan btn--sm">Install →</a>
       </div>
     </div>
+    <div class="pl-nav__progress" id="nav-progress"></div>
   </nav>
 
   <!-- HERO -->
-  <section class="pl-hero">
+  <header class="pl-hero">
     <div class="container">
-      <span class="pl-hero__badge">Chrome Extension · Built for creators at volume</span>
-      <h1 class="pl-hero__title">Generate hundreds of AI images &amp; videos<br /><em class="accent">while you sleep.</em></h1>
-      <p class="pl-hero__subtitle">
-        Paste your prompts. Hit start. Walk away. Magnific Automation queues your entire batch and generates them one after another inside your own Magnific session — no more babysitting the generate button.
-      </p>
-      <div class="pl-hero__ctas">
-        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--primary">Install free on Chrome →</a>
-        <a href="#how" class="btn btn--ghost">See how it works</a>
-      </div>
-      <p class="pl-hero__meta">Free for early users · Regular price $15 lifetime · Works with your existing Magnific account</p>
+      <div class="pl-hero__grid">
+        <div class="pl-hero__copy">
+          <h1 class="pl-hero__title reveal" style="--d:200ms">Automate 100+ Magnific prompts <span class="accent">and walk away.</span></h1>
+          <p class="pl-hero__sub reveal" style="--d:300ms">Paste prompts once. Magnific Automation runs the queue, downloads outputs, and keeps each file matched to its prompt inside your own browser session.</p>
+          <div class="pl-hero__ctas reveal" style="--d:400ms">
+            <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Install free on Chrome →</a>
+          </div>
 
-      <div class="pl-hero__demo">
-        <img src="assets/hero-demo.png" alt="Magnific Automation — Automate Video & Image Generation at Scale. The extension's Settings panel shows Auto-download and Export CSV toggles plus a Start Automation button." loading="eager" />
+          <div class="pl-stats reveal" style="--d:500ms">
+            <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true">👥</span><span class="pl-stat__k">136 users</span></div>
+            <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true" style="color:var(--success)">★</span><span class="pl-stat__k">5.0</span></div>
+            <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true" style="color:var(--success)">✓</span><span class="pl-stat__k">v1.1.5</span></div>
+          </div>
+        </div>
+
+        <div class="pl-hero__visual reveal" style="--d:300ms">
+          <div class="pl-hero__glow" aria-hidden="true"></div>
+          <!-- autopik-style fan of example AI images (Civitai placeholders — swap for real Magnific output later) -->
+          <div class="pl-hero__fan">
+            <img class="pl-hero__card pl-hero__card--l" src="assets/civitai-placeholders/editorial-portrait.jpg" alt="" width="420" height="560" />
+            <img class="pl-hero__card pl-hero__card--r" src="assets/civitai-placeholders/character-poster.jpg" alt="" width="420" height="560" />
+            <img class="pl-hero__card pl-hero__card--c" src="assets/civitai-placeholders/anime-key-art.jpg" alt="Examples of images you can bulk-generate on Magnific" width="420" height="560" fetchpriority="high" />
+            <img class="pl-hero__wolf-badge" src="assets/wolf-fullbody.png" alt="" width="152" height="152" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- TRUST STRIP + PROOF (grey band restores the white → grey → white section rhythm) -->
+  <section class="pl-band pl-proof-band">
+  <div class="container">
+    <div class="pl-trust reveal">
+      <span>Works in <b>Chrome, Edge, Brave, Arc, Opera</b></span>
+      <span>Uses <b>your Magnific session</b></span>
+      <span><b>No password handling</b></span>
+    </div>
+    <div class="pl-proof-stack">
+      <div class="pl-proof-panel reveal reveal--left">
+        <h2 class="pl-proof-title">What you can verify today.</h2>
+        <p class="pl-proof-copy">No inflated install counts, no fake testimonials. The launch proof is the actual product: a live demo, a public Chrome Web Store listing, and a privacy model you can understand before installing.</p>
+        <ul class="pl-proof-list">
+          <li><span class="pl-proof-ic">1</span><span><b>Watch it run.</b> The demo shows the actual batch workflow from prompt list to automated generation.</span></li>
+          <li><span class="pl-proof-ic">2</span><span><b>Install from Chrome Web Store.</b> The listing is public, so you can inspect the extension page before adding it.</span></li>
+          <li><span class="pl-proof-ic">3</span><span><b>Your own session.</b> It runs inside your browser using your logged-in Magnific account.</span></li>
+          <li><span class="pl-proof-ic">4</span><span><b>No password handling.</b> The extension does not collect or transmit your Magnific credentials.</span></li>
+        </ul>
+        <div class="pl-proof-ctas">
+          <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Install free on Chrome →</a>
+        </div>
+      </div>
+      <div class="pl-video-panel reveal reveal--zoom" style="--d:300ms">
+        <div class="pl-video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/Xas8RbltNGs?rel=0&modestbranding=1&playsinline=1"
+            title="Magnific Automation product demo"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
+  <!-- FEATURES (zigzag, one per screenshot) -->
+  <section class="section" id="features">
+    <div class="container">
+      <p class="section__label reveal">// WHAT'S INSIDE</p>
+      <h2 class="section__title reveal" style="--d:60ms">Everything you'd do by hand — <span class="accent">on autopilot.</span></h2>
+
+      <div class="pl-feature">
+        <div class="pl-feature__media reveal reveal--left"><div class="pl-frame"><img src="assets/shot-1-bulk.png" alt="Bulk AI generation running on autopilot with a live prompt queue." loading="lazy" width="1280" height="800" /></div></div>
+        <div class="pl-feature__text reveal reveal--right" style="--d:80ms">
+          <p class="pl-feature__eyebrow">01 · BULK QUEUE</p>
+          <h3 class="pl-feature__title">Bulk generation on autopilot</h3>
+          <p class="pl-feature__body">Paste 10 prompts or 500. The queue runs them one after another inside your own Magnific session — you press start once and it handles the rest.</p>
+          <ul class="pl-feature__list"><li>One prompt per line, no setup</li><li>Runs in order, unattended</li><li>Keeps going even if you switch tabs</li></ul>
+        </div>
+      </div>
+
+      <div class="pl-feature">
+        <div class="pl-feature__media reveal reveal--right"><div class="pl-frame"><img src="assets/shot-2-video.png" alt="Both image and video generation modes: text-to-video, image-to-video, frame pairs." loading="lazy" width="1280" height="800" /></div></div>
+        <div class="pl-feature__text reveal reveal--left" style="--d:80ms">
+          <p class="pl-feature__eyebrow">02 · IMAGE + VIDEO</p>
+          <h3 class="pl-feature__title">Images and videos, one queue</h3>
+          <p class="pl-feature__body">Text-to-video, image-to-video, frame pairs, text-to-image — whatever Magnific supports, the queue drives it with your chosen settings applied to every run.</p>
+          <ul class="pl-feature__list"><li>Lock resolution, concurrency &amp; delay once</li><li>Applied to every generation automatically</li><li>Mix image and video jobs in a batch</li></ul>
+        </div>
+      </div>
+
+      <div class="pl-feature">
+        <div class="pl-feature__media reveal reveal--left"><div class="pl-frame"><img src="assets/shot-3-queue.png" alt="A live prompt queue showing progress for each generation." loading="lazy" width="1280" height="800" /></div></div>
+        <div class="pl-feature__text reveal reveal--right" style="--d:80ms">
+          <p class="pl-feature__eyebrow">03 · LIVE PROGRESS</p>
+          <h3 class="pl-feature__title">Queue everything, watch it run</h3>
+          <p class="pl-feature__body">A live activity panel shows each job as it works — queued, running, done. If something fails, pick up where you left off instead of starting the whole batch over.</p>
+          <ul class="pl-feature__list"><li>Real-time status for every prompt</li><li>Resume after a failure</li><li>See exactly what finished</li></ul>
+        </div>
+      </div>
+
+      <div class="pl-feature">
+        <div class="pl-feature__media reveal reveal--right"><div class="pl-frame"><img src="assets/shot-4-match.png" alt="Matching prompts to their generated images so nothing gets mixed up." loading="lazy" width="1280" height="800" /></div></div>
+        <div class="pl-feature__text reveal reveal--left" style="--d:80ms">
+          <p class="pl-feature__eyebrow">04 · PROMPT MATCHING</p>
+          <h3 class="pl-feature__title">Every image matched to its prompt</h3>
+          <p class="pl-feature__body">No more guessing which output came from which prompt. Each result is paired to the line that made it, so a 200-image batch stays perfectly organized.</p>
+          <ul class="pl-feature__list"><li>Prompt ↔ image pairing</li><li>No confusion at volume</li><li>Clean records for every run</li></ul>
+        </div>
+      </div>
+
+      <div class="pl-feature">
+        <div class="pl-feature__media reveal reveal--left"><div class="pl-frame"><img src="assets/shot-5-download.png" alt="Auto-download with organized filenames and a CSV log." loading="lazy" width="1280" height="800" /></div></div>
+        <div class="pl-feature__text reveal reveal--right" style="--d:80ms">
+          <p class="pl-feature__eyebrow">05 · AUTO-DOWNLOAD</p>
+          <h3 class="pl-feature__title">Downloaded and organized</h3>
+          <p class="pl-feature__body">Optional auto-download per generation with sequenced, prompt-based filenames — plus a CSV log of every prompt and result so your output folder and your records stay tidy.</p>
+          <ul class="pl-feature__list"><li>Auto-download to your Downloads folder</li><li>Numbered, prompt-based filenames</li><li>CSV export of the whole batch</li></ul>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- PROBLEM -->
-  <section class="section" id="problem">
-    <div class="container">
-      <p class="section__label">// THE PROBLEM</p>
-      <h2 class="section__title">Magnific can generate your visuals.<br /><em class="accent">It just can't queue the next one.</em></h2>
-      <div class="pl-grid pl-grid--3">
-        <div class="pl-card">
-          <p class="pl-card__num">01</p>
-          <h3 class="pl-card__title">You have 100 ideas.</h3>
-          <p class="pl-card__body">Stock content, social reels, prototype libraries, upscale batches — volume matters. You need to generate a lot, fast.</p>
-        </div>
-        <div class="pl-card">
-          <p class="pl-card__num">02</p>
-          <h3 class="pl-card__title">Magnific runs them one at a time.</h3>
-          <p class="pl-card__body">Paste prompt. Click generate. Wait. Download. Repeat. Your workflow is the bottleneck — not the AI.</p>
-        </div>
-        <div class="pl-card">
-          <p class="pl-card__num">03</p>
-          <h3 class="pl-card__title">Magnific Automation runs the queue for you.</h3>
-          <p class="pl-card__body">One paste. One button. Your whole batch runs in the background while you do anything else.</p>
+  <!-- PINNED PRODUCT STORY (paste → queue → downloads) -->
+  <section id="product-story" aria-label="How the queue runs, step by step">
+    <div class="pl-story__scroll">
+      <div class="pl-story__pin">
+        <div class="container">
+          <div class="pl-story__inner">
+            <div class="pl-story__side">
+              <p class="pl-story__eyebrow">// WATCH IT RUN</p>
+              <h2 class="pl-story__title">A prompt list in. Organized downloads out. Hands-off.</h2>
+              <ol class="pl-story__steps">
+                <li class="pl-story__step">
+                  <span class="pl-story__step-n">1</span>
+                  <span><span class="pl-story__step-t">Paste your prompts</span><span class="pl-story__step-d">One prompt per line. Set image or video options once.</span></span>
+                </li>
+                <li class="pl-story__step">
+                  <span class="pl-story__step-n">2</span>
+                  <span><span class="pl-story__step-t">The queue runs itself</span><span class="pl-story__step-d">Each job runs in your session — done, running, queued.</span></span>
+                </li>
+                <li class="pl-story__step">
+                  <span class="pl-story__step-n">3</span>
+                  <span><span class="pl-story__step-t">Downloads, matched &amp; organized</span><span class="pl-story__step-d">Numbered files named from each prompt, plus a CSV log.</span></span>
+                </li>
+              </ol>
+              <div class="pl-story__rail"><div class="pl-story__rail-fill"></div></div>
+            </div>
+            <div class="pl-story__stage">
+              <div class="pl-panel">
+                <div class="pl-panel__bar">
+                  <span class="pl-panel__dot"></span><span class="pl-panel__dot"></span><span class="pl-panel__dot"></span>
+                  <span class="pl-panel__title">Magnific · Automation</span>
+                  <span class="pl-panel__badge" data-badge>● Ready</span>
+                </div>
+                <div class="pl-panel__body">
+                  <!-- BEAT 1 · paste prompts (scroll-driven typing effect, 4 prompts) -->
+                  <div class="pl-beat pl-beat--1">
+                    <div class="pl-prompt-list">
+                      <div class="pl-prompt-row" data-prompt="0">
+                        <div class="pl-prompt-row__text"><span class="pl-pl-num">01</span><span class="pl-prompt-row__typed">cinematic wolf portrait, volumetric light</span></div>
+                        <img class="pl-prompt-row__thumb" src="assets/civitai-placeholders/character-poster.jpg" alt="" />
+                      </div>
+                      <div class="pl-prompt-row" data-prompt="1">
+                        <div class="pl-prompt-row__text"><span class="pl-pl-num">02</span><span class="pl-prompt-row__typed">editorial fashion model, studio backdrop</span></div>
+                        <img class="pl-prompt-row__thumb" src="assets/civitai-placeholders/editorial-portrait.jpg" alt="" />
+                      </div>
+                      <div class="pl-prompt-row" data-prompt="2">
+                        <div class="pl-prompt-row__text"><span class="pl-pl-num">03</span><span class="pl-prompt-row__typed">neon-lit tokyo alley at night, rain</span></div>
+                        <img class="pl-prompt-row__thumb" src="assets/civitai-placeholders/surreal-concept.jpg" alt="" />
+                      </div>
+                      <div class="pl-prompt-row" data-prompt="3">
+                        <div class="pl-prompt-row__text"><span class="pl-pl-num">04</span><span class="pl-prompt-row__typed">fantasy castle on a cliff, golden hour<span class="pl-caret"></span></span></div>
+                        <img class="pl-prompt-row__thumb" src="assets/civitai-placeholders/fantasy-environment.jpg" alt="" />
+                      </div>
+                    </div>
+                    <span class="pl-run-btn" data-run-btn>▶ Run Automation · 4 prompts</span>
+                  </div>
+                  <!-- BEAT 2 · queue running (scroll-driven: all start queued, transition to done) -->
+                  <div class="pl-beat pl-beat--2">
+                    <div class="pl-queue">
+                      <div class="pl-qrow" data-state="wait" data-q="0"><span class="pl-qrow__ic"><span class="pl-ic-wait"></span><span class="pl-ic-check">✓</span></span><span>cinematic wolf portrait, volumetric light</span><span class="pl-qrow__st"></span></div>
+                      <div class="pl-qrow" data-state="wait" data-q="1"><span class="pl-qrow__ic"><span class="pl-ic-wait"></span><span class="pl-ic-check">✓</span></span><span>editorial fashion model, studio backdrop</span><span class="pl-qrow__st"></span></div>
+                      <div class="pl-qrow" data-state="wait" data-q="2"><span class="pl-qrow__ic"><span class="pl-ic-wait"></span><span class="pl-ic-check">✓</span></span><span>neon-lit tokyo alley at night, rain</span><span class="pl-qrow__st"></span></div>
+                      <div class="pl-qrow" data-state="wait" data-q="3"><span class="pl-qrow__ic"><span class="pl-ic-wait"></span><span class="pl-ic-check">✓</span></span><span>fantasy castle on a cliff, golden hour</span><span class="pl-qrow__st"></span></div>
+                      <div class="pl-qrow" data-state="wait" data-q="4"><span class="pl-qrow__ic"><span class="pl-ic-wait"></span><span class="pl-ic-check">✓</span></span><span>anime mech pilot, cockpit glow</span><span class="pl-qrow__st"></span></div>
+                    </div>
+                    <div class="pl-qprog">
+                      <div class="pl-qprog__bar"><div class="pl-qprog__fill" data-qfill></div></div>
+                      <div class="pl-qprog__t" data-qtext>0 of 5 complete · queue starting</div>
+                    </div>
+                  </div>
+                  <!-- BEAT 3 · downloads image grid (images + video overlay on 2) -->
+                  <div class="pl-beat pl-beat--3">
+                    <div class="pl-dl-grid">
+                      <div class="pl-dl-card"><img src="assets/civitai-placeholders/character-poster.jpg" alt="" loading="lazy" /><div class="pl-dl-card__overlay"><span class="pl-dl-card__name">01_wolf-portrait.png</span></div></div>
+                      <div class="pl-dl-card"><img src="assets/civitai-placeholders/editorial-portrait.jpg" alt="" loading="lazy" /><div class="pl-dl-card__overlay"><span class="pl-dl-card__name">02_fashion-model.png</span></div><div class="pl-dl-card__video-badge"></div></div>
+                      <div class="pl-dl-card"><img src="assets/civitai-placeholders/surreal-concept.jpg" alt="" loading="lazy" /><div class="pl-dl-card__overlay"><span class="pl-dl-card__name">03_tokyo-alley.png</span></div></div>
+                      <div class="pl-dl-card"><img src="assets/civitai-placeholders/fantasy-environment.jpg" alt="" loading="lazy" /><div class="pl-dl-card__overlay"><span class="pl-dl-card__name">04_castle-cliff.png</span></div></div>
+                      <div class="pl-dl-card"><img src="assets/civitai-placeholders/anime-key-art.jpg" alt="" loading="lazy" /><div class="pl-dl-card__overlay"><span class="pl-dl-card__name">05_mech-pilot.png</span></div><div class="pl-dl-card__video-badge"></div></div>
+                      <div class="pl-dl-card"><img src="assets/civitai-placeholders/product-mockup.jpg" alt="" loading="lazy" /><div class="pl-dl-card__overlay"><span class="pl-dl-card__name">06_product-shot.png</span></div></div>
+                      <div class="pl-dl-card"><img src="assets/civitai-placeholders/tech-character.jpg" alt="" loading="lazy" /><div class="pl-dl-card__overlay"><span class="pl-dl-card__name">07_tech-concept.png</span></div></div>
+                      <div class="pl-dl-card"><img src="assets/civitai-placeholders/stock-background.jpg" alt="" loading="lazy" /><div class="pl-dl-card__overlay"><span class="pl-dl-card__name">08_background.png</span></div></div>
+                    </div>
+                    <div class="pl-dl-foot"><b>✓ 8 files downloaded</b> · 6 images + 2 videos · each matched to its prompt · CSV log saved</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- HOW IT WORKS -->
-  <section class="section" id="how">
+  <section class="section pl-band" id="how">
     <div class="container">
-      <p class="section__label">// HOW IT WORKS</p>
-      <h2 class="section__title">Three steps. <em class="accent">That's the whole product.</em></h2>
-      <div class="pl-grid pl-grid--3">
-        <div class="pl-card">
-          <p class="pl-card__num">STEP 1</p>
-          <h3 class="pl-card__title">Install &amp; open Magnific.</h3>
-          <p class="pl-card__body">Add the extension to Chrome, log into your Magnific account, and open either the image or video generator.</p>
-        </div>
-        <div class="pl-card">
-          <p class="pl-card__num">STEP 2</p>
-          <h3 class="pl-card__title">Paste your prompt list.</h3>
-          <p class="pl-card__body">One prompt per line. The extension reads the list, then configures each run with your chosen resolution, concurrency, and delay.</p>
-        </div>
-        <div class="pl-card">
-          <p class="pl-card__num">STEP 3</p>
-          <h3 class="pl-card__title">Press start. Walk away.</h3>
-          <p class="pl-card__body">The queue runs in order, waits for each render to finish, and starts the next one — even if you switch tabs. Come back to a finished library.</p>
-        </div>
+      <p class="section__label reveal">// HOW IT WORKS</p>
+      <h2 class="section__title reveal" style="--d:60ms">Three steps. <span class="accent">That's the whole product.</span></h2>
+      <div class="pl-steps">
+        <div class="pl-step reveal" style="--d:0ms"><div class="pl-step__n">1</div><h3 class="pl-step__title">Install &amp; open Magnific</h3><p class="pl-step__body">Add the extension to Chrome, log into Magnific, and open the image or video generator.</p></div>
+        <div class="pl-step reveal" style="--d:140ms"><div class="pl-step__n">2</div><h3 class="pl-step__title">Paste your prompt list</h3><p class="pl-step__body">One prompt per line. Set your resolution, concurrency and delay once for the whole batch.</p></div>
+        <div class="pl-step reveal" style="--d:280ms"><div class="pl-step__n">3</div><h3 class="pl-step__title">Press start, walk away</h3><p class="pl-step__body">The queue runs in order and downloads as it goes. Come back to a finished library.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- FEATURES -->
-  <section class="section" id="features">
+  <!-- GALLERY / POPULAR BATCH IDEAS -->
+  <section class="section" id="gallery">
     <div class="container">
-      <p class="section__label">// WHAT'S INSIDE</p>
-      <h2 class="section__title">Built by someone<br /><em class="accent">who got sick of clicking generate.</em></h2>
-      <div class="pl-grid pl-grid--2">
-        <div class="pl-card">
-          <h3 class="pl-card__title">🎬 Bulk prompt queue (image &amp; video)</h3>
-          <p class="pl-card__body">Paste 10 prompts or 500. The queue handles them in order, one after another, for both image and video generations in your own Magnific session.</p>
-        </div>
-        <div class="pl-card">
-          <h3 class="pl-card__title">⚙️ Per-batch settings</h3>
-          <p class="pl-card__body">Lock in resolution, concurrency, and delay once — applied to every generation in the batch automatically.</p>
-        </div>
-        <div class="pl-card">
-          <h3 class="pl-card__title">🛡️ Runs in your own account</h3>
-          <p class="pl-card__body">Uses your existing Magnific login and your own credits. No intermediate server, no password hand-off, nothing leaves your browser.</p>
-        </div>
-        <div class="pl-card">
-          <h3 class="pl-card__title">📥 Auto-download &amp; CSV export</h3>
-          <p class="pl-card__body">Optional auto-download per generation, plus a CSV log of every prompt and result so your output folder and your records stay organized.</p>
-        </div>
-        <div class="pl-card">
-          <h3 class="pl-card__title">🔁 Activity log + resume</h3>
-          <p class="pl-card__body">Watch the queue work in real time in the activity panel. If something fails, pick up where you left off instead of starting over.</p>
-        </div>
-        <div class="pl-card">
-          <h3 class="pl-card__title">🔧 Updated as Magnific changes</h3>
-          <p class="pl-card__body">When Magnific updates their UI, the extension gets patched and pushed to the Chrome Web Store. Lifetime updates included.</p>
-        </div>
+      <p class="section__label reveal">// THE OUTPUT</p>
+      <h2 class="section__title reveal" style="--d:60ms">Batch the kinds of images <span class="accent">people already chase.</span></h2>
+      <div class="pl-gallery reveal">
+        <figure class="pl-gallery__tile" data-source="https://civitai.com/images/9450093">
+          <img src="assets/civitai-placeholders/character-poster.jpg" alt="Temporary Civitai placeholder for cinematic character poster batches" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Civitai placeholder</span><b>Cinematic character posters</b></figcaption>
+        </figure>
+        <figure class="pl-gallery__tile" data-source="https://civitai.com/images/64399178">
+          <img src="assets/civitai-placeholders/editorial-portrait.jpg" alt="Temporary Civitai placeholder for editorial portrait batches" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Civitai placeholder</span><b>Editorial portraits</b></figcaption>
+        </figure>
+        <figure class="pl-gallery__tile" data-source="https://civitai.com/images/11871535">
+          <img src="assets/civitai-placeholders/fantasy-environment.jpg" alt="Temporary Civitai placeholder for fantasy environment batches" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Civitai placeholder</span><b>Fantasy environments</b></figcaption>
+        </figure>
+        <figure class="pl-gallery__tile" data-source="https://civitai.com/images/64517382">
+          <img src="assets/civitai-placeholders/product-mockup.jpg" alt="Temporary Civitai placeholder for product-style mockup batches" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Civitai placeholder</span><b>Product-style mockups</b></figcaption>
+        </figure>
+        <figure class="pl-gallery__tile" data-source="https://civitai.com/images/718471">
+          <img src="assets/civitai-placeholders/anime-key-art.jpg" alt="Temporary Civitai placeholder for anime key art batches" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Civitai placeholder</span><b>Anime key art</b></figcaption>
+        </figure>
+        <figure class="pl-gallery__tile" data-source="https://civitai.com/images/65653762">
+          <img src="assets/civitai-placeholders/surreal-concept.jpg" alt="Temporary Civitai placeholder for surreal concept image batches" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Civitai placeholder</span><b>Surreal concept shots</b></figcaption>
+        </figure>
+        <figure class="pl-gallery__tile" data-source="https://civitai.com/images/11029293">
+          <img src="assets/civitai-placeholders/tech-character.jpg" alt="Temporary Civitai placeholder for futuristic tech concept batches" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Civitai placeholder</span><b>Futuristic tech concepts</b></figcaption>
+        </figure>
+        <figure class="pl-gallery__tile" data-source="https://civitai.com/images/10556898">
+          <img src="assets/civitai-placeholders/stock-background.jpg" alt="Temporary Civitai placeholder for stock-ready background batches" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Civitai placeholder</span><b>Stock-ready backgrounds</b></figcaption>
+        </figure>
       </div>
+      <p class="pl-gallery__note">Temporary placeholders from Civitai popular-all-time, filtered with nsfw=false. Replace these with your own generated Magnific outputs before launch.</p>
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section class="section" id="pricing">
+  <!-- SEE THE DIFFERENCE -->
+  <section class="section pl-band" id="difference">
     <div class="container">
-      <p class="section__label" style="text-align:center;">// PRICING</p>
-      <h2 class="section__title" style="text-align:center;">Free for early users.<br /><em class="accent">$15 lifetime after that.</em></h2>
-
-      <div class="pl-pricing">
-        <div class="pl-price-card">
-          <p class="pl-price-card__label">LAUNCH OFFER · EARLY ACCESS</p>
-          <p class="pl-price-card__amount">FREE</p>
-          <p class="pl-price-card__period"><s class="pl-price-card__strike">$15 lifetime</s>&nbsp;&nbsp;free for early users</p>
-
-          <ul class="pl-price-card__features">
-            <li>Unlimited batch generations (image &amp; video)</li>
-            <li>All current features</li>
-            <li>Lifetime updates</li>
-            <li>Email support</li>
-            <li>Locked in free — no charge, ever</li>
-          </ul>
-
-          <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--primary" id="buy-button">
-            Install on Chrome →
-          </a>
-          <p class="pl-hero__meta" style="margin-top:16px;">No payment required during launch · Paid customers later checkout via Dodo Payments</p>
+      <p class="section__label reveal">// SEE THE DIFFERENCE</p>
+      <h2 class="section__title reveal" style="--d:60ms">Manual grind vs. <span class="accent">automated batch.</span></h2>
+      <div class="pl-compare">
+        <div class="pl-compare__row pl-compare__head">
+          <div class="pl-compare__cell pl-compare__cell--head">What it takes</div>
+          <div class="pl-compare__cell pl-compare__cell--head">Doing it by hand</div>
+          <div class="pl-compare__cell pl-compare__cell--head">With Magnific Automation</div>
         </div>
+        <div class="pl-compare__row"><div class="pl-compare__cell pl-compare__cell--label">Your attention</div><div class="pl-compare__cell pl-compare__cell--bad">Glued to the tab, one click at a time</div><div class="pl-compare__cell pl-compare__cell--good">Press start once, walk away</div></div>
+        <div class="pl-compare__row"><div class="pl-compare__cell pl-compare__cell--label">200 generations</div><div class="pl-compare__cell pl-compare__cell--bad">Hours of paste → wait → download</div><div class="pl-compare__cell pl-compare__cell--good">One queue, runs in the background</div></div>
+        <div class="pl-compare__row"><div class="pl-compare__cell pl-compare__cell--label">Organization</div><div class="pl-compare__cell pl-compare__cell--bad">Random filenames, easy to lose track</div><div class="pl-compare__cell pl-compare__cell--good">Numbered files + CSV of every prompt</div></div>
+        <div class="pl-compare__row"><div class="pl-compare__cell pl-compare__cell--label">If something fails</div><div class="pl-compare__cell pl-compare__cell--bad">Start the batch over</div><div class="pl-compare__cell pl-compare__cell--good">Resume where it stopped</div></div>
+      </div>
+      <div class="pl-result reveal" style="--d:120ms">✦ Save hours of clicking · scale your output without scaling your effort ✦</div>
+      <div class="pl-section-cta reveal" style="--d:180ms">
+        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Install free on Chrome →</a>
       </div>
     </div>
   </section>
 
   <!-- FAQ -->
-  <section class="section" id="faq">
+  <section class="section pl-band" id="faq">
     <div class="container">
-      <p class="section__label" style="text-align:center;">// FAQ</p>
-      <h2 class="section__title" style="text-align:center;">Questions<br /><em class="accent">people actually ask.</em></h2>
-
+      <p class="section__label reveal" style="text-align:center;">// FAQ</p>
+      <h2 class="section__title reveal" style="text-align:center; --d:60ms">Questions <span class="accent">people actually ask.</span></h2>
       <div class="pl-faq">
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">Is Magnific Automation made by Magnific?</summary>
-          <p class="pl-faq__a">No. Magnific Automation is an independent third-party Chrome extension, not affiliated with, endorsed by, or connected to Magnific. It's a browser tool that automates actions you'd otherwise do manually on Magnific using your own account.</p>
-        </details>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">Is Magnific Automation made by Magnific?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">No. Magnific Automation is an independent third-party Chrome extension, not affiliated with, endorsed by, or connected to Magnific. It's a browser tool that automates actions you'd otherwise do manually on Magnific using your own account.</p>
+          </div>
+        </div>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">Is it really free?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">Yes — 100% free. No credit card, no trial that expires, no upsell, and no per-generation charge. Install it from the Chrome Web Store and use it.</p>
+          </div>
+        </div>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">Do I need a Magnific account?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">Yes — you use your own Magnific account and your own credits. The extension doesn't include Magnific access; it just automates how you interact with the site once you're logged in.</p>
+          </div>
+        </div>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">What exactly does the extension touch?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">It runs on Magnific pages to paste prompts, apply your selected settings, start jobs, watch progress, and trigger downloads. It is built to automate the actions you would otherwise do manually in that tab.</p>
+          </div>
+        </div>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">Does it store prompts or generated files?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">Prompt processing happens in your browser session. Optional downloads use your browser's normal download flow, and any generated files still come from your own Magnific account.</p>
+          </div>
+        </div>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">How long does setup take?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">Install the Chrome extension, open Magnific, log in, paste one prompt per line, choose your settings, and start the queue. There are no API keys to configure.</p>
+          </div>
+        </div>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">What if Magnific changes their UI and it breaks?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">When Magnific rolls out meaningful UI changes, the extension gets patched and pushed to the Chrome Web Store, and updates are free.</p>
+          </div>
+        </div>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">Is my Magnific password safe?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">The extension never sees, stores, or transmits your Magnific password. It operates inside your already-logged-in browser session, the same way any user action on the page would. No credentials are sent anywhere.</p>
+          </div>
+        </div>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">What browsers are supported?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">Google Chrome and any Chromium-based browser that supports Chrome Web Store extensions (Brave, Edge, Arc, Opera). Firefox and Safari are not currently supported.</p>
+          </div>
+        </div>
+        <div class="pl-faq__item reveal">
+          <button class="pl-faq__q" aria-expanded="false">How do I get support?</button>
+          <div class="pl-faq__a-wrapper">
+            <p class="pl-faq__a">Email <a href="mailto:thapadeepak726@gmail.com" style="color:var(--accent);">thapadeepak726@gmail.com</a>. Reply usually within 24 hours on weekdays.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">Do I need a Magnific account?</summary>
-          <p class="pl-faq__a">Yes — you use your own Magnific account and your own credits. The extension doesn't include Magnific access; it just automates how you interact with the site once you're logged in.</p>
-        </details>
-
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">Is it really free?</summary>
-          <p class="pl-faq__a">Yes — 100% free for early users. No credit card, no trial that expires, no upsell. You install from the Chrome Web Store and use the full product. The only catch: once I have enough users to consider the product battle-tested, the price flips to <strong>$15 lifetime</strong> for <em>new</em> customers. Everyone who installed during the free launch stays free forever.</p>
-        </details>
-
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">Why is it free right now?</summary>
-          <p class="pl-faq__a">I'm early. I need real users running real batches with this to find rough edges faster than I ever could alone. Your feedback during launch is worth more than $15 to me. Once it's rock-solid and there's a user base, the price goes up for new customers — but you'll be grandfathered in at free for life.</p>
-        </details>
-
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">Is it one-time or a subscription?</summary>
-          <p class="pl-faq__a">Neither currently — it's free. When paid pricing turns on, it will be a <strong>one-time $15 lifetime license</strong>. Never a subscription, never auto-renew, never a per-generation charge.</p>
-        </details>
-
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">What if Magnific changes their UI and the extension breaks?</summary>
-          <p class="pl-faq__a">When Magnific rolls out meaningful UI changes, the extension gets patched and pushed to the Chrome Web Store. Updates are free for the lifetime of your license.</p>
-        </details>
-
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">What's the refund policy?</summary>
-          <p class="pl-faq__a">Free users: nothing to refund — just uninstall from Chrome if it doesn't work for you. Once paid pricing kicks in ($15 lifetime), all new purchases will include a <strong>7-day money-back guarantee</strong>, no questions asked. Email thapadeepak726@gmail.com and I'll process the refund via Dodo Payments.</p>
-        </details>
-
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">Is my Magnific password safe?</summary>
-          <p class="pl-faq__a">The extension never sees, stores, or transmits your Magnific password. It operates inside your already-logged-in browser session, the same way any user action on the page would. No credentials are sent anywhere.</p>
-        </details>
-
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">What browsers are supported?</summary>
-          <p class="pl-faq__a">Google Chrome and any Chromium-based browser that supports Chrome Web Store extensions (Brave, Edge, Arc, Opera). Firefox and Safari are not currently supported.</p>
-        </details>
-
-        <details class="pl-faq__item">
-          <summary class="pl-faq__q">How do I get support?</summary>
-          <p class="pl-faq__a">Email <a href="mailto:thapadeepak726@gmail.com" style="color:var(--accent);">thapadeepak726@gmail.com</a>. Reply usually within 24 hours on weekdays.</p>
-        </details>
+  <!-- FINAL CTA -->
+  <section class="section">
+    <div class="container">
+      <div class="pl-cta-band reveal reveal--zoom">
+        <img class="pl-cta-band__wolf" src="assets/wolf.png" alt="" width="96" height="96" />
+        <h2 class="pl-cta-band__title">Stop babysitting the generate button.</h2>
+        <p class="pl-cta-band__sub">Install free, paste your prompts, and let the queue do the clicking. Free for early users — locked in forever.</p>
+        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Install free on Chrome →</a>
       </div>
     </div>
   </section>
@@ -530,24 +1311,419 @@
   <footer class="pl-footer">
     <div class="container">
       <div class="pl-footer__links">
-        <a href="#pricing">Pricing</a>
+        <a href="#features">Features</a>
         <a href="#faq">FAQ</a>
         <a href="terms.html">Terms</a>
         <a href="privacy.html">Privacy</a>
-        <a href="refund.html">Refund Policy</a>
-        <a href="mailto:thapadeepak726@gmail.com">Contact</a>
+        <a href="contact.html">Contact</a>
         <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener">Chrome Web Store</a>
-        <a href="../">← Back to deepakthapa.dev</a>
+        <a href="https://deepakthapa.dev">← Back to deepakthapa.dev</a>
       </div>
       <p>© <span id="year"></span> Deepak Thapa · Magnific Automation is an independent Chrome extension and is not affiliated with Magnific.</p>
-      <p class="pl-footer__legal">
-        "Magnific" is a trademark of its respective owner. Magnific Automation is a third-party browser extension designed to automate user actions on Magnific and is sold independently. Future paid purchases will be processed by Dodo Payments, our authorized reseller and merchant of record.
-      </p>
     </div>
   </footer>
 
+  <!-- ===================================================================
+       SCRIPTS — the whole "lazy load as you scroll" engine + polish
+       =================================================================== -->
   <script>
+    // (A) SCROLL ENGINE — TWO engines the visitor can toggle between (bottom-right control):
+    //     • "Animate & Scroll" (default) — native IntersectionObserver + native scroll. Zero deps.
+    //     • "GSAP Cinematic"            — GSAP ScrollTrigger + Lenis smooth scroll: momentum scrolling,
+    //       scrubbed parallax, and scroll-linked sequences the native engine can't produce.
+    //     Choice persists to localStorage and reloads to apply (each engine wires itself up at load).
+    //     .reveal is VISIBLE by default; hidden-then-animate only switches on once JS is confirmed
+    //     running, so a JS error or blocked CDN can never leave the page blank.
+    (function () {
+      var ENGINE = 'native';
+      try { if (localStorage.getItem('mag-engine') === 'gsap') ENGINE = 'gsap'; } catch (e) {}
+
+      // Give grouped children a staggered entrance without hand-editing every element.
+      function stagger(nodes, step, base) {
+        base = base || 0;
+        [].slice.call(nodes).forEach(function (el, i) {
+          el.classList.add('reveal');
+          el.style.setProperty('--d', (base + i * step) + 'ms');
+        });
+      }
+      stagger(document.querySelectorAll('.pl-gallery__tile'), 55, 40);
+      stagger(document.querySelectorAll('.pl-personas .pl-persona'), 70, 0);
+      stagger(document.querySelectorAll('.pl-proof-list li'), 70, 120);
+      stagger(document.querySelectorAll('#difference .pl-compare__row'), 100, 0); // autopik card cadence: index × 0.1s
+      stagger(document.querySelectorAll('.pl-faq__item'), 60, 0);
+      document.querySelectorAll('.pl-feature').forEach(function (row) {
+        stagger(row.querySelectorAll('.pl-feature__list li'), 70, 160);
+      });
+
+      var els = [].slice.call(document.querySelectorAll('.reveal'));
+      try { injectToggle(ENGINE); } catch (e) {}  // animation engine toggle is now always visible for user testing
+      if (!els.length) return;
+
+      // Reduced motion: reveal everything immediately and never hide.
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        els.forEach(function (el) { el.classList.add('is-in'); });
+        return;
+      }
+
+      if (ENGINE === 'gsap') { initGsap(els); } else { initIo(els); }
+
+      // ── Engine 1: "Animate & Scroll" — IntersectionObserver + native scroll ──────────
+      function initIo(els) {
+        document.documentElement.classList.add('js'); // JS confirmed → enable hidden-then-animate
+        var TRIGGER = 0.90;
+        var pending = els.slice();
+        function show(el) { el.classList.add('is-in'); }
+
+        if ('IntersectionObserver' in window) {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                show(e.target); io.unobserve(e.target);
+                var i = pending.indexOf(e.target); if (i > -1) pending.splice(i, 1);
+              }
+            });
+          }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
+          els.forEach(function (el) { io.observe(el); });
+        }
+
+        function sweep() {
+          var line = window.innerHeight * TRIGGER;
+          for (var i = pending.length - 1; i >= 0; i--) {
+            if (pending[i].getBoundingClientRect().top < line) { show(pending[i]); pending.splice(i, 1); }
+          }
+          if (!pending.length) { window.removeEventListener('scroll', onScroll); }
+        }
+        var ticking = false;
+        function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { sweep(); ticking = false; }); } }
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll, { passive: true });
+        sweep();
+      }
+
+      // ── Engine 2: "GSAP Cinematic" — GSAP ScrollTrigger + Lenis smooth scroll ─────────
+      function initGsap(els) {
+        document.documentElement.classList.add('engine-gsap');
+        ['https://cdnjs.cloudflare.com', 'https://cdn.jsdelivr.net'].forEach(function (host) {
+          var l = document.createElement('link'); l.rel = 'preconnect'; l.href = host; l.crossOrigin = '';
+          document.head.appendChild(l);
+        });
+
+        // FAST FIRST PAINT: the hero animates in via CSS immediately — GSAP never gates first paint,
+        // and everything else is already visible. Once GSAP loads it hides only what is still below
+        // the fold and reveals it on scroll, so a slow/blocked CDN just leaves a fully visible page.
+        var heroReveals = [].slice.call(document.querySelectorAll('.pl-hero .reveal'));
+        // Comparison rows + video panel get bespoke GSAP timelines below (copied from autopik) —
+        // keep them out of the generic batch so they animate with autopik's exact values, not the default.
+        var specialEls = [].slice.call(document.querySelectorAll('.pl-compare__row.reveal, .pl-video-panel.reveal, .pl-cta-band.reveal'));
+        var scrollEls = els.filter(function (el) {
+          return heroReveals.indexOf(el) === -1 && specialEls.indexOf(el) === -1;
+        });
+
+        loadScripts([
+          'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js',
+          'https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js'
+        ], function () {
+          if (!window.gsap || !window.ScrollTrigger) return; // page already visible — nothing to recover
+          try {
+            gsap.registerPlugin(ScrollTrigger);
+            var narrow = window.matchMedia('(max-width: 900px)').matches;
+
+            // Lenis momentum smooth-scroll, tightly synced to ScrollTrigger (lag smoothing off so
+            // reveals track the scroll input exactly). Touch scrolling stays native on phones.
+            if (window.Lenis && !narrow) {
+              var lenis = new Lenis({ lerp: 0.1, smoothWheel: true });
+              lenis.on('scroll', ScrollTrigger.update);
+              gsap.ticker.add(function (t) { lenis.raf(t * 1000); });
+              gsap.ticker.lagSmoothing(0);
+            }
+
+            // Hide ONLY the elements still below the fold; anything already on screen stays visible.
+            function startVars(el) {
+              var v = { opacity: 0 };
+              if (narrow) { v.y = 28; }
+              else if (el.classList.contains('reveal--left'))  { v.x = -48; }
+              else if (el.classList.contains('reveal--right')) { v.x = 48; }
+              else if (el.classList.contains('reveal--zoom'))  { v.scale = 0.95; }
+              else { v.y = 28; }
+              return v;
+            }
+            var below = [], fold = window.innerHeight;
+            scrollEls.forEach(function (el) {
+              if (el.getBoundingClientRect().top >= fold) { gsap.set(el, startVars(el)); below.push(el); }
+            });
+
+            // ONE reveal, ONE trigger point, ONE easing — every section is in sync.
+            function reveal(batch) {
+              gsap.to(batch, { opacity: 1, x: 0, y: 0, scale: 1, duration: 0.7, ease: 'power3.out', stagger: 0.08, overwrite: true });
+            }
+            ScrollTrigger.batch(below, { start: 'top 85%', once: true, onEnter: reveal });
+
+            // GSAP-only depth: subtle scrubbed parallax on the feature screenshots as you scroll.
+            if (!narrow) {
+              document.querySelectorAll('.pl-feature').forEach(function (row, i) {
+                var frame = row.querySelector('.pl-frame');
+                if (frame) gsap.fromTo(frame, { y: i % 2 ? 24 : -24 }, {
+                  y: i % 2 ? -24 : 24, ease: 'none',
+                  scrollTrigger: { trigger: row, start: 'top bottom', end: 'bottom top', scrub: true }
+                });
+              });
+            }
+
+            // COPIED FROM autopik "Who Can Benefit" cards — comparison rows rise y:20→0, 0.6s, stagger 0.1s.
+            var cmpRows = document.querySelectorAll('.pl-compare__row.reveal');
+            if (cmpRows.length) {
+              gsap.set(cmpRows, { opacity: 0, y: 20 });
+              gsap.timeline({ scrollTrigger: { trigger: '#difference .pl-compare', start: 'top 85%', once: true } })
+                .to(cmpRows, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' });
+            }
+            // COPIED FROM autopik's video zoom (scale .9→1, ~0.6s) — used on the video panel AND the final CTA card.
+            function zoomIn(el, trigger) {
+              if (!el || el.getBoundingClientRect().top < window.innerHeight) return; // above the fold on load → leave visible
+              gsap.set(el, { opacity: 0, scale: 0.9, transformOrigin: 'center' });
+              gsap.to(el, { opacity: 1, scale: 1, duration: 0.65, ease: 'power2.out',
+                scrollTrigger: { trigger: trigger || el, start: 'top 85%', once: true } });
+            }
+            zoomIn(document.querySelector('.pl-video-panel.reveal'), '.pl-proof-stack');
+            zoomIn(document.querySelector('.pl-cta-band.reveal'), null);
+            ScrollTrigger.refresh();
+          } catch (error) {
+            if (window.console) console.warn('GSAP engine fallback:', error);
+          }
+        });
+      }
+
+      function loadScripts(urls, done, fail) {
+        var remaining = urls.length, failed = false;
+        urls.map(function (url) {
+          var s = document.createElement('script');
+          s.src = url; s.async = false;                 // download in parallel, execute in DOM order
+          s.onload = function () { if (!failed && --remaining === 0) done(); };
+          s.onerror = function () { if (!failed) { failed = true; fail && fail(); } };
+          return s;
+        }).forEach(function (s) { document.head.appendChild(s); });
+      }
+
+      // Persistent engine toggle (bottom-right). Saves the choice and reloads to apply it.
+      function injectToggle(active) {
+        var wrap = document.createElement('div');
+        wrap.className = 'pl-engine-toggle';
+        wrap.setAttribute('role', 'group');
+        wrap.setAttribute('aria-label', 'Animation engine');
+        wrap.innerHTML =
+          '<span class="pl-engine-toggle__label">Motion</span>' +
+          '<button type="button" class="pl-engine-toggle__opt" data-engine="native">Animate &amp; Scroll</button>' +
+          '<button type="button" class="pl-engine-toggle__opt" data-engine="gsap">GSAP Cinematic</button>';
+        [].slice.call(wrap.querySelectorAll('.pl-engine-toggle__opt')).forEach(function (btn) {
+          if (btn.getAttribute('data-engine') === active) btn.classList.add('is-active');
+          btn.addEventListener('click', function () {
+            var choice = btn.getAttribute('data-engine');
+            if (choice === active) return;
+            try { localStorage.setItem('mag-engine', choice); } catch (e) {}
+            location.reload();
+          });
+        });
+        (document.body || document.documentElement).appendChild(wrap);
+      }
+    })();
+
+    // (B) IMAGE SHIMMER: fade each framed screenshot in once it decodes,
+    //     and stop the shimmer skeleton on its frame.
+    (function () {
+      document.querySelectorAll('.pl-frame img, .pl-hero__shot img').forEach(function (img) {
+        var done = function () {
+          img.classList.add('loaded');
+          var frame = img.closest('.pl-frame');
+          if (frame) frame.classList.add('loaded');
+        };
+        if (img.complete && img.naturalWidth) { done(); }
+        else { img.addEventListener('load', done); img.addEventListener('error', done); }
+      });
+    })();
+
+    // (C) NAV: solidify on scroll + drive the thin progress bar.
+    (function () {
+      var nav = document.getElementById('nav');
+      var bar = document.getElementById('nav-progress');
+      function onScroll() {
+        var y = window.scrollY || document.documentElement.scrollTop;
+        nav.classList.toggle('scrolled', y > 24);
+        var h = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (h > 0 ? (y / h) * 100 : 0) + '%';
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // (D) year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // (E) PINNED PRODUCT STORY — drive the active beat + progress rail from scroll position.
+    //     Beat 1: Scroll-driven typing effect — each prompt card appears as you scroll,
+    //             with text typing in and image revealing left-to-right.
+    //     Beat 2: Queue rows transition from "queued" to "done" one by one.
+    //     Beat 3: Downloads appear.
+    (function () {
+      var story = document.getElementById('product-story');
+      if (!story) return;
+      var badge = story.querySelector('[data-badge]');
+      var labels = ['● Ready', '● Running', '✓ Complete'];
+      var colors = ['#7d8aa3', 'var(--accent-2)', 'var(--success)'];
+      var qRows = [].slice.call(story.querySelectorAll('.pl-qrow[data-q]'));
+      var qFill = story.querySelector('[data-qfill]');
+      var qText = story.querySelector('[data-qtext]');
+      var totalQ = qRows.length;
+      var promptRows = [].slice.call(story.querySelectorAll('.pl-prompt-row[data-prompt]'));
+      var runBtn = story.querySelector('[data-run-btn]');
+      var totalP = promptRows.length;
+
+      function setBeat(b) {
+        if (story.getAttribute('data-beat') !== String(b)) {
+          story.setAttribute('data-beat', String(b));
+          if (badge) { badge.textContent = labels[b - 1]; badge.style.color = colors[b - 1]; }
+        }
+      }
+
+      function setPromptProgress(p) {
+        // p is 0..1 within beat 1's scroll range
+        // Map to how many prompt rows are visible (0..totalP) + run button
+        var visibleCount = Math.min(Math.floor(p * (totalP + 1)), totalP);
+        promptRows.forEach(function (row, i) {
+          if (i < visibleCount) { row.classList.add('is-visible'); }
+          else { row.classList.remove('is-visible'); }
+        });
+        // Show the run button once all prompts are visible
+        if (runBtn) {
+          if (visibleCount >= totalP) runBtn.classList.add('is-visible');
+          else runBtn.classList.remove('is-visible');
+        }
+      }
+
+      function setQueueProgress(p) {
+        // p is 0..1 within beat 2's scroll range
+        var step = 1 / totalQ;
+        var doneCount = 0;
+
+        qRows.forEach(function (row, i) {
+          var appearThreshold = (i - 0.5) * step;
+          var doneThreshold = (i + 0.5) * step;
+
+          // Row visibility: Row 0 is always visible at start.
+          // Other rows appear when the previous row becomes done.
+          var isVisible = (i === 0) || (p >= appearThreshold);
+          row.classList.toggle('is-visible', isVisible);
+
+          // Row state: Becomes done when we reach doneThreshold.
+          var isDone = p >= doneThreshold;
+          row.setAttribute('data-state', isDone ? 'done' : 'wait');
+
+          if (isDone) {
+            doneCount++;
+          }
+        });
+
+        if (qFill) qFill.style.width = ((doneCount / totalQ) * 100) + '%';
+        if (qText) {
+          if (doneCount === 0) qText.textContent = '0 of 5 complete · queue starting';
+          else if (doneCount < totalQ) qText.textContent = doneCount + ' of 5 complete · running unattended';
+          else qText.textContent = '5 of 5 complete · all done';
+        }
+      }
+
+      // Mobile + reduced-motion: show everything immediately.
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+          window.matchMedia('(max-width: 900px)').matches) {
+        setBeat(3);
+        setPromptProgress(1);
+        setQueueProgress(1);
+        // Show all prompt rows + run button on mobile
+        promptRows.forEach(function (r) { r.classList.add('is-visible'); });
+        if (runBtn) runBtn.classList.add('is-visible');
+        qRows.forEach(function (r) { r.classList.add('is-visible'); });
+        return;
+      }
+      var scroll = story.querySelector('.pl-story__scroll');
+      function update() {
+        var total = scroll.offsetHeight - window.innerHeight;
+        var p = total > 0 ? Math.min(Math.max(-scroll.getBoundingClientRect().top / total, 0), 1) : 0;
+        story.style.setProperty('--p', p.toFixed(4));
+
+        // Beat boundaries: 0–0.30 = beat 1, 0.30–0.88 = beat 2, 0.88–1.0 = beat 3
+        // Beat 3 is deliberately short (~12% of scroll ≈ one scroll gesture) so the
+        // downloads grid appears, sits still for a moment, then the section unpins.
+        if (p < 0.30) {
+          setBeat(1);
+          var beatP = p / 0.30;
+          setPromptProgress(beatP);
+          setQueueProgress(0);
+        } else if (p < 0.88) {
+          setBeat(2);
+          setPromptProgress(1);
+          var beatP = (p - 0.30) / 0.58;
+          setQueueProgress(beatP);
+        } else {
+          setBeat(3);
+          setPromptProgress(1);
+          setQueueProgress(1);
+        }
+      }
+      var ticking = false;
+      function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(function () { update(); ticking = false; }); } }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll, { passive: true });
+      setBeat(1); setPromptProgress(0); setQueueProgress(0); update();
+    })();
+
+    // (F) FAQ ACCORDION ANIMATION — smooth toggle with height transition + fade/blur reveal
+    (function () {
+      var items = document.querySelectorAll('.pl-faq__item');
+      var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      items.forEach(function (item) {
+        var btn = item.querySelector('.pl-faq__q');
+        var wrapper = item.querySelector('.pl-faq__a-wrapper');
+        if (!btn || !wrapper) return;
+
+        btn.addEventListener('click', function () {
+          var isOpen = item.classList.contains('is-open');
+
+          if (prefersReducedMotion) {
+            item.classList.toggle('is-open', !isOpen);
+            btn.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
+            wrapper.style.height = !isOpen ? 'auto' : '0px';
+            return;
+          }
+
+          if (!isOpen) {
+            item.classList.add('is-open');
+            btn.setAttribute('aria-expanded', 'true');
+
+            // Animate height to scrollHeight
+            wrapper.style.height = wrapper.scrollHeight + 'px';
+
+            var onEnd = function (e) {
+              if (e.propertyName === 'height') {
+                if (item.classList.contains('is-open')) {
+                  wrapper.style.height = 'auto';
+                }
+                wrapper.removeEventListener('transitionend', onEnd);
+              }
+            };
+            wrapper.addEventListener('transitionend', onEnd);
+          } else {
+            if (wrapper.style.height === 'auto' || !wrapper.style.height) {
+              wrapper.style.height = wrapper.scrollHeight + 'px';
+            }
+            wrapper.offsetHeight; // force reflow
+
+            item.classList.remove('is-open');
+            btn.setAttribute('aria-expanded', 'false');
+
+            wrapper.style.height = '0px';
+          }
+        });
+      });
+    })();
   </script>
 </body>
 </html>

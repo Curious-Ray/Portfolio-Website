@@ -29,3 +29,13 @@ build/
 
 # Vercel
 .vercel
+
+# Local reference clone of competitor site (study only — do not commit/deploy)
+autopick/
+autopic/
+autopik/
+.playwright-mcp/
+
+# Local design/tool metadata
+.od-skills/
+*.artifact.json
