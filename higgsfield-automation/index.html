@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Higgsfield Automation - Batch-run Higgsfield prompts</title>
   <meta name="description" content="Higgsfield Automation is a Chrome extension for batch-running Higgsfield image and video prompts, importing spreadsheets, retrying failures, and auto-downloading results in your browser session." />
+  <script>
+    if (location.pathname === '/higgsfield-automation') {
+      document.write('<base href="/higgsfield-automation/">');
+    }
+  </script>
 
   <meta property="og:title" content="Higgsfield Automation - Batch-run Higgsfield prompts" />
   <meta property="og:description" content="Import prompts, choose a Higgsfield mode, and let the extension queue, retry, and download the batch in your browser." />
