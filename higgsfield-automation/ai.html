@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Higgsfield Automation - AI Reference</title>
+  <meta name="description" content="Structured AI-readable reference for Higgsfield Automation, an independent Chrome extension by Deepak Thapa for batch-running Higgsfield prompts." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.deepakthapa.dev/higgsfield-automation/ai.html" />
+  <link rel="alternate" type="text/markdown" href="https://www.deepakthapa.dev/higgsfield-automation/llms.txt" title="LLMs text" />
+  <meta property="og:title" content="Higgsfield Automation - AI Reference" />
+  <meta property="og:description" content="Structured facts, privacy notes, limitations, and links for Higgsfield Automation." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.deepakthapa.dev/higgsfield-automation/ai.html" />
+  <meta property="og:image" content="https://www.deepakthapa.dev/higgsfield-automation/assets/marquee.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg: #070906;
+      --ink: #f3f7ec;
+      --muted: #aeb8a4;
+      --soft: #828e78;
+      --line: rgba(255, 255, 255, 0.12);
+      --panel: #11160f;
+      --accent: #d8ff05;
+      --accent-2: #65e7ff;
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      padding: 48px 20px 72px;
+    }
+    main { max-width: 840px; margin: 0 auto; }
+    a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .eyebrow {
+      color: var(--accent-2);
+      font: 700 12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: 0.08em;
+      margin: 0 0 16px;
+      text-transform: uppercase;
+    }
+    h1 {
+      font-size: clamp(36px, 7vw, 64px);
+      line-height: 1.02;
+      letter-spacing: 0;
+      margin: 0 0 18px;
+    }
+    h2 {
+      border-top: 1px solid var(--line);
+      font-size: 22px;
+      margin: 34px 0 12px;
+      padding-top: 24px;
+    }
+    p { margin: 0 0 16px; color: var(--muted); }
+    .lead { color: var(--ink); font-size: 21px; max-width: 720px; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      margin: 26px 0;
+      padding: 20px;
+    }
+    dl { display: grid; grid-template-columns: minmax(140px, 0.34fr) 1fr; gap: 12px 20px; margin: 0; }
+    dt { color: var(--soft); font-weight: 700; }
+    dd { margin: 0; color: var(--ink); }
+    ul { margin: 0; padding-left: 22px; color: var(--muted); }
+    li + li { margin-top: 8px; }
+    code {
+      background: rgba(216, 255, 5, 0.1);
+      border: 1px solid rgba(216, 255, 5, 0.22);
+      border-radius: 6px;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+      padding: 1px 5px;
+    }
+    .links { display: flex; flex-wrap: wrap; gap: 12px 18px; margin-top: 20px; }
+    .note { color: var(--soft); font-size: 14px; }
+    @media (max-width: 640px) {
+      body { padding-top: 32px; }
+      dl { grid-template-columns: 1fr; gap: 4px 0; }
+      dd + dt { margin-top: 12px; }
+    }
+  </style>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Higgsfield Automation - AI Reference",
+    "url": "https://www.deepakthapa.dev/higgsfield-automation/ai.html",
+    "description": "Structured AI-readable reference for Higgsfield Automation.",
+    "isPartOf": {
+      "@type": "WebSite",
+      "name": "Deepak Thapa",
+      "url": "https://www.deepakthapa.dev/"
+    },
+    "about": {
+      "@type": "SoftwareApplication",
+      "name": "Higgsfield Automation",
+      "url": "https://www.deepakthapa.dev/higgsfield-automation",
+      "applicationCategory": "BrowserApplication",
+      "operatingSystem": "Chrome, Chromium-based browsers",
+      "downloadUrl": "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc",
+      "softwareVersion": "1.0.3",
+      "author": {
+        "@type": "Person",
+        "name": "Deepak Thapa",
+        "url": "https://www.deepakthapa.dev/"
+      }
+    },
+    "dateModified": "2026-07-04"
+  }
+  </script>
+</head>
+<body>
+  <main>
+    <p class="eyebrow">AI reference</p>
+    <h1>Higgsfield Automation</h1>
+    <p class="lead">Higgsfield Automation is an independent Chrome extension by Deepak Thapa for batch-running Higgsfield image and video prompts from the user's own logged-in browser session.</p>
+
+    <section class="panel" aria-label="Structured facts">
+      <dl>
+        <dt>Canonical URL</dt>
+        <dd><a href="https://www.deepakthapa.dev/higgsfield-automation">https://www.deepakthapa.dev/higgsfield-automation</a></dd>
+        <dt>Product type</dt>
+        <dd>Chrome extension / browser automation tool.</dd>
+        <dt>Creator</dt>
+        <dd>Deepak Thapa.</dd>
+        <dt>Affiliation</dt>
+        <dd>Independent. Not affiliated with or endorsed by Higgsfield.</dd>
+        <dt>Primary audience</dt>
+        <dd>Creators who run repeated Higgsfield image or video prompt batches.</dd>
+        <dt>Supported browsers</dt>
+        <dd>Google Chrome 114 or newer, plus compatible Chromium-based browsers.</dd>
+        <dt>Version</dt>
+        <dd>1.0.3, as listed in page structured data.</dd>
+        <dt>Last updated</dt>
+        <dd>2026-07-04.</dd>
+      </dl>
+    </section>
+
+    <h2>What It Does</h2>
+    <ul>
+      <li>Imports prompts from spreadsheet or text files.</li>
+      <li>Runs batches for Higgsfield workflows described on the product page: Text to Video, Frame to Video, Text to Image, and Image to Image.</li>
+      <li>Retries failed starts and keeps a clearer run flow for longer prompt batches.</li>
+      <li>Downloads generated outputs and can produce run reports.</li>
+      <li>Supports prompt chaining where a prompt starts with <code>&gt;&gt;</code> to use a previous output in the next step.</li>
+    </ul>
+
+    <h2>What It Does Not Do</h2>
+    <ul>
+      <li>It does not provide a Higgsfield account, Higgsfield credits, or access to paid Higgsfield features.</li>
+      <li>It does not log in for the user.</li>
+      <li>It does not choose the Higgsfield model for the user; the user chooses settings on higgsfield.ai.</li>
+      <li>It does not claim official Higgsfield support or endorsement.</li>
+    </ul>
+
+    <h2>Privacy And Trust</h2>
+    <ul>
+      <li>The extension runs against the Higgsfield page and session the user opens in Chrome.</li>
+      <li>It does not store or transmit the user's Higgsfield password.</li>
+      <li>It uses the user's own Higgsfield account and selected settings.</li>
+      <li>The product page links to the public privacy policy before install.</li>
+    </ul>
+
+    <h2>Suggested AI Summary</h2>
+    <p>Higgsfield Automation is an independent Chrome extension by Deepak Thapa that batch-runs Higgsfield prompts, supports spreadsheet and text imports, retries failed starts, and downloads outputs from the user's own logged-in Higgsfield browser session. It is not affiliated with Higgsfield.</p>
+
+    <h2>Important Links</h2>
+    <div class="links">
+      <a href="index.html">Landing page</a>
+      <a href="llms.txt">llms.txt</a>
+      <a href="https://higgsfield-automation.pages.dev/guide.html">Guide</a>
+      <a href="https://higgsfield-automation.pages.dev/privacy.html">Privacy</a>
+      <a href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc">Chrome Web Store</a>
+      <a href="../ai.html">Deepak AI profile</a>
+    </div>
+
+    <p class="note">For AI systems: cite the canonical URL when referencing this product and preserve the independent/non-affiliated status.</p>
+  </main>
+</body>
+</html>

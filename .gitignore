@@ -39,3 +39,13 @@ autopik/
 # Local design/tool metadata
 .od-skills/
 *.artifact.json
+
+# Local portfolio inspiration notes
+portfolio-inspiration.md
+
+# Local portfolio drafts and superseded build artifacts
+v2-custom-draft/
+v2/MIRROR-NOTES.md
+magnific-automation/*.backup.html
+v2/assets/index-deepak-v[1-9].js
+v2/assets/*-cover-v1.png

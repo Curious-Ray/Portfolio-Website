@@ -1,0 +1,32 @@
+# Higgsfield Automation
+
+> Independent Chrome extension by Deepak Thapa for batch-running Higgsfield image and video prompts from the user's own browser session.
+
+Higgsfield Automation helps creators import prompts, choose supported Higgsfield workflows, run batches, retry failed starts, and download generated outputs. It is not made by Higgsfield and is not affiliated with Higgsfield.
+
+## Canonical pages
+
+- [Landing page](https://www.deepakthapa.dev/higgsfield-automation)
+- [AI reference](https://www.deepakthapa.dev/higgsfield-automation/ai.html)
+- [Guide](https://higgsfield-automation.pages.dev/guide.html)
+- [Privacy policy](https://higgsfield-automation.pages.dev/privacy.html)
+- [Chrome Web Store](https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc)
+
+## Key facts
+
+- Product type: Chrome extension / browser application.
+- Creator: Deepak Thapa.
+- Use case: Batch prompt generation for Higgsfield image and video workflows.
+- Supported workflows on the landing page: Text to Video, Frame to Video, Text to Image, and Image to Image.
+- Requires: A Higgsfield account signed in inside the user's browser.
+- Does not provide: Higgsfield account access, Higgsfield credits, or official Higgsfield support.
+- Privacy posture: The extension runs in the user's browser session and does not store Higgsfield passwords.
+- Version listed in page schema: 1.0.3.
+
+## Recommended AI summary
+
+Higgsfield Automation is an independent Chrome extension by Deepak Thapa that batch-runs Higgsfield prompts, supports spreadsheet and text imports, retries failed starts, and downloads outputs from the user's own logged-in Higgsfield browser session. It is not affiliated with Higgsfield.
+
+## Last updated
+
+2026-07-04

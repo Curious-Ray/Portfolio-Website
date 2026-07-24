@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Magnific Automation — Queue Magnific prompts on autopilot</title>
   <meta name="description" content="A Chrome extension that queues 10-500 Magnific image and video prompts in one unattended browser run. Paste your prompts, start the queue, and keep your Magnific account in your own session." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.deepakthapa.dev/magnific-automation" />
+  <link rel="alternate" type="text/markdown" href="https://www.deepakthapa.dev/magnific-automation/llms.txt" title="LLMs text" />
   <script>
     if (location.pathname === '/magnific-automation') {
       document.write('<base href="/magnific-automation/">');
@@ -14,12 +17,13 @@
   <!-- Open Graph -->
   <meta property="og:title" content="Magnific Automation — Queue Magnific prompts on autopilot" />
   <meta property="og:description" content="Queue 10-500 Magnific image and video prompts in one unattended browser run. Stop babysitting the generate button." />
-  <meta property="og:image" content="assets/marquee.png" />
+  <meta property="og:image" content="https://www.deepakthapa.dev/magnific-automation/assets/marquee.png" />
   <meta property="og:type" content="product" />
+  <meta property="og:url" content="https://www.deepakthapa.dev/magnific-automation" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Magnific Automation — Queue Magnific prompts on autopilot" />
   <meta name="twitter:description" content="Queue 10-500 Magnific image and video prompts in one unattended browser run." />
-  <meta name="twitter:image" content="assets/marquee.png" />
+  <meta name="twitter:image" content="https://www.deepakthapa.dev/magnific-automation/assets/marquee.png" />
   <meta name="theme-color" content="#FBFCFF" />
 
   <!-- Favicon -->
@@ -31,6 +35,76 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&family=Geist+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Magnific Automation - Bulk Prompt Queue for Magnific",
+    "url": "https://www.deepakthapa.dev/magnific-automation",
+    "image": "https://www.deepakthapa.dev/magnific-automation/assets/marquee.png",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome, Chromium-based browsers",
+    "browserRequirements": "Requires Google Chrome or a Chromium-based browser that can install Chrome Web Store extensions",
+    "description": "Magnific Automation is an independent Chrome extension that queues Magnific image and video prompts in an unattended browser run. Users paste prompts, choose settings, start the queue, and keep the work inside their own logged-in Magnific session.",
+    "downloadUrl": "https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik",
+    "author": {
+      "@type": "Person",
+      "name": "Deepak Thapa",
+      "url": "https://www.deepakthapa.dev/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Deepak Thapa",
+      "url": "https://www.deepakthapa.dev/"
+    },
+    "offers": {
+      "@type": "Offer",
+      "url": "https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "Bulk prompt queue",
+      "Runs inside the user's logged-in Magnific browser session",
+      "Image and video workflow support",
+      "Automatic progress watching",
+      "Browser download flow for generated outputs",
+      "No Magnific password storage",
+      "No API key setup"
+    ],
+    "isAccessibleForFree": true
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is Magnific Automation made by Magnific?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Magnific Automation is an independent third-party Chrome extension and is not affiliated with, endorsed by, or connected to Magnific." }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Magnific Automation free?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The landing page presents Magnific Automation as free to install from the Chrome Web Store, with no credit card, trial expiry, upsell, or per-generation charge from the extension." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Magnific Automation store my Magnific password?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. The extension operates inside the user's already logged-in browser session and does not collect, store, or transmit Magnific credentials." }
+      },
+      {
+        "@type": "Question",
+        "name": "What browsers are supported?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Google Chrome and Chromium-based browsers that support Chrome Web Store extensions, including Brave, Edge, Arc, and Opera. Firefox and Safari are not currently supported." }
+      }
+    ]
+  }
+  </script>
 
   <!-- Shared theme (base tokens, buttons, layout) -->
   <link rel="stylesheet" href="../style.css" />
@@ -46,6 +120,7 @@
     /* ---- 1. Re-theme: light / white with blue + cyan accents (autopik-style) ----
        Dark navy screenshots sit on white as crisp elevated cards. */
     :root {
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --bg: #FBFCFF;               /* soft near-white — more premium than flat #fff */
       --bg-2: #f4f7fb;             /* light band for section rhythm */
       --bg-card: #ffffff;
@@ -88,11 +163,11 @@
       position: absolute;
       inset: 0;
       background-image:
-        linear-gradient(rgba(15, 23, 42, 0.028) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 23, 42, 0.028) 1px, transparent 1px);
+        linear-gradient(rgba(37, 99, 235, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37, 99, 235, 0.045) 1px, transparent 1px);
       background-size: 64px 64px;
-      -webkit-mask-image: radial-gradient(1200px 800px at 50% 0%, #000 0%, transparent 72%);
-      mask-image: radial-gradient(1200px 800px at 50% 0%, #000 0%, transparent 72%);
+      -webkit-mask-image: radial-gradient(1400px 1000px at 50% 0%, #000 20%, transparent 80%);
+      mask-image: radial-gradient(1400px 1000px at 50% 0%, #000 20%, transparent 80%);
     }
 
     /* light grey section band (alternating rhythm) */
@@ -120,7 +195,10 @@
     .js .reveal.is-in  { opacity: 1; transform: none; filter: none; }
     /* Large media / panels skip the blur so big screenshots stay crisp and cheap to composite. */
     .js .reveal:is(.pl-hero__visual, .pl-hero__shot, .pl-feature__media, .pl-frame,
-                   .pl-video-panel, .pl-proof-panel, .pl-compare, .pl-gallery) { filter: none; }
+                   .pl-video-panel, .pl-proof-panel, .pl-compare, .pl-gallery, .pl-gallery__tile) { filter: none; }
+
+    /* Once revealed, reset transition-delay so hover states feel snappy and immediate */
+    .reveal.is-in { transition-delay: 0ms !important; }
 
     /* autopik hero 1:1 — decoded from their bundle: every left-column item animates
        initial:{opacity:0, x:-20} → {opacity:1, x:0} with Framer's default SPRING, staggered 0.1s.
@@ -131,16 +209,80 @@
     .js .pl-hero__visual.reveal             { transition-duration: 0.6s; transition-timing-function: cubic-bezier(0.34, 1.3, 0.5, 1); }
     .js .pl-hero__visual.reveal:not(.is-in) { opacity: 0; transform: translateY(24px); filter: none; }
 
-    /* COPIED FROM autopik — comparison rows use the "Who Can Benefit" card motion EXACTLY: rise
-       translateY(20px)→0 over 0.6s with easeOut (JS staggers them 0.1s apart = the reference's
-       staggerChildren). The video panel copies the demo "expand": scale .95→1 over 1s, 300ms delay. */
-    .js .pl-compare__row.reveal        { transform: translateY(20px); filter: none; transition-duration: 0.6s; transition-timing-function: cubic-bezier(0, 0, 0.58, 1); }
-    .js .pl-compare__row.reveal.is-in  { transform: none; }
+    /* Custom transition merges for components that have hover states and reveal effects,
+       preventing hover/shorthand overrides from breaking their scroll-reveal animations. */
+    .js .pl-compare__row.reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(5px);
+      transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  filter 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                  background-color 0.25s var(--ease-out);
+      transition-delay: var(--d, 0ms), var(--d, 0ms), var(--d, 0ms), 0ms;
+    }
+    .js .pl-compare__row.reveal.is-in {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: background-color 0.25s var(--ease-out) !important;
+      transition-delay: 0ms !important;
+    }
+    .js .pl-compare__row.reveal.gsap-active {
+      transition: none !important;
+    }
+    .engine-gsap .pl-compare__row.reveal {
+      filter: none;
+      transition: none;
+    }
+
+    .js .pl-step.reveal {
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.4s var(--ease-out);
+      transition-delay: var(--d, 0ms), var(--d, 0ms);
+    }
+    .js .pl-step.reveal:not(.is-in) {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .js .pl-gallery__tile.reveal {
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color var(--transition),
+                  box-shadow var(--transition);
+      transition-delay: var(--d, 0ms), var(--d, 0ms), 0ms, 0ms;
+    }
+    .js .pl-gallery__tile.reveal.is-in {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: border-color var(--transition), box-shadow var(--transition) !important;
+      transition-delay: 0ms !important;
+    }
+    .js .pl-gallery__tile.reveal.gsap-active {
+      transition: none !important;
+    }
+
     /* COPIED FROM autopik's video zoom (Framer scale .9→1, opacity 0→1, ~0.6s). Same zoom on the final CTA card. */
-    .js .pl-video-panel.reveal,
-    .js .pl-cta-band.reveal            { transform: scale(0.9); filter: none; transition-duration: 0.65s; transition-timing-function: cubic-bezier(0, 0, 0.58, 1); }
-    .js .pl-video-panel.reveal.is-in,
-    .js .pl-cta-band.reveal.is-in      { transform: none; }
+    .js .pl-video-panel.reveal {
+      transform: scale(0.9);
+      filter: none;
+      transition-duration: 0.65s;
+      transition-timing-function: cubic-bezier(0, 0, 0.58, 1);
+    }
+    .js .pl-video-panel.reveal.is-in { transform: none; }
+
+    .js .pl-cta-band.reveal {
+      transform: scale(0.9);
+      filter: none;
+      transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.65s cubic-bezier(0, 0, 0.58, 1),
+                  border-color 0.4s var(--ease-out),
+                  box-shadow 0.4s var(--ease-out);
+      transition-delay: var(--d, 0ms), var(--d, 0ms), 0ms, 0ms;
+    }
+    .js .pl-cta-band.reveal.is-in { transform: none; }
 
     @media (prefers-reduced-motion: reduce) {
       .js .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
@@ -248,6 +390,29 @@
       background: linear-gradient(180deg, #2f74ea, #1d4fd0); color: var(--accent-ink);
     }
 
+    /* Premium Chrome icon & Google badge micro-animations */
+    .btn-chrome-icon, .btn-google-badge {
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .btn:hover .btn-chrome-icon,
+    .btn:hover .btn-google-badge {
+      transform: scale(1.12);
+    }
+
+    /* White circular badge for colored Google logo to prevent blending into blue backgrounds */
+    .btn-google-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      background: #ffffff;
+      border-radius: 50%;
+      margin-right: 6px;
+      flex-shrink: 0;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+
     /* ---- 4. NAV ---- */
     .pl-nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -284,7 +449,14 @@
     .pl-nav__progress { position: absolute; bottom: -1px; left: 0; height: 2px; width: 0%; background: var(--accent); box-shadow: 0 0 12px var(--accent-glow); }
 
     /* ---- 5. HERO ---- */
-    .pl-hero { padding: 150px 0 90px; overflow-x: clip; }  /* contain the tilt + glow so they never cause horizontal scroll */
+    .pl-hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 120px 0 60px;
+      box-sizing: border-box;
+      overflow-x: clip;
+    }
     .pl-hero__grid {
       display: grid; grid-template-columns: 1.05fr 0.95fr;
       gap: 56px; align-items: center;
@@ -314,16 +486,32 @@
     .pl-hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 26px; }
     .pl-hero__meta { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); }
 
-    /* stat pills row — single line: all three share the width and shrink to fit (never wrap). */
-    .pl-stats { display: flex; gap: 12px; flex-wrap: nowrap; margin-top: 34px; }
+    /* stat pills row — single line: all three share the width and shrink to fit. */
+    .pl-stats { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 34px; }
+    @media (max-width: 640px) {
+      .pl-stats { flex-direction: column; gap: 8px; }
+      .pl-stat { width: 100%; min-width: 0; }
+    }
     .pl-stat {
-      flex: 1 1 0; min-width: 0;
+      flex: 1 1 auto; min-width: max-content;
       display: flex; align-items: center; justify-content: center; gap: 10px;
       padding: 16px 18px; background: var(--bg-card); border: 1px solid var(--border);
       border-radius: 14px; box-shadow: var(--shadow-card);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .pl-stat:hover {
+      transform: translateY(-2px);
+      border-color: var(--border-tag);
     }
     .pl-stat__ic { font-size: 20px; line-height: 1; flex-shrink: 0; }
     .pl-stat__k { font-family: var(--font-mono); font-size: 15px; color: var(--text-primary); font-weight: 700; white-space: nowrap; }
+    @media (max-width: 768px) {
+      .pl-stat__k { font-size: 13px; }
+      .pl-stat { padding: 12px 14px; }
+    }
+    @media (max-width: 350px) {
+      .pl-stat__k { white-space: normal; text-align: center; }
+    }
 
     /* hero visual: wolf + floating screenshot */
     .pl-hero__visual { position: relative; }
@@ -354,7 +542,7 @@
       border-radius: 20px; border: 5px solid #fff; background: #eef2f8;
       box-shadow: 0 26px 55px -20px rgba(37, 99, 235, 0.38), 0 12px 26px -16px rgba(16, 24, 40, 0.32);
       transform: var(--t);
-      transition: transform 0.4s cubic-bezier(0.22, 0.61, 0.24, 1), box-shadow 0.4s ease;
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.15), box-shadow 0.5s var(--ease-out);
       cursor: pointer;
     }
     .pl-hero__card--c { --t: rotate(-2deg) translateY(-12px);        z-index: 3; }
@@ -433,6 +621,10 @@
       align-items: start;
       color: var(--text-secondary);
       line-height: 1.55;
+      transition: transform 0.3s var(--ease-out);
+    }
+    .pl-proof-list li:hover {
+      transform: translateX(4px);
     }
     .pl-proof-list b { color: var(--text-primary); }
     .pl-proof-ic {
@@ -445,6 +637,12 @@
       color: var(--accent);
       font-size: 13px;
       font-weight: 700;
+      transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .pl-proof-list li:hover .pl-proof-ic {
+      background-color: var(--accent);
+      color: #fff;
+      transform: scale(1.1);
     }
     .pl-video-panel { display: flex; flex-direction: column; }
     .pl-video-frame {
@@ -491,7 +689,7 @@
     .pl-card {
       padding: 28px; background: var(--bg-card); border: 1px solid var(--border);
       border-radius: var(--radius-card); box-shadow: var(--shadow-card);
-      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      transition: border-color 0.4s var(--ease-out), transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
     }
     .pl-card:hover { border-color: var(--border-tag); transform: translateY(-3px); box-shadow: 0 1px 2px rgba(16,24,40,0.05), 0 22px 44px -20px rgba(37,99,235,0.28); }
     .pl-card__num { font-family: var(--font-mono); font-size: 13px; color: var(--accent); margin-bottom: 12px; }
@@ -530,12 +728,23 @@
 
     /* ---- how it works (3 steps with connector) ---- */
     .pl-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; position: relative; }
-    .pl-step { text-align: center; padding: 0 12px; }
+    .pl-step {
+      text-align: center; padding: 0 12px;
+      transition: transform 0.4s var(--ease-out);
+    }
+    .pl-step:hover {
+      transform: translateY(-4px);
+    }
     .pl-step__n {
       width: 56px; height: 56px; margin: 0 auto 18px; border-radius: 50%;
       display: grid; place-items: center; font-family: var(--font-mono); font-weight: 700; font-size: 20px;
       color: var(--accent-ink); background: linear-gradient(180deg, #3b82f6, #2563eb);
       box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.10), 0 10px 24px -8px var(--accent-glow);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s var(--ease-out);
+    }
+    .pl-step:hover .pl-step__n {
+      transform: scale(1.08);
+      box-shadow: 0 0 0 8px rgba(37, 99, 235, 0.14), 0 14px 28px -6px var(--accent-glow);
     }
     .pl-step__title { font-family: var(--font-display); font-size: 22px; font-weight: 400; margin-bottom: 8px; }
     .pl-step__body { color: var(--text-card); font-size: 15px; line-height: 1.6; }
@@ -557,7 +766,13 @@
       border: 1px solid var(--border); border-radius: var(--radius-card); overflow: hidden;
       background: var(--bg-card); box-shadow: var(--shadow-card);
     }
-    .pl-compare__row { display: grid; grid-template-columns: 1.2fr 1fr 1fr; }
+    .pl-compare__row {
+      display: grid; grid-template-columns: 1.2fr 1fr 1fr;
+      transition: background-color 0.25s var(--ease-out);
+    }
+    .pl-compare__row:not(.pl-compare__head):hover {
+      background-color: rgba(37, 99, 235, 0.02);
+    }
     .pl-compare__row + .pl-compare__row { border-top: 1px solid var(--border); }
     .pl-compare__cell { padding: 18px 22px; font-size: 15px; }
     .pl-compare__cell--head { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); background: var(--bg-2); }
@@ -592,6 +807,21 @@
       transition: transform 0.75s var(--ease-out), filter 0.75s var(--ease-out);
     }
     .pl-gallery__tile:hover img { transform: scale(1.075); filter: saturate(1.08) contrast(1.04); }
+
+    /* By default, focus on the top part of vertical/cover images to keep main subjects (faces/details) in frame */
+    .pl-hero__card,
+    .pl-prompt-row__thumb,
+    .pl-dl-card img,
+    .pl-gallery__tile img {
+      object-position: top !important;
+    }
+
+    /* Exceptions: Keep balanced centered crops for editorial portraits, fantasy environments, and product mockups */
+    img[src*="editorial-portrait"],
+    img[src*="fantasy-environment"],
+    img[src*="product-mockup"] {
+      object-position: center !important;
+    }
     .pl-gallery__tile::before {
       content: ""; position: absolute; inset: 0; z-index: 1;
       background:
@@ -634,6 +864,10 @@
       display: flex; justify-content: space-between; align-items: center; gap: 20px;
       padding: 22px 32px 22px 0;
       user-select: none;
+      transition: color 0.3s var(--ease-out);
+    }
+    .pl-faq__q:hover {
+      color: var(--accent);
     }
 
     /* Elegant CSS-only Plus icon using pseudo-elements */
@@ -643,7 +877,11 @@
       position: absolute;
       right: 4px;
       background-color: var(--accent);
-      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s var(--ease-out);
+    }
+    .pl-faq__q:hover::before,
+    .pl-faq__q:hover::after {
+      background-color: var(--accent-2);
     }
     /* Horizontal bar */
     .pl-faq__q::before {
@@ -706,6 +944,11 @@
     .pl-cta-band__wolf { width: 96px; margin: 0 auto 20px; filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.5)); }
     .pl-cta-band__title { font-family: var(--font-display); font-size: clamp(30px, 4vw, 48px); font-weight: 400; margin-bottom: 16px; line-height: 1.12; }
     .pl-cta-band__sub { color: var(--text-secondary); max-width: 500px; margin: 0 auto 28px; font-size: 17px; }
+    .pl-stats--footer {
+      justify-content: center;
+      max-width: 580px;
+      margin: 28px auto 0;
+    }
 
     /* ---- footer ---- */
     .pl-footer { border-top: 1px solid var(--border); padding: 48px 0; text-align: center; color: var(--text-muted); font-family: var(--font-mono); font-size: 13px; }
@@ -737,7 +980,7 @@
       /* lighter motion on phones: no blur (cheaper to paint), slightly quicker settle */
       .js .reveal, .js .reveal--zoom { filter: none; }
       .js .reveal { transition-duration: 0.6s; }
-      .pl-hero { padding: 120px 0 60px; }
+      .pl-hero { min-height: auto; padding: 100px 0 40px; }
       .pl-nav__links a:not(.btn) { display: none; }
       .pl-hero__title { font-size: clamp(34px, 9vw, 46px); }
       .pl-hero__wolf { width: 130px; right: -8px; bottom: -22px; }
@@ -781,7 +1024,13 @@
     .pl-panel__bar { display: flex; align-items: center; gap: 7px; padding: 12px 16px; border-bottom: 1px solid rgba(255,255,255,0.07); }
     .pl-panel__dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(255,255,255,0.16); }
     .pl-panel__title { margin-left: 8px; font-family: var(--font-mono); font-size: 12px; color: #7d8aa3; }
-    .pl-panel__badge { margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: #7d8aa3; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 3px 10px; border-radius: 999px; transition: color 0.4s ease; }
+    .pl-panel__badge {
+      margin-left: auto; font-family: var(--font-mono); font-size: 11px; color: #7d8aa3;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+      padding: 3px 10px; border-radius: 999px;
+      transition: color 0.4s ease, opacity 0.15s var(--ease-out), transform 0.15s var(--ease-out);
+      opacity: 1; transform: translateY(0);
+    }
     .pl-panel__body { position: relative; height: 480px; overflow: hidden; display: flex; flex-direction: column; }
     .pl-beat { position: absolute; inset: 0; padding: 20px; opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; pointer-events: none; overflow-y: auto; display: flex; flex-direction: column; }
     #product-story[data-beat="1"] .pl-beat--1,
@@ -796,7 +1045,11 @@
       background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
       /* Scroll-driven entrance: starts hidden, JS reveals as you scroll */
       opacity: 0; transform: translateY(12px);
-      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out), border-color 0.3s var(--ease-out), background-color 0.3s var(--ease-out);
+    }
+    .pl-prompt-row:hover {
+      border-color: rgba(255,255,255,0.15);
+      background-color: rgba(255,255,255,0.06);
     }
     .pl-prompt-row.is-visible { opacity: 1; transform: none; }
     .pl-prompt-row__text {
@@ -807,7 +1060,7 @@
       display: inline;
       /* Typing effect: clip-path reveals text left-to-right */
       clip-path: inset(0 100% 0 0);
-      transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: clip-path 0.8s var(--ease-out);
     }
     .pl-prompt-row.is-visible .pl-prompt-row__typed { clip-path: inset(0 0 0 0); }
     .pl-pl-num { color: #56637d; flex-shrink: 0; font-variant-numeric: tabular-nums; }
@@ -816,7 +1069,7 @@
       border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0;
       /* Image reveal: clip from left to right */
       clip-path: inset(0 100% 0 0);
-      transition: clip-path 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s;
+      transition: clip-path 0.7s var(--ease-out) 0.3s;
     }
     .pl-prompt-row.is-visible .pl-prompt-row__thumb { clip-path: inset(0 0 0 0); }
     .pl-run-btn {
@@ -825,7 +1078,7 @@
       font-family: var(--font-mono); font-size: 13px; font-weight: 700;
       padding: 12px 16px; border-radius: 10px; width: 100%;
       opacity: 0; transform: translateY(8px);
-      transition: opacity 0.4s ease 0.2s, transform 0.4s ease 0.2s;
+      transition: opacity 0.45s var(--ease-out) 0.2s, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s, background-color 0.2s ease, box-shadow 0.2s ease;
     }
     .pl-run-btn.is-visible { opacity: 1; transform: none; }
     .pl-caret { display: inline-block; width: 8px; height: 15px; background: var(--accent-2); margin-left: 2px; vertical-align: text-bottom; animation: pl-caret 1.1s steps(1) infinite; }
@@ -837,7 +1090,11 @@
       font-family: var(--font-mono); font-size: 12px; color: #aeb9cf;
       padding: 8px 12px; border-radius: 10px;
       background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
-      transition: border-color 0.4s ease, color 0.3s ease, background 0.4s ease, opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: border-color 0.4s var(--ease-out), color 0.3s var(--ease-out), background 0.4s var(--ease-out), opacity 0.5s var(--ease-out), transform 0.5s var(--ease-out);
+    }
+    .pl-qrow:hover {
+      border-color: rgba(255,255,255,0.12);
+      background-color: rgba(255,255,255,0.05);
     }
     .js .pl-qrow,
     .engine-gsap .pl-qrow {
@@ -871,10 +1128,30 @@
     /* ---- beat 3: download image grid ---- */
     .pl-dl-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 6px; height: 100%; }
     .pl-dl-card { position: relative; border-radius: 8px; overflow: hidden; background: rgba(255,255,255,0.04); }
-    .pl-dl-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .pl-dl-card__overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 50%); display: flex; align-items: flex-end; padding: 6px 8px; }
+    .pl-dl-card img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.5s var(--ease-out);
+    }
+    .pl-dl-card:hover img {
+      transform: scale(1.08);
+    }
+    .pl-dl-card__overlay {
+      position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, transparent 50%); display: flex; align-items: flex-end; padding: 6px 8px;
+      transition: background 0.3s var(--ease-out);
+    }
+    .pl-dl-card:hover .pl-dl-card__overlay {
+      background: linear-gradient(0deg, rgba(0,0,0,0.85) 0%, rgba(37,99,235,0.15) 100%);
+    }
     .pl-dl-card__name { font-family: var(--font-mono); font-size: 9px; color: rgba(255,255,255,0.75); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .pl-dl-card__video-badge { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 28px; height: 28px; border-radius: 50%; background: rgba(0,0,0,0.55); border: 1.5px solid rgba(255,255,255,0.5); display: grid; place-items: center; backdrop-filter: blur(4px); }
+    .pl-dl-card__video-badge {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 28px; height: 28px; border-radius: 50%; background: rgba(0,0,0,0.55); border: 1.5px solid rgba(255,255,255,0.5); display: grid; place-items: center; backdrop-filter: blur(4px);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.3s var(--ease-out);
+    }
+    .pl-dl-card:hover .pl-dl-card__video-badge {
+      transform: translate(-50%,-50%) scale(1.15);
+      background-color: var(--accent);
+      border-color: transparent;
+    }
     .pl-dl-card__video-badge::after { content: ''; display: block; width: 0; height: 0; border-left: 9px solid #fff; border-top: 5px solid transparent; border-bottom: 5px solid transparent; margin-left: 2px; }
     .pl-dl-foot { margin-top: auto; display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 11px; color: #7d8aa3; padding-top: 6px; border-top: 1px solid rgba(255,255,255,0.06); }
     .pl-dl-foot b { color: var(--success); }
@@ -925,7 +1202,7 @@
         <a href="#features">Features</a>
         <a href="#how">How it works</a>
         <a href="#faq">FAQ</a>
-        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan btn--sm">Install →</a>
+        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan btn--sm"><span class="btn-google-badge"><svg viewBox="0 0 24 24" width="11" height="11" style="display: block;"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg></span>Add to Chrome</a>
       </div>
     </div>
     <div class="pl-nav__progress" id="nav-progress"></div>
@@ -939,13 +1216,13 @@
           <h1 class="pl-hero__title reveal" style="--d:200ms">Automate 100+ Magnific prompts <span class="accent">and walk away.</span></h1>
           <p class="pl-hero__sub reveal" style="--d:300ms">Paste prompts once. Magnific Automation runs the queue, downloads outputs, and keeps each file matched to its prompt inside your own browser session.</p>
           <div class="pl-hero__ctas reveal" style="--d:400ms">
-            <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Install free on Chrome →</a>
+            <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Add to Chrome (Free)</a>
           </div>
 
           <div class="pl-stats reveal" style="--d:500ms">
-            <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true">👥</span><span class="pl-stat__k">136 users</span></div>
+            <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true">👥</span><span class="pl-stat__k">100+ users</span></div>
             <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true" style="color:var(--success)">★</span><span class="pl-stat__k">5.0</span></div>
-            <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true" style="color:var(--success)">✓</span><span class="pl-stat__k">v1.1.5</span></div>
+            <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true" style="color:var(--success)">✓</span><span class="pl-stat__k">10,000+ generations</span></div>
           </div>
         </div>
 
@@ -966,7 +1243,7 @@
   <!-- TRUST STRIP + PROOF (grey band restores the white → grey → white section rhythm) -->
   <section class="pl-band pl-proof-band">
   <div class="container">
-    <div class="pl-trust reveal">
+    <div class="pl-trust">
       <span>Works in <b>Chrome, Edge, Brave, Arc, Opera</b></span>
       <span>Uses <b>your Magnific session</b></span>
       <span><b>No password handling</b></span>
@@ -982,7 +1259,7 @@
           <li><span class="pl-proof-ic">4</span><span><b>No password handling.</b> The extension does not collect or transmit your Magnific credentials.</span></li>
         </ul>
         <div class="pl-proof-ctas">
-          <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Install free on Chrome →</a>
+          <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Add to Chrome (Free)</a>
         </div>
       </div>
       <div class="pl-video-panel reveal reveal--zoom" style="--d:300ms">
@@ -1225,7 +1502,7 @@
       </div>
       <div class="pl-result reveal" style="--d:120ms">✦ Save hours of clicking · scale your output without scaling your effort ✦</div>
       <div class="pl-section-cta reveal" style="--d:180ms">
-        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Install free on Chrome →</a>
+        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Add to Chrome (Free)</a>
       </div>
     </div>
   </section>
@@ -1307,7 +1584,12 @@
         <img class="pl-cta-band__wolf" src="assets/wolf.png" alt="" width="96" height="96" />
         <h2 class="pl-cta-band__title">Stop babysitting the generate button.</h2>
         <p class="pl-cta-band__sub">Install free, paste your prompts, and let the queue do the clicking. Free for early users — locked in forever.</p>
-        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Install free on Chrome →</a>
+        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Add to Chrome (Free)</a>
+        <div class="pl-stats pl-stats--footer">
+          <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true">👥</span><span class="pl-stat__k">100+ users</span></div>
+          <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true" style="color:var(--success)">★</span><span class="pl-stat__k">5.0</span></div>
+          <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true" style="color:var(--success)">✓</span><span class="pl-stat__k">10,000+ generations</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1321,6 +1603,7 @@
         <a href="terms.html">Terms</a>
         <a href="privacy.html">Privacy</a>
         <a href="contact.html">Contact</a>
+        <a href="ai.html">AI Reference</a>
         <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener">Chrome Web Store</a>
         <a href="https://deepakthapa.dev">← Back to deepakthapa.dev</a>
       </div>
@@ -1356,6 +1639,7 @@
       stagger(document.querySelectorAll('.pl-proof-list li'), 70, 120);
       stagger(document.querySelectorAll('#difference .pl-compare__row'), 100, 0); // autopik card cadence: index × 0.1s
       stagger(document.querySelectorAll('.pl-faq__item'), 60, 0);
+      stagger(document.querySelectorAll('.pl-trust span'), 85, 100);
       document.querySelectorAll('.pl-feature').forEach(function (row) {
         stagger(row.querySelectorAll('.pl-feature__list li'), 70, 160);
       });
@@ -1375,8 +1659,12 @@
       // ── Engine 1: "Animate & Scroll" — IntersectionObserver + native scroll ──────────
       function initIo(els) {
         document.documentElement.classList.add('js'); // JS confirmed → enable hidden-then-animate
+        var cmpRows = document.querySelectorAll('.pl-compare__row.reveal');
+        var galleryTiles = document.querySelectorAll('.pl-gallery__tile.reveal');
+        var pending = els.filter(function (el) {
+          return [].slice.call(cmpRows).indexOf(el) === -1 && [].slice.call(galleryTiles).indexOf(el) === -1;
+        });
         var TRIGGER = 0.90;
-        var pending = els.slice();
         function show(el) { el.classList.add('is-in'); }
 
         if ('IntersectionObserver' in window) {
@@ -1388,7 +1676,7 @@
               }
             });
           }, { threshold: 0, rootMargin: '0px 0px -10% 0px' });
-          els.forEach(function (el) { io.observe(el); });
+          pending.forEach(function (el) { io.observe(el); });
         }
 
         function sweep() {
@@ -1403,6 +1691,59 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         window.addEventListener('resize', onScroll, { passive: true });
         sweep();
+
+        // Load GSAP immediately in native mode since it's used for both the comparison table and the product story Beat 3.
+        loadScripts([
+          'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js'
+        ], function () {
+          if (!window.gsap || !window.ScrollTrigger) return;
+          try {
+            gsap.registerPlugin(ScrollTrigger);
+            if (cmpRows.length) {
+              cmpRows.forEach(function (el) { el.classList.add('gsap-active'); });
+              gsap.set(cmpRows, { opacity: 0, y: 20, filter: 'blur(5px)' });
+              gsap.timeline({ scrollTrigger: { trigger: '#difference .pl-compare', start: 'top 85%', once: true } })
+                .to(cmpRows, {
+                  opacity: 1,
+                  y: 0,
+                  filter: 'blur(0px)',
+                  duration: 0.6,
+                  stagger: 0.1,
+                  ease: 'power2.out',
+                  onComplete: function () {
+                    cmpRows.forEach(function (el) {
+                      el.classList.add('is-in');
+                      el.classList.remove('gsap-active');
+                    });
+                    gsap.set(cmpRows, { clearProps: 'transform,opacity,filter' });
+                  }
+                });
+            }
+            if (galleryTiles.length) {
+              galleryTiles.forEach(function (el) { el.classList.add('gsap-active'); });
+              gsap.set(galleryTiles, { opacity: 0, y: 30, filter: 'blur(8px)' });
+              gsap.timeline({ scrollTrigger: { trigger: '#gallery .pl-gallery', start: 'top 85%', once: true } })
+                .to(galleryTiles, {
+                  opacity: 1,
+                  y: 0,
+                  filter: 'blur(0px)',
+                  duration: 0.65,
+                  stagger: 0.08,
+                  ease: 'power2.out',
+                  onComplete: function () {
+                    galleryTiles.forEach(function (el) {
+                      el.classList.add('is-in');
+                      el.classList.remove('gsap-active');
+                    });
+                    gsap.set(galleryTiles, { clearProps: 'transform,opacity,filter' });
+                  }
+                });
+            }
+          } catch (error) {
+            if (window.console) console.warn('GSAP native fallback setup:', error);
+          }
+        });
       }
 
       // ── Engine 2: "GSAP Cinematic" — GSAP ScrollTrigger + Lenis smooth scroll ─────────
@@ -1417,9 +1758,9 @@
         // and everything else is already visible. Once GSAP loads it hides only what is still below
         // the fold and reveals it on scroll, so a slow/blocked CDN just leaves a fully visible page.
         var heroReveals = [].slice.call(document.querySelectorAll('.pl-hero .reveal'));
-        // Comparison rows + video panel get bespoke GSAP timelines below (copied from autopik) —
+        // Comparison rows + video panel + gallery tiles get bespoke GSAP timelines below (copied from autopik) —
         // keep them out of the generic batch so they animate with autopik's exact values, not the default.
-        var specialEls = [].slice.call(document.querySelectorAll('.pl-compare__row.reveal, .pl-video-panel.reveal, .pl-cta-band.reveal'));
+        var specialEls = [].slice.call(document.querySelectorAll('.pl-compare__row.reveal, .pl-video-panel.reveal, .pl-cta-band.reveal, .pl-gallery__tile.reveal'));
         var scrollEls = els.filter(function (el) {
           return heroReveals.indexOf(el) === -1 && specialEls.indexOf(el) === -1;
         });
@@ -1478,10 +1819,46 @@
             // COPIED FROM autopik "Who Can Benefit" cards — comparison rows rise y:20→0, 0.6s, stagger 0.1s.
             var cmpRows = document.querySelectorAll('.pl-compare__row.reveal');
             if (cmpRows.length) {
+              cmpRows.forEach(function (el) { el.classList.add('gsap-active'); });
               gsap.set(cmpRows, { opacity: 0, y: 20 });
               gsap.timeline({ scrollTrigger: { trigger: '#difference .pl-compare', start: 'top 85%', once: true } })
-                .to(cmpRows, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1, ease: 'power2.out' });
+                .to(cmpRows, {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.6,
+                  stagger: 0.1,
+                  ease: 'power2.out',
+                  onComplete: function () {
+                    cmpRows.forEach(function (el) {
+                      el.classList.add('is-in');
+                      el.classList.remove('gsap-active');
+                    });
+                    gsap.set(cmpRows, { clearProps: 'transform,opacity,filter' });
+                  }
+                });
             }
+
+            var galleryTiles = document.querySelectorAll('.pl-gallery__tile.reveal');
+            if (galleryTiles.length) {
+              galleryTiles.forEach(function (el) { el.classList.add('gsap-active'); });
+              gsap.set(galleryTiles, { opacity: 0, y: 30 });
+              gsap.timeline({ scrollTrigger: { trigger: '#gallery .pl-gallery', start: 'top 85%', once: true } })
+                .to(galleryTiles, {
+                  opacity: 1,
+                  y: 0,
+                  duration: 0.65,
+                  stagger: 0.08,
+                  ease: 'power2.out',
+                  onComplete: function () {
+                    galleryTiles.forEach(function (el) {
+                      el.classList.add('is-in');
+                      el.classList.remove('gsap-active');
+                    });
+                    gsap.set(galleryTiles, { clearProps: 'transform,opacity,filter' });
+                  }
+                });
+            }
+
             // COPIED FROM autopik's video zoom (scale .9→1, ~0.6s) — used on the video panel AND the final CTA card.
             function zoomIn(el, trigger) {
               if (!el || el.getBoundingClientRect().top < window.innerHeight) return; // above the fold on load → leave visible
@@ -1582,10 +1959,97 @@
       var runBtn = story.querySelector('[data-run-btn]');
       var totalP = promptRows.length;
 
+      var engine = 'native';
+      try { if (localStorage.getItem('mag-engine') === 'gsap') engine = 'gsap'; } catch (e) {}
+
+      var dlCards = [].slice.call(story.querySelectorAll('.pl-dl-card'));
+      var dlFoot = story.querySelector('.pl-dl-foot');
+
+      function triggerBeat3Animation() {
+        if (window.gsap) {
+          gsap.killTweensOf(dlCards);
+          if (dlFoot) gsap.killTweensOf(dlFoot);
+
+          gsap.set(dlCards, {
+            opacity: 0,
+            y: 20,
+            filter: engine === 'gsap' ? 'none' : 'blur(5px)'
+          });
+          if (dlFoot) gsap.set(dlFoot, { opacity: 0, y: 10 });
+
+          var tl = gsap.timeline();
+          tl.to(dlCards, {
+            opacity: 1,
+            y: 0,
+            filter: 'blur(0px)',
+            duration: 0.5,
+            stagger: 0.06,
+            ease: 'power2.out'
+          });
+          if (dlFoot) {
+            tl.to(dlFoot, {
+              opacity: 1,
+              y: 0,
+              duration: 0.4,
+              ease: 'power2.out'
+            }, '-=0.25');
+          }
+        } else {
+          dlCards.forEach(function (card) {
+            card.style.opacity = '1';
+            card.style.transform = 'none';
+            card.style.filter = 'none';
+          });
+          if (dlFoot) {
+            dlFoot.style.opacity = '1';
+            dlFoot.style.transform = 'none';
+          }
+        }
+      }
+
+      function resetBeat3Animation() {
+        if (window.gsap) {
+          gsap.killTweensOf(dlCards);
+          if (dlFoot) gsap.killTweensOf(dlFoot);
+          gsap.set(dlCards, {
+            opacity: 0,
+            y: 20,
+            filter: engine === 'gsap' ? 'none' : 'blur(5px)'
+          });
+          if (dlFoot) gsap.set(dlFoot, { opacity: 0, y: 10 });
+        } else {
+          dlCards.forEach(function (card) {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.filter = engine === 'gsap' ? 'none' : 'blur(5px)';
+          });
+          if (dlFoot) {
+            dlFoot.style.opacity = '0';
+            dlFoot.style.transform = 'translateY(10px)';
+          }
+        }
+      }
+
       function setBeat(b) {
-        if (story.getAttribute('data-beat') !== String(b)) {
+        var prevBeat = story.getAttribute('data-beat');
+        if (prevBeat !== String(b)) {
           story.setAttribute('data-beat', String(b));
-          if (badge) { badge.textContent = labels[b - 1]; badge.style.color = colors[b - 1]; }
+          if (badge) {
+            badge.style.opacity = '0';
+            badge.style.transform = 'translateY(-2px)';
+            setTimeout(function() {
+              badge.textContent = labels[b - 1];
+              badge.style.color = colors[b - 1];
+              badge.style.opacity = '1';
+              badge.style.transform = 'translateY(0)';
+            }, 150);
+          }
+
+          if (b === 3) {
+            triggerBeat3Animation();
+          } else if (prevBeat === '3') {
+            resetBeat3Animation();
+          }
         }
       }
 
@@ -1646,6 +2110,21 @@
         if (runBtn) runBtn.classList.add('is-visible');
         qRows.forEach(function (r) { r.classList.add('is-visible'); });
         return;
+      }
+
+      // Initialize starting styles of Beat 3 cards for non-mobile animation
+      dlCards.forEach(function (card) {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        if (engine !== 'gsap') {
+          card.style.filter = 'blur(5px)';
+        }
+        card.style.transition = 'none';
+      });
+      if (dlFoot) {
+        dlFoot.style.opacity = '0';
+        dlFoot.style.transform = 'translateY(10px)';
+        dlFoot.style.transition = 'none';
       }
       var scroll = story.querySelector('.pl-story__scroll');
       function update() {

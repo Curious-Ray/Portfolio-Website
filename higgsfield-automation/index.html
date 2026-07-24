@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Higgsfield Automation - Batch-run Higgsfield prompts</title>
   <meta name="description" content="Higgsfield Automation is a Chrome extension for batch-running Higgsfield image and video prompts, importing spreadsheets, retrying failures, and auto-downloading results in your browser session." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.deepakthapa.dev/higgsfield-automation" />
+  <link rel="alternate" type="text/markdown" href="https://www.deepakthapa.dev/higgsfield-automation/llms.txt" title="LLMs text" />
   <script>
     if (location.pathname === '/higgsfield-automation') {
       document.write('<base href="/higgsfield-automation/">');
@@ -13,11 +16,13 @@
 
   <meta property="og:title" content="Higgsfield Automation - Batch-run Higgsfield prompts" />
   <meta property="og:description" content="Import prompts, choose a Higgsfield mode, and let the extension queue, retry, and download the batch in your browser." />
-  <meta property="og:image" content="assets/marquee.png" />
+  <meta property="og:image" content="https://www.deepakthapa.dev/higgsfield-automation/assets/marquee.png" />
   <meta property="og:type" content="product" />
+  <meta property="og:url" content="https://www.deepakthapa.dev/higgsfield-automation" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Higgsfield Automation - Batch-run Higgsfield prompts" />
   <meta name="twitter:description" content="Batch-run Higgsfield prompts and auto-download results in your Chrome browser session." />
+  <meta name="twitter:image" content="https://www.deepakthapa.dev/higgsfield-automation/assets/marquee.png" />
   <meta name="theme-color" content="#070906" />
 
   <link rel="icon" type="image/png" sizes="32x32" href="assets/logo.png" />
@@ -35,12 +40,24 @@
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "name": "Higgsfield Automation - Bulk Image and Video Generator",
+    "url": "https://www.deepakthapa.dev/higgsfield-automation",
+    "image": "https://www.deepakthapa.dev/higgsfield-automation/assets/marquee.png",
     "applicationCategory": "BrowserApplication",
-    "operatingSystem": "Chrome",
+    "operatingSystem": "Chrome, Chromium-based browsers",
     "browserRequirements": "Requires Google Chrome 114 or newer",
     "description": "Higgsfield Automation batch-runs user-provided image and video prompts in the Higgsfield browser session the user opens in Chrome. It imports prompts from spreadsheets or text files, supports Text to Video, Frame to Video, Text to Image, and Image to Image, retries failed starts, and downloads generated outputs.",
     "downloadUrl": "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc",
     "softwareVersion": "1.0.3",
+    "author": {
+      "@type": "Person",
+      "name": "Deepak Thapa",
+      "url": "https://www.deepakthapa.dev/"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Deepak Thapa",
+      "url": "https://www.deepakthapa.dev/"
+    },
     "offers": {
       "@type": "Offer",
       "url": "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc"
@@ -90,7 +107,11 @@
        second accent (used once: the gallery lens ring).
        ============================================================ */
     :root {
-      --bg:        #070906;
+      --bg-rgb:        7, 9, 6;
+      --lime-rgb:      216, 255, 5;
+      --lime-ink-rgb:  10, 15, 0;
+
+      --bg:        rgb(var(--bg-rgb));
       --surface:   #11160f;
       --elevated:  #171c14;
       --ink:       #f3f7ec;
@@ -98,11 +119,12 @@
       --soft:      #828e78;
       --line:      rgba(255, 255, 255, 0.07);
       --line-2:    rgba(255, 255, 255, 0.12);
-      --lime:      #d8ff05;
+      --lime:      rgb(var(--lime-rgb));
       --lime-soft: #ecff73;
       --cyan:      #65e7ff;
-      --lime-ink:  #0a0f00;
-      --glow:      rgba(216, 255, 5, 0.5);
+      --lime-ink:  rgb(var(--lime-ink-rgb));
+      --glow:      rgba(var(--lime-rgb), 0.5);
+      --stage-bg:  #020302;
 
       --shadow:    0 34px 90px -34px rgba(0, 0, 0, 0.9);
       --radius:    14px;
@@ -125,7 +147,7 @@
       margin: 0;
       min-height: 100vh;
       background:
-        radial-gradient(120% 70% at 84% -8%, rgba(216, 255, 5, 0.055), transparent 55%),
+        radial-gradient(120% 70% at 84% -8%, rgba(var(--lime-rgb), 0.055), transparent 55%),
         var(--bg);
       color: var(--ink);
       font-family: var(--font-body);
@@ -178,24 +200,24 @@
       position: relative;
       overflow: hidden;
       background: linear-gradient(180deg, #ffffff, #edf2e4);
-      color: #0a0f00;
+      color: var(--lime-ink);
       box-shadow:
         0 10px 26px -10px rgba(0, 0, 0, 0.75),
         0 2px 5px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.85),
-        inset 0 -1px 0 rgba(10, 15, 0, 0.14);
+        inset 0 -1px 0 rgba(var(--lime-ink-rgb), 0.14);
     }
     .btn--primary:hover {
       box-shadow:
-        0 16px 38px -12px rgba(216, 255, 5, 0.5),
-        0 0 0 1px rgba(216, 255, 5, 0.4),
+        0 16px 38px -12px rgba(var(--lime-rgb), 0.5),
+        0 0 0 1px rgba(var(--lime-rgb), 0.4),
         0 2px 6px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
     .btn--primary .btn__dot {
       position: relative; z-index: 1;
-      width: 7px; height: 7px; border-radius: 50%; background: #0a0f00; color: #0a0f00;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(10, 15, 0, 0.08);
+      width: 7px; height: 7px; border-radius: 50%; background: var(--lime-ink); color: var(--lime-ink);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 0 0 3px rgba(var(--lime-ink-rgb), 0.08);
     }
     /* particle emitter canvas sits behind the label + dot, clipped to the pill */
     .btn__particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
@@ -219,7 +241,7 @@
       transition: background 0.3s var(--ease), border-color 0.3s var(--ease), backdrop-filter 0.3s var(--ease);
     }
     .nav.is-scrolled {
-      background: rgba(7, 9, 6, 0.72); border-color: var(--line-2);
+      background: rgba(var(--bg-rgb), 0.72); border-color: var(--line-2);
       -webkit-backdrop-filter: blur(20px) saturate(1.4); backdrop-filter: blur(20px) saturate(1.4);
     }
     .nav__inner {
@@ -236,7 +258,7 @@
     .nav__progress { position: absolute; left: 0; bottom: -1px; width: 100%; height: 2px; background: linear-gradient(90deg, var(--lime), var(--cyan)); transform: scaleX(0); transform-origin: 0 50%; box-shadow: 0 0 12px var(--glow); }
 
     /* ---------- hero ---------- */
-    .hero { position: relative; min-height: min(880px, 94svh); padding: 160px 0 92px; display: grid; align-items: center; justify-items: center; overflow: hidden; isolation: isolate; }
+    .hero { position: relative; min-height: 100dvh; padding: clamp(100px, 12vh, 140px) 0 60px; display: flex; align-items: center; justify-content: center; overflow: hidden; isolation: isolate; }
     .hero__wall {
       position: absolute; inset: -6% 0 -6% auto; width: 56%; z-index: -3;
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-content: center; padding-left: 2vw;
@@ -244,7 +266,7 @@
       mask-image: linear-gradient(90deg, transparent, #000 38%, #000 100%);
       opacity: 0.42; will-change: transform;
     }
-    .hero__wall .col { display: grid; gap: 14px; }
+    .hero__wall .col { display: grid; gap: 14px; will-change: transform; }
     .hero__wall .col:nth-child(2) { margin-top: -46px; }
     .hero__wall img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--line); object-fit: cover; }
     /* Hero wall looping vertical scroll */
@@ -260,11 +282,11 @@
     .hero__scrim {
       position: absolute; inset: 0; z-index: -2; pointer-events: none;
       background:
-        linear-gradient(90deg, var(--bg) 8%, rgba(7,9,6,0.74) 44%, rgba(7,9,6,0.2) 76%, rgba(7,9,6,0.6) 100%),
-        linear-gradient(180deg, rgba(7,9,6,0.3), transparent 22%, transparent 68%, var(--bg) 100%);
+        linear-gradient(90deg, var(--bg) 8%, rgba(var(--bg-rgb), 0.74) 44%, rgba(var(--bg-rgb), 0.2) 76%, rgba(var(--bg-rgb), 0.6) 100%),
+        linear-gradient(180deg, rgba(var(--bg-rgb), 0.3), transparent 22%, transparent 68%, var(--bg) 100%);
     }
     .hero__beam { position: absolute; left: -10%; right: -10%; bottom: 22%; z-index: -1; height: 1px; background: linear-gradient(90deg, transparent, var(--lime-soft), transparent); box-shadow: 0 0 26px var(--glow); transform: rotate(-6deg); opacity: 0.7; }
-    .hero__content { width: min(880px, 100%); position: relative; z-index: 2; text-align: center; display: flex; flex-direction: column; align-items: center; }
+    .hero__content { width: fit-content; max-width: 100%; position: relative; z-index: 2; text-align: left; display: flex; flex-direction: column; align-items: flex-start; margin: 0 auto; }
     .hero__label {
       display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; padding: 8px 14px;
       border: 1px solid var(--line-2); border-radius: 999px; background: rgba(7, 9, 6, 0.6);
@@ -277,15 +299,9 @@
     .hero h1 .line { display: block; overflow: hidden; padding-bottom: 0.12em; }
     .hero h1 .line i { display: block; font-style: normal; }
     .hero h1 em { font-style: normal; color: var(--lime); text-shadow: 0 0 48px rgba(216, 255, 5, 0.3); }
-    .hero__copy { max-width: 54ch; margin-top: 24px; color: #d7e4cd; font-size: clamp(17px, 1.9vw, 21px); line-height: 1.5; text-align: center; }
+    .hero__copy { max-width: 54ch; margin-top: 24px; color: #d7e4cd; font-size: clamp(17px, 1.9vw, 21px); line-height: 1.5; text-align: left; }
     .hero__actions { margin-top: 32px; }
-    .hero__meta { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 28px 0 0; padding: 0; list-style: none; }
-    .hero__meta li {
-      display: inline-flex; align-items: center; gap: 8px; min-height: 36px; padding: 0 14px;
-      border: 1px solid var(--line); border-radius: 999px; background: rgba(0, 0, 0, 0.26);
-      color: #d3e0c9; font-family: var(--font-mono); font-size: 12px; font-weight: 700;
-    }
-    .hero__meta li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--soft); }
+
 
     /* ---------- how it works (pinned sequence) ---------- */
     .sequence { background: linear-gradient(180deg, rgba(17, 22, 15, 0.5), rgba(7, 9, 6, 0)); border-top: 1px solid var(--line); }
@@ -302,7 +318,7 @@
     .device__status { display: inline-flex; align-items: center; gap: 8px; color: var(--lime); }
     .device__status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 12px var(--glow); animation: pulse 2s ease-in-out infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
-    .device__stage { position: relative; aspect-ratio: 16 / 10; background: #020302; overflow: hidden; }
+    .device__stage { position: relative; aspect-ratio: 16 / 10; background: var(--stage-bg); overflow: hidden; }
     .device__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 0.7s var(--ease), transform 1.1s var(--ease); }
     .device__stage img.is-active { opacity: 1; transform: scale(1); }
     .device__caption { position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 16px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.58); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
@@ -312,24 +328,65 @@
     .step:first-child { min-height: 54vh; padding-top: 4vh; }
     .step:last-child { min-height: auto; }
     .step.is-active { opacity: 1; }
-    .step__inner { width: 100%; padding: clamp(26px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.022); transition: border-color 0.5s var(--ease), background 0.5s var(--ease); }
-    .step.is-active .step__inner { border-color: rgba(216, 255, 5, 0.28); background: rgba(216, 255, 5, 0.03); }
+    .step__inner { width: 100%; padding: clamp(26px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.022); transition: border-color 0.5s var(--ease), background 0.5s var(--ease), transform 0.5s var(--ease); will-change: transform, border-color, background-color; }
+    .step.is-active .step__inner { border-color: rgba(var(--lime-rgb), 0.28); background: rgba(var(--lime-rgb), 0.03); transform: translate3d(6px, 0, 0); }
     .step__index { display: inline-flex; margin-bottom: 16px; color: var(--soft); font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.5s var(--ease); }
     .step.is-active .step__index { color: var(--lime); }
     .step h3 { font-size: clamp(27px, 3.4vw, 42px); line-height: 1.03; letter-spacing: -0.02em; }
     .step p { margin-top: 14px; color: var(--muted); font-size: 17px; }
     .step__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
     .tag { display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--muted); font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
-    .step.is-active .tag { border-color: rgba(216, 255, 5, 0.24); color: var(--lime-soft); }
+    .step.is-active .tag { border-color: rgba(var(--lime-rgb), 0.24); color: var(--lime-soft); }
+
+    /* ---------- video demo ---------- */
+    .demo-grid { display: grid; place-items: center; text-align: center; }
+    .video-wrap {
+      position: relative;
+      border: 1px solid var(--line-2);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)), var(--surface);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      width: 100%;
+      max-width: 860px;
+      margin-top: 40px;
+      will-change: transform;
+      transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+    }
+    .video-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle 240px at 50% 50%, rgba(var(--lime-rgb), 0.12), transparent 70%);
+      transition: opacity 0.4s var(--ease);
+    }
+    .video-wrap:hover {
+      border-color: rgba(var(--lime-rgb), 0.24);
+      box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.95), 0 0 40px rgba(var(--lime-rgb), 0.05);
+    }
+    .video-wrap:hover::before {
+      opacity: 1;
+    }
+    .video-wrap iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
 
     /* ---------- modes ---------- */
     .modes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 44px; }
     .mode-card { --mx: 50%; --my: 50%; position: relative; min-height: 220px; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01)), var(--surface); overflow: hidden; transition: transform 0.4s var(--ease), border-color 0.4s var(--ease); }
-    .mode-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(circle 180px at var(--mx) var(--my), rgba(216, 255, 5, 0.16), transparent 70%); transition: opacity 0.4s var(--ease); }
-    .mode-card:hover { transform: translateY(-6px); border-color: rgba(216, 255, 5, 0.2); }
+    .mode-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(circle 180px at var(--mx) var(--my), rgba(var(--lime-rgb), 0.16), transparent 70%); transition: opacity 0.4s var(--ease); }
+    .mode-card:hover { transform: translateY(-6px); border-color: rgba(var(--lime-rgb), 0.2); }
     .mode-card:hover::before { opacity: 1; }
     .mode-card__tag { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border: 1px solid var(--line-2); border-radius: 12px; color: var(--ink); font-family: var(--font-mono); font-size: 13px; font-weight: 700; transition: color 0.4s var(--ease), border-color 0.4s var(--ease); }
-    .mode-card:hover .mode-card__tag { color: var(--lime); border-color: rgba(216, 255, 5, 0.4); }
+    .mode-card:hover .mode-card__tag { color: var(--lime); border-color: rgba(var(--lime-rgb), 0.4); }
     .mode-card h3 { position: relative; margin-top: 22px; font-size: 23px; line-height: 1.05; letter-spacing: -0.01em; }
     .mode-card p { position: relative; margin-top: 12px; color: var(--muted); font-size: 15px; }
 
@@ -341,7 +398,7 @@
       -webkit-mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
       mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
     }
-    .wall .wall-col { display: grid; gap: 14px; align-content: start; }
+    .wall .wall-col { display: grid; gap: 14px; align-content: start; will-change: transform; }
     .wall .wall-col img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--line); object-fit: cover; }
     @keyframes gallery-scroll-up   { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
     @keyframes gallery-scroll-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
@@ -352,11 +409,11 @@
 
     /* ---------- trust ---------- */
     .trust { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); gap: clamp(34px, 7vw, 80px); align-items: center; }
-    .bot-wrap { position: relative; min-height: 480px; display: grid; place-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: radial-gradient(90% 70% at 30% 20%, rgba(216, 255, 5, 0.1), transparent 55%), var(--surface); }
-    .bot-wrap::before, .bot-wrap::after { content: ""; position: absolute; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, rgba(216, 255, 5, 0.45), transparent); }
+    .bot-wrap { position: relative; min-height: 480px; display: grid; place-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: radial-gradient(90% 70% at 30% 20%, rgba(var(--lime-rgb), 0.1), transparent 55%), var(--surface); }
+    .bot-wrap::before, .bot-wrap::after { content: ""; position: absolute; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, rgba(var(--lime-rgb), 0.45), transparent); }
     .bot-wrap::before { top: 28%; transform: rotate(-12deg); }
     .bot-wrap::after { bottom: 26%; transform: rotate(9deg); }
-    .bot-wrap img { position: relative; z-index: 2; width: min(82%, 440px); filter: drop-shadow(0 30px 54px rgba(216, 255, 5, 0.14)); animation: bot-float 6s ease-in-out infinite; }
+    .bot-wrap img { position: relative; z-index: 2; width: min(82%, 440px); filter: drop-shadow(0 30px 54px rgba(var(--lime-rgb), 0.14)); animation: bot-float 6s ease-in-out infinite; will-change: transform; }
     .trust-facts { display: grid; gap: 0; margin-top: 30px; }
     .trust-fact { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 16px; align-items: center; padding: 18px 0; border-top: 1px solid var(--line); font-size: 17px; color: var(--ink); }
     .trust-fact:last-child { border-bottom: 1px solid var(--line); }
@@ -382,17 +439,72 @@
     .faq-list summary { display: flex; align-items: center; justify-content: space-between; gap: 22px; color: var(--ink); cursor: pointer; list-style: none; font-family: var(--font-display); font-size: clamp(18px, 2.1vw, 22px); font-weight: 700; line-height: 1.2; letter-spacing: -0.01em; }
     .faq-list summary::-webkit-details-marker { display: none; }
     .faq-list summary::after { content: "+"; flex: 0 0 auto; display: grid; place-items: center; width: 30px; height: 30px; border: 1px solid var(--line-2); border-radius: 50%; color: var(--muted); font-family: var(--font-mono); font-size: 16px; transition: transform 0.35s var(--ease), color 0.35s var(--ease), border-color 0.35s var(--ease); }
-    .faq-list details[open] summary::after { content: "\2013"; transform: rotate(180deg); color: var(--lime); border-color: rgba(216, 255, 5, 0.4); }
+    .faq-list details[open] summary::after { transform: rotate(135deg); color: var(--lime); border-color: rgba(var(--lime-rgb), 0.4); }
     .faq-list p { max-width: 66ch; margin-top: 14px; color: var(--muted); font-size: 16px; }
+    .faq-content { overflow: hidden; transition: opacity 0.3s ease; }
 
     /* ---------- cta ---------- */
     .cta { position: relative; overflow: hidden; padding: clamp(72px, 12vw, 128px) 0; border-top: 1px solid var(--line-2); }
     .cta__bg { position: absolute; inset: 0; z-index: -2; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; opacity: 0.16; -webkit-mask-image: radial-gradient(120% 120% at 82% 50%, #000, transparent 68%); mask-image: radial-gradient(120% 120% at 82% 50%, #000, transparent 68%); }
-    .cta__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, var(--bg) 22%, rgba(7,9,6,0.72) 56%, rgba(7,9,6,0.42) 100%); }
+    .cta__scrim { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, var(--bg) 22%, rgba(var(--bg-rgb), 0.72) 56%, rgba(var(--bg-rgb), 0.42) 100%); }
     .cta__inner { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 30px; align-items: end; position: relative; }
     .cta h2 { max-width: 16ch; font-size: clamp(37px, 6.2vw, 74px); line-height: 0.98; font-weight: 700; letter-spacing: -0.03em; }
     .cta h2 em { font-style: normal; color: var(--lime); }
     .cta p { max-width: 50ch; margin-top: 20px; color: var(--muted); font-size: 18px; }
+
+    .cta__stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: clamp(40px, 6vw, 64px);
+      position: relative;
+      z-index: 2;
+    }
+    .stat-card {
+      position: relative;
+      padding: clamp(20px, 3vw, 28px) 24px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.005)), var(--surface);
+      text-align: center;
+      transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+      overflow: hidden;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(var(--lime-rgb), 0.24);
+      box-shadow: 0 20px 40px -20px rgba(0,0,0,0.8), 0 0 24px rgba(var(--lime-rgb), 0.03);
+    }
+    .stat-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      background: radial-gradient(circle 120px at 50% 50%, rgba(var(--lime-rgb), 0.08), transparent 70%);
+      transition: opacity 0.4s var(--ease);
+    }
+    .stat-card:hover::before {
+      opacity: 1;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 4.5vw, 52px);
+      font-weight: 700;
+      color: var(--lime);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 32px rgba(var(--lime-rgb), 0.12);
+    }
+    .stat-label {
+      margin-top: 8px;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
 
     /* ---------- footer ---------- */
     .footer { padding: 38px 0; border-top: 1px solid var(--line); color: var(--soft); font-family: var(--font-mono); font-size: 12px; }
@@ -414,10 +526,11 @@
       .sequence__visual { position: relative; top: auto; }
       .step { min-height: auto; }
       .hero__wall { width: 68%; opacity: 0.3; }
-      .wall { grid-template-columns: repeat(4, 1fr); height: 440px; }
+      .wall { grid-template-columns: repeat(3, 1fr); height: 440px; }
+      .wall .wall-col:nth-child(4) { display: none; }
       .bot-wrap { min-height: 400px; }
     }
-    @media (max-width: 720px) {
+    @media (max-width: 768px) {
       :root { --pad: 20px; }
       .nav__inner { min-height: 64px; }
       .nav__links a:not(.btn) { display: none; }
@@ -426,13 +539,14 @@
       .hero { min-height: 88svh; padding: 132px 0 82px; }
       .hero__wall { inset: 0; width: 100%; opacity: 0.16; grid-template-columns: repeat(2, 1fr); -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 80%, transparent); mask-image: linear-gradient(180deg, transparent, #000 30%, #000 80%, transparent); }
       .hero__wall .col:nth-child(3) { display: none; }
-      .hero__scrim { background: linear-gradient(180deg, rgba(7,9,6,0.5), rgba(7,9,6,0.86) 46%, var(--bg)); }
+      .hero__scrim { background: linear-gradient(180deg, rgba(var(--bg-rgb), 0.5), rgba(var(--bg-rgb), 0.86) 46%, var(--bg)); }
       .modes { grid-template-columns: 1fr; }
       .wall { grid-template-columns: repeat(2, 1fr); height: 360px; }
       .wall .wall-col:nth-child(3) { display: none; }
       .wall .wall-col:nth-child(4) { display: none; }
       .device__caption { position: static; margin: 0; border-radius: 0; border-inline: 0; border-bottom: 0; }
       .footer__inner { display: grid; }
+      .cta__stats { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
     }
 
 
@@ -440,7 +554,24 @@
     /* ---- Native Scroll Reveal & Hero animations ---- */
     .engine-gsap .rise { transition: none; }
 
-    .js:not(.engine-gsap) .rise {
+    /* Prevent Flash of Unstyled Content (FOUC) while GSAP is loading */
+    .js-loading .rise,
+    .js-loading .stat-card {
+      opacity: 0;
+    }
+    .js-loading .hero__copy,
+    .js-loading .hero__actions {
+      opacity: 0;
+    }
+    .js-loading [data-hero-line] {
+      transform: translateY(115%);
+    }
+    .js-loading .hero__wall {
+      opacity: 0;
+    }
+
+    .js:not(.engine-gsap) .rise,
+    .js:not(.engine-gsap) .stat-card {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
@@ -463,18 +594,14 @@
     }
     @keyframes pl-hero-line-slide { to { transform: none; } }
 
-    html.js:not(.engine-gsap) .hero__label,
     html.js:not(.engine-gsap) .hero__copy,
-    html.js:not(.engine-gsap) .hero__actions,
-    html.js:not(.engine-gsap) .hero__meta {
+    html.js:not(.engine-gsap) .hero__actions {
       opacity: 0;
       transform: translateY(18px);
       animation: pl-hero-fade-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
-    html.js:not(.engine-gsap) .hero__label { animation-delay: 100ms; }
-    html.js:not(.engine-gsap) .hero__copy { animation-delay: 200ms; }
-    html.js:not(.engine-gsap) .hero__actions { animation-delay: 300ms; }
-    html.js:not(.engine-gsap) .hero__meta { animation-delay: 400ms; }
+    html.js:not(.engine-gsap) .hero__copy { animation-delay: 100ms; }
+    html.js:not(.engine-gsap) .hero__actions { animation-delay: 200ms; }
 
     @keyframes pl-hero-fade-rise { to { opacity: 1; transform: none; } }
   </style>
@@ -488,6 +615,7 @@
       </a>
       <div class="nav__links">
         <a href="#workflow">How it works</a>
+        <a href="#demo">Demo</a>
         <a href="#modes">Modes</a>
         <a href="#gallery">Gallery</a>
         <a href="#privacy">Privacy</a>
@@ -499,7 +627,7 @@
 
   <main>
     <!-- HERO -->
-    <section class="hero" id="top">
+    <section class="hero" id="top" data-od-id="hero">
       <div class="hero__wall" id="hero-wall" aria-hidden="true">
         <div class="col">
           <img src="assets/civitai/gen-03.jpg" alt="" loading="eager" />
@@ -527,10 +655,7 @@
 
       <div class="container">
         <div class="hero__content">
-          <div class="hero__label" data-hero>
-            <img src="assets/logo.png" alt="" />
-            Chrome extension for <b>higgsfield.ai</b>
-          </div>
+
           <h1>
             <span class="line"><i data-hero-line>Batch every</i></span>
             <span class="line"><i data-hero-line>Higgsfield prompt.</i></span>
@@ -542,17 +667,13 @@
           <div class="button-row hero__actions" data-hero>
             <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label">Install on Chrome</span></a>
           </div>
-          <ul class="hero__meta" data-hero>
-            <li>Live on Chrome Web Store</li>
-            <li>No analytics or telemetry</li>
-            <li>Runs in your own session</li>
-          </ul>
+
         </div>
       </div>
     </section>
 
     <!-- HOW IT WORKS -->
-    <section class="sequence section" id="workflow">
+    <section class="sequence section" id="workflow" data-od-id="workflow">
       <div class="container sequence__grid rise">
         <div class="sequence__visual">
           <p class="eyebrow">How it works</p>
@@ -614,8 +735,26 @@
       </div>
     </section>
 
+    <!-- VIDEO DEMO -->
+    <section class="section section--tight" id="demo" data-od-id="demo">
+      <div class="container demo-grid rise">
+        <p class="eyebrow">See it in action</p>
+        <h2 class="section-title">Video Walkthrough</h2>
+        <p class="section-copy">Watch the extension queue, pace, and automate generations on higgsfield.ai with real cost calculations.</p>
+        <div class="video-wrap">
+          <iframe
+            src="https://www.youtube.com/embed/DFyNAXC-YN4?rel=0"
+            title="Higgsfield Automation Demo Video"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </section>
+
     <!-- MODES -->
-    <section class="section" id="modes">
+    <section class="section" id="modes" data-od-id="modes">
       <div class="container rise">
         <p class="eyebrow">Generation modes</p>
         <h2 class="section-title">One panel for the workflows you repeat.</h2>
@@ -647,7 +786,7 @@
     </section>
 
     <!-- GALLERY (lens) -->
-    <section class="gallery section" id="gallery">
+    <section class="gallery section" id="gallery" data-od-id="gallery">
       <div class="container gallery__head rise">
         <div>
           <p class="eyebrow">Made at volume</p>
@@ -705,7 +844,7 @@
     </section>
 
     <!-- TRUST -->
-    <section class="section" id="privacy">
+    <section class="section" id="privacy" data-od-id="privacy">
       <div class="container trust">
         <div class="bot-wrap rise" aria-hidden="true">
           <img src="assets/higgsbot.png" alt="" loading="lazy" />
@@ -728,7 +867,7 @@
     </section>
 
     <!-- FAQ -->
-    <section class="section" id="faq">
+    <section class="section" id="faq" data-od-id="faq">
       <div class="container faq">
         <div class="rise">
           <p class="eyebrow">FAQ</p>
@@ -737,30 +876,40 @@
         <div class="faq-list">
           <details open class="faq-details rise" style="--d: 0ms;">
             <summary>What browsers are supported?</summary>
-            <p>The Chrome Web Store listing requires Google Chrome 114 or newer. Other Chromium browsers work if they support installing Chrome Web Store extensions.</p>
+            <div class="faq-content">
+              <p>The Chrome Web Store listing requires Google Chrome 114 or newer. Other Chromium browsers work if they support installing Chrome Web Store extensions.</p>
+            </div>
           </details>
           <details class="faq-details rise" style="--d: 100ms;">
             <summary>Do I choose the Higgsfield model in the extension?</summary>
-            <p>No — you set the model, aspect ratio, duration, and resolution on higgsfield.ai. The extension runs against the page and settings you have selected.</p>
+            <div class="faq-content">
+              <p>No — you set the model, aspect ratio, duration, and resolution on higgsfield.ai. The extension runs against the page and settings you have selected.</p>
+            </div>
           </details>
           <details class="faq-details rise" style="--d: 200ms;">
             <summary>Can it chain prompts together?</summary>
-            <p>Yes. Start a prompt with "&gt;&gt;" to feed the previous output into the next — useful for continuous shots or iterative edits.</p>
+            <div class="faq-content">
+              <p>Yes. Start a prompt with "&gt;&gt;" to feed the previous output into the next — useful for continuous shots or iterative edits.</p>
+            </div>
           </details>
           <details class="faq-details rise" style="--d: 300ms;">
             <summary>Does it work without a Higgsfield account?</summary>
-            <p>No. You need a higgsfield.ai account signed in in your browser. The extension does not create an account or log in for you.</p>
+            <div class="faq-content">
+              <p>No. You need a higgsfield.ai account signed in in your browser. The extension does not create an account or log in for you.</p>
+            </div>
           </details>
           <details class="faq-details rise" style="--d: 400ms;">
             <summary>Is this official Higgsfield software?</summary>
-            <p>No. It is an independent Chrome extension by Deepak Thapa, not affiliated with or endorsed by Higgsfield.</p>
+            <div class="faq-content">
+              <p>No. It is an independent Chrome extension by Deepak Thapa, not affiliated with or endorsed by Higgsfield.</p>
+            </div>
           </details>
         </div>
       </div>
     </section>
 
     <!-- CTA -->
-    <section class="cta" id="install">
+    <section class="cta" id="install" data-od-id="cta">
       <div class="cta__bg" aria-hidden="true">
         <img src="assets/civitai/gen-09.jpg" alt="" loading="lazy" />
         <img src="assets/civitai/gen-13.jpg" alt="" loading="lazy" />
@@ -777,6 +926,22 @@
           <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label">Install on Chrome</span></a>
         </div>
       </div>
+      <div class="container">
+        <div class="cta__stats">
+          <div class="stat-card rise" style="--d: 0ms;">
+            <div class="stat-num">100+</div>
+            <div class="stat-label">Installs</div>
+          </div>
+          <div class="stat-card rise" style="--d: 100ms;">
+            <div class="stat-num">10,000+</div>
+            <div class="stat-label">Images</div>
+          </div>
+          <div class="stat-card rise" style="--d: 200ms;">
+            <div class="stat-num">4.5+</div>
+            <div class="stat-label">Stars</div>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -787,6 +952,7 @@
         <a href="https://deepakthapa.dev">deepakthapa.dev</a>
         <a href="https://higgsfield-automation.pages.dev/guide.html" target="_blank" rel="noopener">Guide</a>
         <a href="https://higgsfield-automation.pages.dev/privacy.html" target="_blank" rel="noopener">Privacy</a>
+        <a href="ai.html">AI Reference</a>
         <a href="mailto:thapadeepak726@gmail.com">Support</a>
         <a href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener">Chrome Web Store</a>
       </div>
@@ -805,6 +971,7 @@
       var isNarrow = win.matchMedia('(max-width: 900px)').matches;
       var isTouch = win.matchMedia('(hover: none)').matches;
       root.classList.add('js');
+      root.classList.add('js-loading');
 
       var y = doc.getElementById('year');
       if (y) y.textContent = new Date().getFullYear();
@@ -812,16 +979,32 @@
       /* ---- nav frost + scroll progress + hero parallax (native, always on) ---- */
       var nav = doc.getElementById('nav'), prog = doc.getElementById('progress'), wall = doc.getElementById('hero-wall');
       var ticking = false;
+
+      /* Cache heights to prevent layout thrashing inside scroll listener */
+      var docH = 0, winH = win.innerHeight;
+      function updateCachedDimensions() {
+        docH = doc.body.scrollHeight - win.innerHeight;
+        winH = win.innerHeight;
+      }
+      updateCachedDimensions();
+
       function onScroll() {
         var sy = win.scrollY || root.scrollTop;
         if (nav) nav.classList.toggle('is-scrolled', sy > 16);
-        if (prog) { var h = doc.body.scrollHeight - win.innerHeight; prog.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, sy / h) : 0) + ')'; }
-        if (wall && !reduce && !window.__lenisParallax && sy < win.innerHeight * 1.3) wall.style.transform = 'translateY(' + (sy * 0.07) + 'px)';
+        if (prog) {
+          prog.style.transform = 'scaleX(' + (docH > 0 ? Math.min(1, sy / docH) : 0) + ')';
+        }
+        if (wall && !reduce && !window.__lenisParallax && sy < winH * 1.3) {
+          wall.style.transform = 'translateY(' + (sy * 0.07) + 'px)';
+        }
         ticking = false;
       }
       function requestScroll() { if (!ticking) { win.requestAnimationFrame(onScroll); ticking = true; } }
       win.addEventListener('scroll', requestScroll, { passive: true });
-      win.addEventListener('resize', requestScroll, { passive: true });
+      win.addEventListener('resize', function () {
+        updateCachedDimensions();
+        requestScroll();
+      }, { passive: true });
       onScroll();
 
       /* ---- workflow step -> device image (shared by GSAP + fallback) ---- */
@@ -830,11 +1013,48 @@
       var cap = doc.getElementById('device-caption'), cnt = doc.getElementById('device-step');
       var total = steps.length;
       function setShot(i) {
+        var a = steps[i];
+        if (!a) return;
+
         shots.forEach(function (s) { s.classList.toggle('is-active', Number(s.getAttribute('data-shot')) === i); });
         steps.forEach(function (s) { s.classList.toggle('is-active', Number(s.getAttribute('data-step')) === i); });
-        var a = steps[i];
-        if (cap && a) cap.textContent = a.getAttribute('data-caption') || '';
-        if (cnt) cnt.textContent = String(i + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+
+        var newCap = a.getAttribute('data-caption') || '';
+        var newCnt = String(i + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+
+        if (cap && cap.textContent !== newCap) {
+          if (win.gsap && !reduce) {
+            gsap.to(cap, {
+              y: -8,
+              opacity: 0,
+              duration: 0.15,
+              ease: 'power2.in',
+              onComplete: function () {
+                cap.textContent = newCap;
+                gsap.fromTo(cap, { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: 'power2.out' });
+              }
+            });
+          } else {
+            cap.textContent = newCap;
+          }
+        }
+
+        if (cnt && cnt.textContent !== newCnt) {
+          if (win.gsap && !reduce) {
+            gsap.to(cnt, {
+              y: -8,
+              opacity: 0,
+              duration: 0.15,
+              ease: 'power2.in',
+              onComplete: function () {
+                cnt.textContent = newCnt;
+                gsap.fromTo(cnt, { y: 8, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: 'power2.out' });
+              }
+            });
+          } else {
+            cnt.textContent = newCnt;
+          }
+        }
       }
       if (total) setShot(0);
 
@@ -861,13 +1081,121 @@
       alignSteps();
       win.addEventListener('resize', alignSteps, { passive: true });
 
-      /* ---- mode cards: cursor-following glow ---- */
+      /* ---- mode cards: cursor-following glow (optimized & lerped for premium feel) ---- */
       var modeCards = [].slice.call(doc.querySelectorAll('.mode-card'));
       modeCards.forEach(function (card) {
+        var rect = null;
+        var targetX = 0, targetY = 0;
+        var currentX = 0, currentY = 0;
+        var rafId = null;
+        var isHovered = false;
+
+        function updateRect() { rect = card.getBoundingClientRect(); }
+
+        function tick() {
+          if (!isHovered) return;
+          currentX += (targetX - currentX) * 0.12;
+          currentY += (targetY - currentY) * 0.12;
+          card.style.setProperty('--mx', currentX + 'px');
+          card.style.setProperty('--my', currentY + 'px');
+          rafId = win.requestAnimationFrame(tick);
+        }
+
+        card.addEventListener('pointerenter', function (e) {
+          updateRect();
+          isHovered = true;
+          if (rect) {
+            currentX = e.clientX - rect.left;
+            currentY = e.clientY - rect.top;
+            targetX = currentX;
+            targetY = currentY;
+          }
+          if (!rafId) {
+            rafId = win.requestAnimationFrame(tick);
+          }
+        });
+
         card.addEventListener('pointermove', function (e) {
-          var r = card.getBoundingClientRect();
-          card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-          card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+          if (!rect) updateRect();
+          if (rect) {
+            targetX = e.clientX - rect.left;
+            targetY = e.clientY - rect.top;
+          }
+        });
+
+        card.addEventListener('pointerleave', function () {
+          isHovered = false;
+          if (rafId) {
+            win.cancelAnimationFrame(rafId);
+            rafId = null;
+          }
+          rect = null;
+        });
+
+        win.addEventListener('resize', function () { rect = null; }, { passive: true });
+        win.addEventListener('scroll', function () { rect = null; }, { passive: true });
+      });
+
+      /* ---- magnetic button content (tactile premium interaction, no jitter) ---- */
+      var primaryButtons = [].slice.call(doc.querySelectorAll('.btn--primary'));
+      primaryButtons.forEach(function (btn) {
+        if (isTouch) return;
+        var rect = null;
+        var dot = btn.querySelector('.btn__dot');
+        var label = btn.querySelector('.btn__label');
+
+        function updateRect() { rect = btn.getBoundingClientRect(); }
+        btn.addEventListener('pointerenter', updateRect);
+
+        btn.addEventListener('pointermove', function (e) {
+          if (!rect) updateRect();
+          if (rect) {
+            var btnX = rect.left + rect.width / 2;
+            var btnY = rect.top + rect.height / 2;
+            var relX = e.clientX - btnX;
+            var relY = e.clientY - btnY;
+
+            if (dot && win.gsap) {
+              gsap.to(dot, {
+                x: relX * 0.25,
+                y: relY * 0.25,
+                duration: 0.35,
+                ease: 'power2.out',
+                overwrite: 'auto'
+              });
+            }
+            if (label && win.gsap) {
+              gsap.to(label, {
+                x: relX * 0.12,
+                y: relY * 0.12,
+                duration: 0.35,
+                ease: 'power2.out',
+                overwrite: 'auto'
+              });
+            }
+          }
+        });
+
+        btn.addEventListener('pointerleave', function () {
+          rect = null;
+          if (dot && win.gsap) {
+            gsap.to(dot, {
+              x: 0,
+              y: 0,
+              duration: 0.55,
+              ease: 'power3.out',
+              overwrite: 'auto'
+            });
+          }
+          if (label && win.gsap) {
+            gsap.to(label, {
+              x: 0,
+              y: 0,
+              duration: 0.55,
+              ease: 'power3.out',
+              overwrite: 'auto'
+            });
+          }
         });
       });
 
@@ -881,9 +1209,13 @@
       ], initMotion, initFallback);
 
       function initMotion() {
+        root.classList.remove('js-loading');
         if (!win.gsap || !win.ScrollTrigger) { initFallback(); return; }
         try {
           gsap.registerPlugin(ScrollTrigger);
+
+          /* Sync our cached dimensions with ScrollTrigger's refresh cycle */
+          ScrollTrigger.addEventListener('refresh', updateCachedDimensions);
 
           /* Lenis smooth scroll (desktop only) */
           if (win.Lenis && !isNarrow) {
@@ -893,62 +1225,123 @@
             gsap.ticker.lagSmoothing(0);
           }
 
-          /* 1 — hero entrance timeline */
-          var tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-          tl.from('[data-hero-line]', { yPercent: 115, duration: 0.9, stagger: 0.09 })
-            .from('.hero__label', { y: 18, autoAlpha: 0, duration: 0.7 }, 0.1)
-            .from('.hero__copy', { y: 18, autoAlpha: 0, duration: 0.7 }, '-=0.55')
-            .from('.hero__actions', { y: 14, autoAlpha: 0, duration: 0.6 }, '-=0.45')
-            .from('.hero__meta', { y: 14, autoAlpha: 0, duration: 0.6 }, '-=0.45')
-            .from('.hero__wall', { autoAlpha: 0, duration: 1.3 }, 0.2);
+          /* 1 — hero entrance timeline (refined with power4.out and premium timing) */
+          var tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+          tl.from('[data-hero-line]', { yPercent: 115, duration: 1.0, stagger: 0.08 })
+            .from('.hero__copy', { y: 16, autoAlpha: 0, duration: 0.8 }, 0.15)
+            .from('.hero__actions', { y: 12, autoAlpha: 0, duration: 0.7 }, '-=0.55')
+            .from('.hero__wall', { autoAlpha: 0, duration: 1.4 }, 0.25);
 
           /* 2 — hero parallax on scroll (hand off from native handler) */
           window.__lenisParallax = true;
           gsap.to('.hero__wall', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
 
-          /* 3 — one subtle rise on section headers only */
-          gsap.utils.toArray('.rise:not(.mode-card):not(.trust-fact):not(.faq-details)').forEach(function (el) {
-            gsap.from(el, { y: 26, autoAlpha: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 86%', once: true } });
+          /* 3 — subtle rise on section headers (polished values & eases) */
+          gsap.utils.toArray('.rise:not(.mode-card):not(.trust-fact):not(.faq-details):not(.stat-card)').forEach(function (el) {
+            gsap.from(el, { y: 22, autoAlpha: 0, duration: 0.85, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
           });
 
-          /* Modes card stagger */
-          gsap.from('#modes .mode-card', {
-            y: 26,
-            autoAlpha: 0,
-            duration: 0.8,
-            stagger: 0.08,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: '#modes .modes', start: 'top 86%', once: true }
+          /* Modes card stagger scroll reveal one by one */
+          gsap.set('#modes .mode-card', { y: 22, autoAlpha: 0 });
+          ScrollTrigger.batch('#modes .mode-card', {
+            start: 'top 88%',
+            once: true,
+            onEnter: function (batch) {
+              gsap.to(batch, {
+                y: 0,
+                autoAlpha: 1,
+                duration: 0.85,
+                stagger: 0.15,
+                ease: 'power3.out',
+                overwrite: 'auto'
+              });
+            }
           });
 
           /* Trust section stagger + checkmarks drawing */
           gsap.from('#privacy .trust-fact', {
-            x: -16,
+            x: -12,
             autoAlpha: 0,
-            duration: 0.6,
-            stagger: 0.08,
+            duration: 0.65,
+            stagger: 0.07,
             ease: 'power3.out',
-            scrollTrigger: { trigger: '#privacy .trust-facts', start: 'top 86%', once: true }
+            scrollTrigger: { trigger: '#privacy .trust-facts', start: 'top 88%', once: true }
           });
           gsap.fromTo('#privacy .trust-fact svg path',
             { strokeDasharray: 24, strokeDashoffset: 24 },
             {
               strokeDashoffset: 0,
-              duration: 0.5,
-              stagger: 0.08,
+              duration: 0.55,
+              stagger: 0.07,
               ease: 'power2.out',
-              scrollTrigger: { trigger: '#privacy .trust-facts', start: 'top 86%', once: true }
+              scrollTrigger: { trigger: '#privacy .trust-facts', start: 'top 88%', once: true }
             }
           );
 
           /* FAQ details stagger */
           gsap.from('#faq .faq-details', {
-            x: -16,
+            x: -12,
             autoAlpha: 0,
-            duration: 0.7,
-            stagger: 0.08,
+            duration: 0.75,
+            stagger: 0.07,
             ease: 'power3.out',
-            scrollTrigger: { trigger: '#faq .faq-list', start: 'top 86%', once: true }
+            scrollTrigger: { trigger: '#faq .faq-list', start: 'top 88%', once: true }
+          });
+
+          /* FAQ accordion interactive animation */
+          var faqs = [].slice.call(doc.querySelectorAll('.faq-list details'));
+          faqs.forEach(function (details) {
+            var summary = details.querySelector('summary');
+            var wrapper = details.querySelector('.faq-content');
+            if (!summary || !wrapper) return;
+
+            // Set initial state based on open attribute
+            if (!details.hasAttribute('open')) {
+              gsap.set(wrapper, { height: 0, opacity: 0 });
+            } else {
+              gsap.set(wrapper, { height: 'auto', opacity: 1 });
+            }
+
+            summary.addEventListener('click', function (e) {
+              e.preventDefault();
+              var isOpen = details.hasAttribute('open');
+
+              if (!isOpen) {
+                // Open: add attribute first, animate height from 0
+                details.setAttribute('open', '');
+                gsap.set(wrapper, { height: 'auto', opacity: 1 });
+                var naturalHeight = wrapper.offsetHeight;
+                gsap.fromTo(wrapper,
+                  { height: 0, opacity: 0 },
+                  {
+                    height: naturalHeight,
+                    opacity: 1,
+                    duration: 0.35,
+                    ease: 'power2.out',
+                    onComplete: function () {
+                      gsap.set(wrapper, { height: 'auto' });
+                      ScrollTrigger.refresh(); // Refresh ScrollTrigger to adjust for height changes
+                    }
+                  }
+                );
+              } else {
+                // Close: animate height to 0, then remove attribute
+                var currentHeight = wrapper.offsetHeight;
+                gsap.fromTo(wrapper,
+                  { height: currentHeight, opacity: 1 },
+                  {
+                    height: 0,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.inOut',
+                    onComplete: function () {
+                      details.removeAttribute('open');
+                      ScrollTrigger.refresh(); // Refresh ScrollTrigger
+                    }
+                  }
+                );
+              }
+            });
           });
 
           /* 4 — pinned workflow sequence: swap device image per step */
@@ -960,14 +1353,35 @@
             });
           });
 
+          /* CTA stats stagger reveal */
+          gsap.set('.cta__stats .stat-card', { y: 22, autoAlpha: 0 });
+          ScrollTrigger.batch('.cta__stats .stat-card', {
+            start: 'top 88%',
+            once: true,
+            onEnter: function (batch) {
+              gsap.to(batch, {
+                y: 0,
+                autoAlpha: 1,
+                duration: 0.85,
+                stagger: 0.12,
+                ease: 'power3.out',
+                overwrite: 'auto'
+              });
+            }
+          });
+
           ScrollTrigger.refresh();
         } catch (err) { initFallback(); }
       }
 
 
       function initFallback() {
+        root.classList.remove('js-loading');
         /* no GSAP: reveal everything, drive steps with IntersectionObserver */
-        [].slice.call(doc.querySelectorAll('.rise')).forEach(function (el) { el.style.opacity = '1'; });
+        [].slice.call(doc.querySelectorAll('.rise, .stat-card')).forEach(function (el) { el.style.opacity = '1'; });
+        [].slice.call(doc.querySelectorAll('.hero__copy, .hero__actions')).forEach(function (el) { el.style.opacity = '1'; });
+        [].slice.call(doc.querySelectorAll('[data-hero-line]')).forEach(function (el) { el.style.transform = 'none'; });
+        [].slice.call(doc.querySelectorAll('.hero__wall')).forEach(function (el) { el.style.opacity = '0.42'; });
         if ('IntersectionObserver' in win && !isNarrow) {
           var io = new IntersectionObserver(function (es) {
             es.forEach(function (e) { if (e.isIntersecting) setShot(Number(e.target.getAttribute('data-step'))); });
