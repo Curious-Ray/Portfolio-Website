@@ -100,7 +100,7 @@
       {
         "@type": "Question",
         "name": "What browsers are supported?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Google Chrome and Chromium-based browsers that support Chrome Web Store extensions, including Brave, Edge, Arc, and Opera. Firefox and Safari are not currently supported." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Google Chrome and Chromium-based browsers that support Chrome Web Store extensions, including Brave, Edge, Arc, and Opera. Firefox uses a separate Mozilla Add-ons package when available. Safari is not currently supported." }
       }
     ]
   }
@@ -534,7 +534,7 @@
       filter: blur(10px);
     }
 
-    /* autopik-style fan of example AI images (replaces the single screenshot; Civitai placeholders).
+    /* autopik-style fan of example AI images (replaces the single screenshot).
        Each card's base transform lives in --t so :hover can just append scale() and keep the angle. */
     .pl-hero__fan { position: relative; height: 480px; display: grid; place-items: center; }
     .pl-hero__card {
@@ -1228,7 +1228,7 @@
 
         <div class="pl-hero__visual reveal" style="--d:300ms">
           <div class="pl-hero__glow" aria-hidden="true"></div>
-          <!-- autopik-style fan of example AI images (Civitai placeholders — swap for real Magnific output later) -->
+          <!-- autopik-style fan of example AI images -->
           <div class="pl-hero__fan">
             <img class="pl-hero__card pl-hero__card--l" src="assets/civitai-placeholders/editorial-portrait.jpg" alt="" width="420" height="560" />
             <img class="pl-hero__card pl-hero__card--r" src="assets/civitai-placeholders/character-poster.jpg" alt="" width="420" height="560" />
@@ -1290,7 +1290,7 @@
           <p class="pl-feature__eyebrow">01 · BULK QUEUE</p>
           <h3 class="pl-feature__title">Bulk generation on autopilot</h3>
           <p class="pl-feature__body">Paste 10 prompts or 500. The queue runs them one after another inside your own Magnific session — you press start once and it handles the rest.</p>
-          <ul class="pl-feature__list"><li>One prompt per line, no setup</li><li>Runs in order, unattended</li><li>Keeps going even if you switch tabs</li></ul>
+          <ul class="pl-feature__list"><li>One prompt per line, no setup</li><li>Runs in order with live progress</li><li>Works best with the Magnific tab visible</li></ul>
         </div>
       </div>
 
@@ -1448,39 +1448,38 @@
       <h2 class="section__title reveal" style="--d:60ms">Batch the kinds of images <span class="accent">people already chase.</span></h2>
       <div class="pl-gallery reveal">
         <figure class="pl-gallery__tile" data-source="https://civitai.com/images/9450093">
-          <img src="assets/civitai-placeholders/character-poster.jpg" alt="Temporary Civitai placeholder for cinematic character poster batches" width="960" height="960" loading="lazy" decoding="async">
-          <figcaption><span>Civitai placeholder</span><b>Cinematic character posters</b></figcaption>
+          <img src="assets/civitai-placeholders/character-poster.jpg" alt="Cinematic character poster batch example" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Batch idea</span><b>Cinematic character posters</b></figcaption>
         </figure>
         <figure class="pl-gallery__tile" data-source="https://civitai.com/images/64399178">
-          <img src="assets/civitai-placeholders/editorial-portrait.jpg" alt="Temporary Civitai placeholder for editorial portrait batches" width="960" height="960" loading="lazy" decoding="async">
-          <figcaption><span>Civitai placeholder</span><b>Editorial portraits</b></figcaption>
+          <img src="assets/civitai-placeholders/editorial-portrait.jpg" alt="Editorial portrait batch example" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Batch idea</span><b>Editorial portraits</b></figcaption>
         </figure>
         <figure class="pl-gallery__tile" data-source="https://civitai.com/images/11871535">
-          <img src="assets/civitai-placeholders/fantasy-environment.jpg" alt="Temporary Civitai placeholder for fantasy environment batches" width="960" height="960" loading="lazy" decoding="async">
-          <figcaption><span>Civitai placeholder</span><b>Fantasy environments</b></figcaption>
+          <img src="assets/civitai-placeholders/fantasy-environment.jpg" alt="Fantasy environment batch example" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Batch idea</span><b>Fantasy environments</b></figcaption>
         </figure>
         <figure class="pl-gallery__tile" data-source="https://civitai.com/images/64517382">
-          <img src="assets/civitai-placeholders/product-mockup.jpg" alt="Temporary Civitai placeholder for product-style mockup batches" width="960" height="960" loading="lazy" decoding="async">
-          <figcaption><span>Civitai placeholder</span><b>Product-style mockups</b></figcaption>
+          <img src="assets/civitai-placeholders/product-mockup.jpg" alt="Product-style mockup batch example" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Batch idea</span><b>Product-style mockups</b></figcaption>
         </figure>
         <figure class="pl-gallery__tile" data-source="https://civitai.com/images/718471">
-          <img src="assets/civitai-placeholders/anime-key-art.jpg" alt="Temporary Civitai placeholder for anime key art batches" width="960" height="960" loading="lazy" decoding="async">
-          <figcaption><span>Civitai placeholder</span><b>Anime key art</b></figcaption>
+          <img src="assets/civitai-placeholders/anime-key-art.jpg" alt="Anime key art batch example" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Batch idea</span><b>Anime key art</b></figcaption>
         </figure>
         <figure class="pl-gallery__tile" data-source="https://civitai.com/images/65653762">
-          <img src="assets/civitai-placeholders/surreal-concept.jpg" alt="Temporary Civitai placeholder for surreal concept image batches" width="960" height="960" loading="lazy" decoding="async">
-          <figcaption><span>Civitai placeholder</span><b>Surreal concept shots</b></figcaption>
+          <img src="assets/civitai-placeholders/surreal-concept.jpg" alt="Surreal concept image batch example" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Batch idea</span><b>Surreal concept shots</b></figcaption>
         </figure>
         <figure class="pl-gallery__tile" data-source="https://civitai.com/images/11029293">
-          <img src="assets/civitai-placeholders/tech-character.jpg" alt="Temporary Civitai placeholder for futuristic tech concept batches" width="960" height="960" loading="lazy" decoding="async">
-          <figcaption><span>Civitai placeholder</span><b>Futuristic tech concepts</b></figcaption>
+          <img src="assets/civitai-placeholders/tech-character.jpg" alt="Futuristic tech concept batch example" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Batch idea</span><b>Futuristic tech concepts</b></figcaption>
         </figure>
         <figure class="pl-gallery__tile" data-source="https://civitai.com/images/10556898">
-          <img src="assets/civitai-placeholders/stock-background.jpg" alt="Temporary Civitai placeholder for stock-ready background batches" width="960" height="960" loading="lazy" decoding="async">
-          <figcaption><span>Civitai placeholder</span><b>Stock-ready backgrounds</b></figcaption>
+          <img src="assets/civitai-placeholders/stock-background.jpg" alt="Stock-ready background batch example" width="960" height="960" loading="lazy" decoding="async">
+          <figcaption><span>Batch idea</span><b>Stock-ready backgrounds</b></figcaption>
         </figure>
       </div>
-      <p class="pl-gallery__note">Temporary placeholders from Civitai popular-all-time, filtered with nsfw=false. Replace these with your own generated Magnific outputs before launch.</p>
     </div>
   </section>
 
@@ -1496,7 +1495,7 @@
           <div class="pl-compare__cell pl-compare__cell--head">With Magnific Automation</div>
         </div>
         <div class="pl-compare__row"><div class="pl-compare__cell pl-compare__cell--label">Your attention</div><div class="pl-compare__cell pl-compare__cell--bad">Glued to the tab, one click at a time</div><div class="pl-compare__cell pl-compare__cell--good">Press start once, walk away</div></div>
-        <div class="pl-compare__row"><div class="pl-compare__cell pl-compare__cell--label">200 generations</div><div class="pl-compare__cell pl-compare__cell--bad">Hours of paste → wait → download</div><div class="pl-compare__cell pl-compare__cell--good">One queue, runs in the background</div></div>
+        <div class="pl-compare__row"><div class="pl-compare__cell pl-compare__cell--label">200 generations</div><div class="pl-compare__cell pl-compare__cell--bad">Hours of paste → wait → download</div><div class="pl-compare__cell pl-compare__cell--good">One queue with live progress</div></div>
         <div class="pl-compare__row"><div class="pl-compare__cell pl-compare__cell--label">Organization</div><div class="pl-compare__cell pl-compare__cell--bad">Random filenames, easy to lose track</div><div class="pl-compare__cell pl-compare__cell--good">Numbered files + CSV of every prompt</div></div>
         <div class="pl-compare__row"><div class="pl-compare__cell pl-compare__cell--label">If something fails</div><div class="pl-compare__cell pl-compare__cell--bad">Start the batch over</div><div class="pl-compare__cell pl-compare__cell--good">Resume where it stopped</div></div>
       </div>
@@ -1564,7 +1563,7 @@
         <div class="pl-faq__item reveal">
           <button class="pl-faq__q" aria-expanded="false">What browsers are supported?</button>
           <div class="pl-faq__a-wrapper">
-            <p class="pl-faq__a">Google Chrome and any Chromium-based browser that supports Chrome Web Store extensions (Brave, Edge, Arc, Opera). Firefox and Safari are not currently supported.</p>
+            <p class="pl-faq__a">Google Chrome and Chromium-based browsers that support Chrome Web Store extensions are supported, including Brave, Edge, Arc, and Opera. Firefox uses a separate Mozilla Add-ons package when available. Safari is not currently supported.</p>
           </div>
         </div>
         <div class="pl-faq__item reveal">

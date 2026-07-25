@@ -12,7 +12,7 @@
       "laughs": 1601,
       "cries": 840
     },
-    "note": "Temporary placeholder from Civitai popular-all-time, nsfw=false API query. Replace with owned/generated images before production launch."
+    "note": "Example image source used for public batch-idea gallery attribution."
   },
   {
     "file": "editorial-portrait.jpg",
@@ -27,7 +27,7 @@
       "laughs": 2077,
       "cries": 1260
     },
-    "note": "Temporary placeholder from Civitai popular-all-time, nsfw=false API query. Replace with owned/generated images before production launch."
+    "note": "Example image source used for public batch-idea gallery attribution."
   },
   {
     "file": "fantasy-environment.jpg",
@@ -42,7 +42,7 @@
       "laughs": 1743,
       "cries": 917
     },
-    "note": "Temporary placeholder from Civitai popular-all-time, nsfw=false API query. Replace with owned/generated images before production launch."
+    "note": "Example image source used for public batch-idea gallery attribution."
   },
   {
     "file": "product-mockup.jpg",
@@ -57,7 +57,7 @@
       "laughs": 1820,
       "cries": 1322
     },
-    "note": "Temporary placeholder from Civitai popular-all-time, nsfw=false API query. Replace with owned/generated images before production launch."
+    "note": "Example image source used for public batch-idea gallery attribution."
   },
   {
     "file": "anime-key-art.jpg",
@@ -72,7 +72,7 @@
       "laughs": 1530,
       "cries": 943
     },
-    "note": "Temporary placeholder from Civitai popular-all-time, nsfw=false API query. Replace with owned/generated images before production launch."
+    "note": "Example image source used for public batch-idea gallery attribution."
   },
   {
     "file": "surreal-concept.jpg",
@@ -87,7 +87,7 @@
       "laughs": 1593,
       "cries": 1078
     },
-    "note": "Temporary placeholder from Civitai popular-all-time, nsfw=false API query. Replace with owned/generated images before production launch."
+    "note": "Example image source used for public batch-idea gallery attribution."
   },
   {
     "file": "tech-character.jpg",
@@ -102,7 +102,7 @@
       "laughs": 1544,
       "cries": 723
     },
-    "note": "Temporary placeholder from Civitai popular-all-time, nsfw=false API query. Replace with owned/generated images before production launch."
+    "note": "Example image source used for public batch-idea gallery attribution."
   },
   {
     "file": "stock-background.jpg",
@@ -117,6 +117,6 @@
       "laughs": 1399,
       "cries": 744
     },
-    "note": "Temporary placeholder from Civitai popular-all-time, nsfw=false API query. Replace with owned/generated images before production launch."
+    "note": "Example image source used for public batch-idea gallery attribution."
   }
 ]
