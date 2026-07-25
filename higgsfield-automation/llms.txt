@@ -10,6 +10,8 @@ Higgsfield Automation helps creators import prompts, choose supported Higgsfield
 - [AI reference](https://www.deepakthapa.dev/higgsfield-automation/ai.html)
 - [Guide](https://www.deepakthapa.dev/higgsfield-automation/guide.html)
 - [Privacy policy](https://www.deepakthapa.dev/higgsfield-automation/privacy.html)
+- [Terms of use](https://www.deepakthapa.dev/higgsfield-automation/terms.html)
+- [Contact and support](https://www.deepakthapa.dev/higgsfield-automation/contact.html)
 - [Full AI reference](https://www.deepakthapa.dev/higgsfield-automation/llms-full.txt)
 - [Selector configuration](https://higgsfield-automation.pages.dev/selectors.json)
 - [Chrome Web Store](https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc)

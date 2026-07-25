@@ -952,8 +952,9 @@
         <a href="https://deepakthapa.dev">deepakthapa.dev</a>
         <a href="guide.html">Guide</a>
         <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
         <a href="ai.html">AI Reference</a>
-        <a href="mailto:thapadeepak726@gmail.com">Support</a>
         <a href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener">Chrome Web Store</a>
       </div>
     </div>
@@ -1081,7 +1082,7 @@
       alignSteps();
       win.addEventListener('resize', alignSteps, { passive: true });
 
-      /* ---- mode cards: cursor-following glow (optimized & lerped for premium feel) ---- */
+      /* ---- mode cards: cursor-following glow (optimized and lerped for a polished feel) ---- */
       var modeCards = [].slice.call(doc.querySelectorAll('.mode-card'));
       modeCards.forEach(function (card) {
         var rect = null;
@@ -1136,7 +1137,7 @@
         win.addEventListener('scroll', function () { rect = null; }, { passive: true });
       });
 
-      /* ---- magnetic button content (tactile premium interaction, no jitter) ---- */
+      /* ---- magnetic button content (tactile interaction, no jitter) ---- */
       var primaryButtons = [].slice.call(doc.querySelectorAll('.btn--primary'));
       primaryButtons.forEach(function (btn) {
         if (isTouch) return;
@@ -1225,7 +1226,7 @@
             gsap.ticker.lagSmoothing(0);
           }
 
-          /* 1 — hero entrance timeline (refined with power4.out and premium timing) */
+          /* 1 — hero entrance timeline (refined with power4.out timing) */
           var tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
           tl.from('[data-hero-line]', { yPercent: 115, duration: 1.0, stagger: 0.08 })
             .from('.hero__copy', { y: 16, autoAlpha: 0, duration: 0.8 }, 0.15)
