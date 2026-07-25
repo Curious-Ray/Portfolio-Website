@@ -1,14 +1,13 @@
 User-agent: *
-Allow: /
+Allow: /magnific-automation/
 
 User-agent: OAI-SearchBot
-Allow: /
+Allow: /magnific-automation/
 
 User-agent: GPTBot
-Allow: /
+Allow: /magnific-automation/
 
 User-agent: ChatGPT-User
-Allow: /
+Allow: /magnific-automation/
 
-Sitemap: https://www.deepakthapa.dev/sitemap.xml
 Sitemap: https://www.deepakthapa.dev/magnific-automation/sitemap.xml
