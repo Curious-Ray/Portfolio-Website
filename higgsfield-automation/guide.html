@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>User Guide - Higgsfield Automation</title>
+  <meta name="description" content="Guide for running Higgsfield prompt batches, importing files, using reference images, organizing downloads, and exporting reports with Higgsfield Automation.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.deepakthapa.dev/higgsfield-automation/guide.html">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg: #070906;
+      --panel: #11160f;
+      --ink: #f3f7ec;
+      --muted: #aeb8a4;
+      --soft: #828e78;
+      --line: rgba(255, 255, 255, 0.12);
+      --accent: #d8ff05;
+      --accent-soft: rgba(216, 255, 5, 0.08);
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      padding: 48px 20px 72px;
+    }
+    main { max-width: 840px; margin: 0 auto; }
+    a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .brand { align-items: center; display: flex; gap: 12px; margin-bottom: 28px; }
+    .brand img { border-radius: 8px; height: 38px; width: 38px; }
+    .brand a { color: var(--ink); font-weight: 800; text-decoration: none; }
+    .eyebrow {
+      color: var(--accent);
+      font: 700 12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: 0.08em;
+      margin: 0 0 16px;
+      text-transform: uppercase;
+    }
+    h1 { font-size: clamp(36px, 7vw, 64px); line-height: 1.02; letter-spacing: 0; margin: 0 0 18px; }
+    h2 { border-top: 1px solid var(--line); font-size: 23px; margin: 40px 0 14px; padding-top: 28px; }
+    h3 { color: var(--ink); font-size: 17px; margin: 28px 0 10px; }
+    p, li, td { color: var(--muted); }
+    ul, ol { padding-left: 22px; }
+    li + li { margin-top: 7px; }
+    .lead { color: var(--ink); font-size: 20px; }
+    .note {
+      background: var(--accent-soft);
+      border: 1px solid rgba(216, 255, 5, 0.22);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      color: var(--ink);
+      margin: 22px 0;
+      padding: 14px 16px;
+    }
+    .modes { display: grid; gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 18px 0; }
+    .mode { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+    .mode b { color: var(--ink); display: block; margin-bottom: 5px; }
+    .mode p { margin: 0; }
+    code {
+      background: var(--accent-soft);
+      border: 1px solid rgba(216, 255, 5, 0.2);
+      border-radius: 5px;
+      color: var(--accent);
+      padding: 1px 5px;
+    }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { border: 1px solid var(--line); padding: 11px; text-align: left; vertical-align: top; }
+    th { background: var(--panel); color: var(--ink); }
+    footer { border-top: 1px solid var(--line); color: var(--soft); font-size: 13px; margin-top: 48px; padding-top: 20px; }
+    @media (max-width: 660px) { .modes { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="brand" aria-label="Product">
+      <img src="assets/logo.png" alt="">
+      <a href="./">Higgsfield Automation</a>
+    </nav>
+
+    <p class="eyebrow">User guide</p>
+    <h1>From prompt list to organized outputs.</h1>
+    <p class="lead">
+      Higgsfield Automation turns prompts into a queue and runs them through the Higgsfield page open in your browser.
+      You choose the model and generation settings on higgsfield.ai; the extension handles the repeated queue work.
+    </p>
+
+    <div class="note">
+      <strong>Before the first run:</strong> sign in to higgsfield.ai, open the Image or Video workspace,
+      choose the settings on the page, and then open the extension side panel.
+    </div>
+
+    <h2>Choose a workflow</h2>
+    <div class="modes">
+      <section class="mode">
+        <b>Text to Video</b>
+        <p>Runs one or more text prompts through the Higgsfield video workspace.</p>
+      </section>
+      <section class="mode">
+        <b>Frame to Video</b>
+        <p>Uses uploaded start frames, with optional end frames, for video prompts.</p>
+      </section>
+      <section class="mode">
+        <b>Text to Image</b>
+        <p>Runs text prompts through the Higgsfield image workspace and applies the selected image batch size.</p>
+      </section>
+      <section class="mode">
+        <b>Image to Image</b>
+        <p>Pairs uploaded reference images with prompts in the order shown in the image rack.</p>
+      </section>
+    </div>
+
+    <h2>Add prompts</h2>
+    <h3>Type prompts</h3>
+    <p>Enter one prompt per blank-line-separated block. A prompt may span several lines; a completely blank line starts the next prompt.</p>
+
+    <h3>Import prompts</h3>
+    <p>Use the import controls above the prompt field:</p>
+    <ul>
+      <li>TXT files are split into prompt blocks.</li>
+      <li>CSV, XLS, and XLSX files open a preview where you can choose the sheet and prompt column.</li>
+      <li>The importer suggests the column containing the most usable text.</li>
+      <li>Choose Replace to start a new list or Append to add to the prompts already present.</li>
+    </ul>
+
+    <h2>Configure the batch</h2>
+    <h3>Outputs per prompt</h3>
+    <table>
+      <thead>
+        <tr><th>Workflow</th><th>Behavior</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Image workflows</td><td>The extension adjusts Higgsfield's image Batch Size control and submits each prompt once.</td></tr>
+        <tr><td>Video workflows</td><td>The extension submits the video prompt the selected number of times.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Concurrency and pacing</h3>
+    <ul>
+      <li><strong>Concurrent prompts</strong> controls how many generations may be resolving at the same time.</li>
+      <li><strong>Delay range</strong> adds randomized pacing between submissions.</li>
+      <li><strong>Wait limits</strong> set ceilings for detecting a started generation and waiting for it to finish. A generation continues immediately when it completes; these values are maximums.</li>
+    </ul>
+
+    <h3>Retries</h3>
+    <p>If a generation does not start or cannot be resolved, the extension retries according to your settings. The queue and report distinguish submission retries from result or download retries.</p>
+
+    <h2>Use reference images</h2>
+    <h3>Pair images manually</h3>
+    <p>Upload images, drag them into the intended order, and review the prompt-to-image preview before starting. Batch validation warns when a workflow is missing required images.</p>
+
+    <h3>Match character images automatically</h3>
+    <p>
+      In Image to Image mode, name uploaded files after the characters they represent. When enabled, a prompt that
+      mentions the filename's character name receives that image as a reference.
+    </p>
+
+    <h3>Chain from the previous output</h3>
+    <p>Start a prompt with <code>&gt;&gt;</code> to use the previous output as the next prompt's reference:</p>
+    <ul>
+      <li>For video, the previous result can provide the next start frame.</li>
+      <li>For image workflows, the previous image becomes the next reference.</li>
+    </ul>
+
+    <h2>Downloads and reports</h2>
+    <ul>
+      <li><strong>Auto-download</strong> saves results after they finish.</li>
+      <li><strong>Folder name</strong> places files in a subfolder of your browser's Downloads directory.</li>
+      <li><strong>Filename mode</strong> can use prompt-based names or retain the original source name, depending on the selected option.</li>
+      <li><strong>CSV report</strong> records prompt status, retry stages, output details, filenames, and completion information.</li>
+    </ul>
+
+    <h2>Stop and resume</h2>
+    <p>
+      Cancel stops new work and preserves a compatible resume point. Resume is offered only while the prompt,
+      image, mode, and relevant settings signature still matches the interrupted batch. Editing that batch starts a fresh run.
+    </p>
+
+    <h2>Troubleshooting</h2>
+    <ul>
+      <li>Keep the intended Higgsfield workspace open and signed in.</li>
+      <li>If the extension cannot reach the tab, refresh the Higgsfield page and try again.</li>
+      <li>If selector configuration cannot load, open <a href="https://higgsfield-automation.pages.dev/selectors.json" target="_blank" rel="noopener">the Cloudflare configuration URL</a> in the same browser profile. Network filters must allow that endpoint.</li>
+      <li>Review the action log for the failed prompt and retry stage before restarting a batch.</li>
+    </ul>
+
+    <footer>
+      Operated independently and not affiliated with Higgsfield.
+      <a href="privacy.html">Privacy policy</a> ·
+      <a href="mailto:thapadeepak726@gmail.com">Contact</a>
+    </footer>
+  </main>
+</body>
+</html>

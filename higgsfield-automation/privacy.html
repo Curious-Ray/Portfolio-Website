@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy Policy - Higgsfield Automation</title>
+  <meta name="description" content="Privacy policy for Higgsfield Automation, including user data collection, handling, storage, retention, and sharing.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.deepakthapa.dev/higgsfield-automation/privacy.html">
+  <link rel="icon" type="image/png" href="assets/logo.png">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    :root {
+      --bg: #070906;
+      --panel: #11160f;
+      --ink: #f3f7ec;
+      --muted: #aeb8a4;
+      --soft: #828e78;
+      --line: rgba(255, 255, 255, 0.12);
+      --accent: #d8ff05;
+      --accent-soft: rgba(216, 255, 5, 0.08);
+    }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      padding: 48px 20px 72px;
+    }
+    main { max-width: 980px; margin: 0 auto; }
+    a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+    .brand img { width: 38px; height: 38px; border-radius: 8px; }
+    .brand a { color: var(--ink); font-weight: 800; text-decoration: none; }
+    .eyebrow {
+      color: var(--accent);
+      font: 700 12px/1.2 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      letter-spacing: 0.08em;
+      margin: 0 0 16px;
+      text-transform: uppercase;
+    }
+    h1 { font-size: clamp(36px, 7vw, 64px); line-height: 1.02; letter-spacing: 0; margin: 0 0 12px; }
+    h2 { border-top: 1px solid var(--line); font-size: 22px; margin: 38px 0 14px; padding-top: 26px; }
+    p, li { color: var(--muted); }
+    ul, ol { padding-left: 22px; }
+    li + li { margin-top: 7px; }
+    .updated { color: var(--soft); font-size: 14px; margin: 0 0 28px; }
+    .notice {
+      background: var(--accent-soft);
+      border: 1px solid rgba(216, 255, 5, 0.24);
+      border-left: 4px solid var(--accent);
+      border-radius: 8px;
+      color: var(--ink);
+      margin: 0 0 30px;
+      padding: 16px 18px;
+    }
+    .table-wrap { overflow-x: auto; }
+    table { border-collapse: collapse; min-width: 860px; width: 100%; }
+    th, td { border: 1px solid var(--line); padding: 12px; text-align: left; vertical-align: top; }
+    th { background: var(--panel); color: var(--ink); font-size: 13px; }
+    td { color: var(--muted); font-size: 14px; }
+    code {
+      background: var(--accent-soft);
+      border: 1px solid rgba(216, 255, 5, 0.2);
+      border-radius: 5px;
+      color: var(--accent);
+      padding: 1px 5px;
+    }
+    footer { border-top: 1px solid var(--line); color: var(--soft); font-size: 13px; margin-top: 46px; padding-top: 20px; }
+  </style>
+</head>
+<body>
+  <main>
+    <nav class="brand" aria-label="Product">
+      <img src="assets/logo.png" alt="">
+      <a href="./">Higgsfield Automation</a>
+    </nav>
+
+    <p class="eyebrow">Privacy policy</p>
+    <h1>Your data, plainly explained.</h1>
+    <p class="updated">Last updated: 25 July 2026</p>
+
+    <div class="notice">
+      <strong>Prominent disclosure:</strong> Higgsfield Automation handles only the data needed to sign you in to the extension,
+      run the prompts you provide on higgsfield.ai, remember your local settings, and download generated results. It does not
+      use analytics, advertising SDKs, tracking pixels, or third-party tracking.
+    </div>
+
+    <h2>1. What the extension does</h2>
+    <p>
+      Higgsfield Automation is a browser extension that automates bulk image and video generation on
+      <a href="https://higgsfield.ai" target="_blank" rel="noopener">higgsfield.ai</a>. It lets you enter or import prompts,
+      optionally add reference images, run those prompts through the Higgsfield page open in your browser, and download
+      finished images or videos to your computer.
+    </p>
+
+    <h2>2. User data collected or handled</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Data category</th>
+            <th>What is handled</th>
+            <th>How it is used</th>
+            <th>Where it is stored</th>
+            <th>Who receives it</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Authentication information</td>
+            <td>Email address, Firebase user ID, Firebase ID token, email verification state, and the basic profile returned for Google sign-in. For email/password sign-up, Firebase stores the password hash; the extension developer does not receive the plaintext password.</td>
+            <td>To sign you in to the extension, keep the extension session active, verify email status, and recognize the same extension user across sessions.</td>
+            <td>Google Firebase Authentication servers and browser IndexedDB used by the Firebase Web Extension SDK.</td>
+            <td>Google Firebase Authentication and Google OAuth services.</td>
+          </tr>
+          <tr>
+            <td>Personally identifiable information</td>
+            <td>Email address and, when Google sign-in is used, the display name and profile picture URL returned by Google.</td>
+            <td>Only for extension sign-in and displaying the signed-in account in the side panel.</td>
+            <td>Google Firebase Authentication servers and browser IndexedDB.</td>
+            <td>Google Firebase Authentication and Google OAuth services.</td>
+          </tr>
+          <tr>
+            <td>User-provided and website content</td>
+            <td>Prompts typed into the side panel, prompts imported from TXT/CSV/XLS/XLSX files, optional reference images, filenames, generated media URLs, and generated images or videos returned by higgsfield.ai.</td>
+            <td>To submit the requested generation jobs, monitor progress, match outputs to prompts, produce a local report, and download the resulting files.</td>
+            <td>Prompt and imported-file content is handled locally by the extension while you use it. Generated downloads are stored in your browser's Downloads folder. Selected reference images are represented locally during the current session.</td>
+            <td>higgsfield.ai receives prompts and selected reference images when you start a run. Generated media is downloaded from Higgsfield or its media hosts through your browser session.</td>
+          </tr>
+          <tr>
+            <td>Extension settings and local activity state</td>
+            <td>Selected mode, output count, pacing and retry settings, concurrency, wait limits, folder and filename preferences, interface language, welcome preference, resume state, and cached selector configuration.</td>
+            <td>To remember your preferences, support resume behavior, and keep the automation compatible with the Higgsfield page.</td>
+            <td>Browser extension storage on your device, primarily <code>chrome.storage.local</code>. The selector configuration contains no prompt or account content.</td>
+            <td>Settings are not sent to the extension developer. Selector configuration requests go to the developer-operated Cloudflare Pages endpoint and do not attach prompts, files, generated media, email addresses, Firebase IDs, or Higgsfield credentials.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>3. Data not collected</h2>
+    <ul>
+      <li>The extension does not collect general browsing history or track websites outside higgsfield.ai.</li>
+      <li>The extension does not use analytics, telemetry, advertising SDKs, or third-party tracking.</li>
+      <li>The extension does not store, request, or transmit your higgsfield.ai login credentials.</li>
+      <li>The extension does not send your prompts, settings, generated files, or download logs to a developer-operated analytics service.</li>
+      <li>The extension does not collect location, health, or personal communications data.</li>
+    </ul>
+
+    <h2>4. How data is collected</h2>
+    <ul>
+      <li><strong>Extension sign-in:</strong> you enter an email/password or start Google sign-in. Google Firebase Authentication and Google OAuth handle authentication.</li>
+      <li><strong>Prompt entry and import:</strong> you type prompts or select a TXT/CSV/XLS/XLSX file. The extension reads the selected file locally to extract prompt text.</li>
+      <li><strong>Reference images:</strong> you select local image files for workflows that use images. The extension uses them only for the generation run you start.</li>
+      <li><strong>Higgsfield automation:</strong> when you click Run, the extension applies your prompts and images to the higgsfield.ai page using your existing browser session.</li>
+      <li><strong>Settings:</strong> when you change extension settings, they are saved in extension storage on your device.</li>
+    </ul>
+
+    <h2>5. User consent</h2>
+    <p>
+      Data handling begins only after you take the corresponding action: signing in, importing a prompt file, selecting
+      reference images, changing settings, or starting a run. Removing the extension stops further data handling by the extension.
+    </p>
+
+    <h2>6. How data is used</h2>
+    <ul>
+      <li>Authentication information is used only to operate extension sign-in and maintain that session.</li>
+      <li>Prompts, imported files, and reference images are used only for the Higgsfield generation workflow you request.</li>
+      <li>Generated media URLs are used to identify completed outputs and download them.</li>
+      <li>Folder and filename preferences are used only to organize files in your Downloads folder.</li>
+      <li>Settings, resume state, and cached selector configuration are used only to operate the extension.</li>
+    </ul>
+
+    <h2>7. Storage and retention</h2>
+    <ul>
+      <li><strong>Firebase Authentication:</strong> Firebase retains authentication records while the associated extension account exists, unless deleted earlier.</li>
+      <li><strong>Browser IndexedDB:</strong> Firebase stores a local sign-in session so you do not need to sign in every time.</li>
+      <li><strong>Extension storage:</strong> settings, preferences, resume state, and selector cache stay on your device until reset, extension data is cleared, or the extension is removed.</li>
+      <li><strong>Queue and action log:</strong> active run state is maintained by the extension while needed for the current workflow and can be cleared through the interface or by removing extension data.</li>
+      <li><strong>Downloads:</strong> generated files remain in your local Downloads folder until you delete them.</li>
+    </ul>
+
+    <h2>8. Sharing and disclosure</h2>
+    <p>The extension shares data only as needed to provide its stated functionality:</p>
+    <ul>
+      <li><strong>Google Firebase Authentication and Google OAuth:</strong> receive authentication information when you sign in, create an extension account, sign out, verify email, or refresh the session.</li>
+      <li><strong>higgsfield.ai:</strong> receives the prompts and reference images you choose to run and returns the generated media.</li>
+      <li><strong>Developer-operated hosting:</strong> Vercel serves the official public pages at deepakthapa.dev. Cloudflare Pages serves the extension's selector configuration. These requests do not attach your prompts, images, generated media, email address, Firebase user ID, Higgsfield credentials, or browsing history. As with normal HTTPS hosting, Vercel or Cloudflare may process standard request metadata such as IP address, user agent, timestamp, and requested URL for security and delivery.</li>
+    </ul>
+    <p>The extension does not provide user data to advertising networks, data brokers, analytics providers, or unrelated third parties.</p>
+
+    <h2>9. Network requests</h2>
+    <ol>
+      <li>Requests to <strong>higgsfield.ai</strong> and its media hosts, driven by your existing Higgsfield browser session and the settings selected on that page.</li>
+      <li>Requests to <strong>Google Firebase Authentication and Google OAuth</strong> hosts only for sign-in and session management.</li>
+      <li>Requests to <strong>www.deepakthapa.dev</strong> when you open public product or support pages.</li>
+      <li>Requests to <strong>higgsfield-automation.pages.dev</strong> for selector configuration. Selector requests do not include prompts or account content.</li>
+    </ol>
+
+    <h2>10. Security</h2>
+    <ul>
+      <li>Network requests made by the extension use HTTPS.</li>
+      <li>The extension does not put prompts, authentication tokens, or user identifiers in query strings sent to developer-operated endpoints.</li>
+      <li>The extension does not execute remote code. Remote selector configuration is JSON data, not executable JavaScript.</li>
+    </ul>
+
+    <h2>11. User control and deletion</h2>
+    <ul>
+      <li>You can sign out from the side panel.</li>
+      <li>You can reset extension settings from the Settings tab.</li>
+      <li>You can remove local extension data by clearing extension storage or removing the extension.</li>
+      <li>You can delete generated files from your Downloads folder at any time.</li>
+      <li>For deletion of Firebase Authentication records associated with your extension sign-in, contact the developer below.</li>
+    </ul>
+
+    <h2>12. Children</h2>
+    <p>The extension is intended for users 18 and older and does not knowingly collect data from children.</p>
+
+    <h2>13. Changes to this policy</h2>
+    <p>Changes will be posted at this URL with an updated date.</p>
+
+    <h2>14. Contact</h2>
+    <p>Questions or deletion requests: <a href="mailto:thapadeepak726@gmail.com">thapadeepak726@gmail.com</a></p>
+
+    <footer>
+      Operated independently and not affiliated with Higgsfield. <a href="./">Return to the product page</a>.
+    </footer>
+  </main>
+</body>
+</html>
