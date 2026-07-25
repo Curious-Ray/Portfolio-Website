@@ -8,6 +8,7 @@ Magnific Automation is a browser automation tool for creators who need to run re
 
 - [Landing page](https://www.deepakthapa.dev/magnific-automation)
 - [AI reference](https://www.deepakthapa.dev/magnific-automation/ai.html)
+- [Full LLM reference](https://www.deepakthapa.dev/magnific-automation/llms-full.txt)
 - [Privacy policy](https://www.deepakthapa.dev/magnific-automation/privacy.html)
 - [Terms](https://www.deepakthapa.dev/magnific-automation/terms.html)
 - [Refund policy](https://www.deepakthapa.dev/magnific-automation/refund.html)
@@ -30,4 +31,4 @@ Magnific Automation is an independent Chrome extension by Deepak Thapa that lets
 
 ## Last updated
 
-2026-07-04
+2026-07-25
