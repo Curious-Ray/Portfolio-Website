@@ -1,0 +1,31 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/magnific-automation/ai.html",
+      "destination": "/magnific-automation/ai",
+      "permanent": true
+    },
+    {
+      "source": "/magnific-automation/privacy.html",
+      "destination": "/magnific-automation/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/magnific-automation/terms.html",
+      "destination": "/magnific-automation/terms",
+      "permanent": true
+    },
+    {
+      "source": "/magnific-automation/contact.html",
+      "destination": "/magnific-automation/contact",
+      "permanent": true
+    },
+    {
+      "source": "/magnific-automation/refund.html",
+      "destination": "/magnific-automation/refund",
+      "permanent": true
+    }
+  ]
+}

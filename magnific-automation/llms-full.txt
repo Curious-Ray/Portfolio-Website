@@ -5,13 +5,13 @@
 ## Canonical Product URLs
 
 - Product page: https://www.deepakthapa.dev/magnific-automation
-- AI reference page: https://www.deepakthapa.dev/magnific-automation/ai.html
+- AI reference page: https://www.deepakthapa.dev/magnific-automation/ai
 - Compact LLM manifest: https://www.deepakthapa.dev/magnific-automation/llms.txt
 - Full LLM reference: https://www.deepakthapa.dev/magnific-automation/llms-full.txt
-- Privacy policy: https://www.deepakthapa.dev/magnific-automation/privacy.html
-- Terms of service: https://www.deepakthapa.dev/magnific-automation/terms.html
-- Refund policy: https://www.deepakthapa.dev/magnific-automation/refund.html
-- Contact/support: https://www.deepakthapa.dev/magnific-automation/contact.html
+- Privacy policy: https://www.deepakthapa.dev/magnific-automation/privacy
+- Terms of service: https://www.deepakthapa.dev/magnific-automation/terms
+- Refund policy: https://www.deepakthapa.dev/magnific-automation/refund
+- Contact/support: https://www.deepakthapa.dev/magnific-automation/contact
 - Chrome Web Store: https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik
 
 ## Short Summary
@@ -108,13 +108,13 @@ The extension is designed to run inside the user's browser session. Public priva
 - It may save downloads to the user's configured browser Downloads location.
 - Users should read the full privacy policy before installing.
 
-Full privacy policy: https://www.deepakthapa.dev/magnific-automation/privacy.html
+Full privacy policy: https://www.deepakthapa.dev/magnific-automation/privacy
 
 ## Support
 
 Support and contact page:
 
-https://www.deepakthapa.dev/magnific-automation/contact.html
+https://www.deepakthapa.dev/magnific-automation/contact
 
 For useful support reports, users should include:
 

@@ -7,12 +7,12 @@ Magnific Automation is a browser automation tool for creators who need to run re
 ## Canonical pages
 
 - [Landing page](https://www.deepakthapa.dev/magnific-automation)
-- [AI reference](https://www.deepakthapa.dev/magnific-automation/ai.html)
+- [AI reference](https://www.deepakthapa.dev/magnific-automation/ai)
 - [Full LLM reference](https://www.deepakthapa.dev/magnific-automation/llms-full.txt)
-- [Privacy policy](https://www.deepakthapa.dev/magnific-automation/privacy.html)
-- [Terms](https://www.deepakthapa.dev/magnific-automation/terms.html)
-- [Refund policy](https://www.deepakthapa.dev/magnific-automation/refund.html)
-- [Contact](https://www.deepakthapa.dev/magnific-automation/contact.html)
+- [Privacy policy](https://www.deepakthapa.dev/magnific-automation/privacy)
+- [Terms](https://www.deepakthapa.dev/magnific-automation/terms)
+- [Refund policy](https://www.deepakthapa.dev/magnific-automation/refund)
+- [Contact](https://www.deepakthapa.dev/magnific-automation/contact)
 - [Chrome Web Store](https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik)
 
 ## Key facts
