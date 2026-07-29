@@ -13,6 +13,26 @@
       "permanent": true
     },
     {
+      "source": "/higgsfield-automation/ai.html",
+      "destination": "/higgsfield-automation/ai",
+      "permanent": true
+    },
+    {
+      "source": "/higgsfield-automation/privacy.html",
+      "destination": "/higgsfield-automation/privacy",
+      "permanent": true
+    },
+    {
+      "source": "/higgsfield-automation/terms.html",
+      "destination": "/higgsfield-automation/terms",
+      "permanent": true
+    },
+    {
+      "source": "/higgsfield-automation/contact.html",
+      "destination": "/higgsfield-automation/contact",
+      "permanent": true
+    },
+    {
       "source": "/magnific-automation/ai.html",
       "destination": "/magnific-automation/ai",
       "permanent": true
