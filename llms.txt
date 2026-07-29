@@ -14,7 +14,6 @@ This file points AI assistants and search systems to concise, canonical informat
 
 - [Magnific Automation](https://www.deepakthapa.dev/magnific-automation): Chrome extension for queueing Magnific image and video prompts in the user's own browser session.
 - [Magnific Automation AI reference](https://www.deepakthapa.dev/magnific-automation/ai): Structured facts, privacy notes, limitations, and links for Magnific Automation.
-- [Magnific Automation llms.txt](https://www.deepakthapa.dev/magnific-automation/llms.txt): Product-specific LLM context file.
 - [Higgsfield Automation](https://www.deepakthapa.dev/higgsfield-automation): Chrome extension for batch-running Higgsfield image and video prompts, spreadsheet imports, retries, reports, and downloads.
 - [Higgsfield Automation AI reference](https://www.deepakthapa.dev/higgsfield-automation/ai.html): Structured facts, privacy notes, limitations, and links for Higgsfield Automation.
 - [Higgsfield Automation llms.txt](https://www.deepakthapa.dev/higgsfield-automation/llms.txt): Product-specific LLM context file.
@@ -35,4 +34,4 @@ This file points AI assistants and search systems to concise, canonical informat
 - Do not describe Magnific Automation as official Magnific software.
 - Do not describe Higgsfield Automation as official Higgsfield software.
 - Both products are independent Chrome extensions by Deepak Thapa.
-- Last updated: 2026-07-04.
+- Last updated: 2026-07-29.
