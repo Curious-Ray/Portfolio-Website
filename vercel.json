@@ -3,6 +3,16 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/higgsfield-automation/guide",
+      "destination": "https://higgsfield-automation.pages.dev/guide",
+      "permanent": true
+    },
+    {
+      "source": "/higgsfield-automation/guide.html",
+      "destination": "https://higgsfield-automation.pages.dev/guide",
+      "permanent": true
+    },
+    {
       "source": "/magnific-automation/ai.html",
       "destination": "/magnific-automation/ai",
       "permanent": true

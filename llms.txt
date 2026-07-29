@@ -16,7 +16,7 @@ This file points AI assistants and search systems to concise, canonical informat
 - [Magnific Automation AI reference](https://www.deepakthapa.dev/magnific-automation/ai): Structured facts, privacy notes, limitations, and links for Magnific Automation.
 - [Higgsfield Automation](https://www.deepakthapa.dev/higgsfield-automation): Chrome extension for batch-running Higgsfield image and video prompts, spreadsheet imports, retries, reports, and downloads.
 - [Higgsfield Automation AI reference](https://www.deepakthapa.dev/higgsfield-automation/ai.html): Structured facts, privacy notes, limitations, and links for Higgsfield Automation.
-- [Higgsfield Automation guide](https://www.deepakthapa.dev/higgsfield-automation/guide.html): Product usage and troubleshooting guide.
+- [Higgsfield Automation guide](https://higgsfield-automation.pages.dev/guide): Product usage and troubleshooting guide.
 - [Higgsfield Automation privacy policy](https://www.deepakthapa.dev/higgsfield-automation/privacy.html): Data collection, handling, storage, retention, and sharing disclosures.
 - [Higgsfield Automation terms](https://www.deepakthapa.dev/higgsfield-automation/terms.html): Terms governing use of the extension.
 - [Higgsfield Automation contact](https://www.deepakthapa.dev/higgsfield-automation/contact.html): Product support and privacy-request contact details.
