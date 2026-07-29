@@ -11,4 +11,5 @@ User-agent: ChatGPT-User
 Allow: /
 
 Sitemap: https://www.deepakthapa.dev/sitemap.xml
+Sitemap: https://www.deepakthapa.dev/magnific-automation/sitemap.xml
 Sitemap: https://www.deepakthapa.dev/higgsfield-automation/sitemap.xml

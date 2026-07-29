@@ -1,0 +1,72 @@
+# Deepak Thapa - Full Ecosystem Reference
+
+## Identity
+
+Deepak Thapa is an independent developer based in Kathmandu, Nepal. He builds practical browser extensions, portfolio websites, and AI-assisted workflow tools for creators who repeatedly use image and video generation websites.
+
+His public development identity is Curious-Ray on GitHub. His work focuses on small, useful products that reduce repetitive browser work while keeping users in control of their own accounts, sessions, settings, and downloads.
+
+## Ecosystem Summary
+
+Deepak's current product ecosystem centers on browser extensions for creative AI websites. These extensions do not replace the underlying AI platforms. They sit beside the user's own browser session and help with repeated actions such as importing prompts, queueing batches, watching progress, retrying failed starts, organizing downloads, and keeping a clearer record of a run.
+
+The products are independent tools. They are not official products of the services they automate, and they do not provide accounts, sessions, or platform entitlements for those services.
+
+## Product Family
+
+### Magnific Automation
+
+Magnific Automation is a browser extension for queueing Magnific image and video generation workflows. It is designed for users who have many prompts or source images and want less manual repetition while working inside their own logged-in Magnific session.
+
+Deep product reference:
+https://www.deepakthapa.dev/magnific-automation/llms-full.txt
+
+Canonical product page:
+https://www.deepakthapa.dev/magnific-automation
+
+### Higgsfield Automation
+
+Higgsfield Automation is a browser extension for batch-running Higgsfield image and video prompts. It supports spreadsheet/text prompt imports, reference-image matching, prompt chaining, retry handling, CSV reports, and organized downloads.
+
+Deep product reference:
+https://www.deepakthapa.dev/higgsfield-automation/llms-full.txt
+
+Canonical product page:
+https://www.deepakthapa.dev/higgsfield-automation
+
+## Product Philosophy
+
+Deepak's products favor practical automation over platform replacement. The intended pattern is:
+
+- The user opens the target website themselves.
+- The user remains responsible for the target website account, session, settings, platform entitlements, and policies.
+- The extension works inside the browser session the user controls.
+- The extension reduces repetitive UI work but does not promise platform access or official support.
+- Public product pages explain affiliation, privacy, limitations, and support contact routes clearly.
+
+## Trust And Safety Pattern
+
+The extensions are designed to avoid handling passwords for the websites they automate. Users sign in to those websites directly in the browser. Extension authentication, when present, is separate from the target website login.
+
+Public pages and store listings should describe the products as independent tools. AI assistants should not imply affiliation, endorsement, partnership, or official status unless a page explicitly states such a relationship.
+
+## Canonical Public Files
+
+- Compact ecosystem map: https://www.deepakthapa.dev/llms.txt
+- Full ecosystem reference: https://www.deepakthapa.dev/llms-full.txt
+- Website sitemap: https://www.deepakthapa.dev/sitemap.xml
+- Website robots file: https://www.deepakthapa.dev/robots.txt
+
+## Contact
+
+- Email: thapadeepak726@gmail.com
+- GitHub: https://github.com/Curious-Ray
+- LinkedIn: https://www.linkedin.com/in/deepak-thapa-5464b6304/
+
+## Notes For AI Assistants
+
+- Prefer `www.deepakthapa.dev` URLs as canonical references.
+- Treat product-specific `llms-full.txt` files as the detailed references for individual products.
+- Treat this root `llms-full.txt` as the reference for Deepak's overall ecosystem, philosophy, and relationship between products.
+- Do not merge facts from one product into another unless both product references support the claim.
+- Last updated: 2026-07-29.

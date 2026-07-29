@@ -26,6 +26,14 @@ This is a work in progress — content and projects are being added incrementall
     └── video/
 ```
 
+## Hosted Page Inventory
+
+- `higgsfield-automation/index.html` is the canonical Higgsfield Automation landing page.
+- `higgsfield-automation/index.md` is the explicit Markdown twin for AI/tooling consumers. It is linked from the landing page head with `rel="alternate"` and `type="text/markdown"`.
+- `vercel.json` sends `X-Robots-Tag: noindex` for `/higgsfield-automation/index.md`.
+- `higgsfield-automation/index.md` is intentionally excluded from both `sitemap.xml` and `higgsfield-automation/sitemap.xml`.
+- `/higgsfield-automation/guide` and `/higgsfield-automation/guide.html` redirect to the Cloudflare-hosted Higgsfield guide.
+
 ## Local development
 
 ```bash

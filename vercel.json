@@ -1,7 +1,37 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/magnific-automation/index.md",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/higgsfield-automation/index.md",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    }
+  ],
   "redirects": [
+    {
+      "source": "/magnific-automation/guide",
+      "destination": "https://magnific-automation.pages.dev/guide",
+      "permanent": true
+    },
+    {
+      "source": "/magnific-automation/guide.html",
+      "destination": "https://magnific-automation.pages.dev/guide",
+      "permanent": true
+    },
     {
       "source": "/higgsfield-automation/guide",
       "destination": "https://higgsfield-automation.pages.dev/guide",
@@ -13,9 +43,14 @@
       "permanent": true
     },
     {
+      "source": "/higgsfield-automation/ai",
+      "destination": "/higgsfield-automation/llms-full.txt",
+      "statusCode": 301
+    },
+    {
       "source": "/higgsfield-automation/ai.html",
-      "destination": "/higgsfield-automation/ai",
-      "permanent": true
+      "destination": "/higgsfield-automation/llms-full.txt",
+      "statusCode": 301
     },
     {
       "source": "/higgsfield-automation/privacy.html",
@@ -33,9 +68,14 @@
       "permanent": true
     },
     {
+      "source": "/magnific-automation/ai",
+      "destination": "/magnific-automation/llms-full.txt",
+      "statusCode": 301
+    },
+    {
       "source": "/magnific-automation/ai.html",
-      "destination": "/magnific-automation/ai",
-      "permanent": true
+      "destination": "/magnific-automation/llms-full.txt",
+      "statusCode": 301
     },
     {
       "source": "/magnific-automation/privacy.html",

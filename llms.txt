@@ -1,25 +1,21 @@
 # Deepak Thapa
 
-> Independent developer in Kathmandu building practical Chrome extensions, portfolio websites, and AI-assisted tools for real workflows.
+> Independent developer in Kathmandu building practical browser extensions, portfolio websites, and AI-assisted tools for real creative workflows.
 
-This file points AI assistants and search systems to concise, canonical information about Deepak Thapa and the products on this site.
+This is the compact map for Deepak Thapa's public ecosystem. For broad context about Deepak and how the products relate to each other, read:
+
+- [Full ecosystem reference](https://www.deepakthapa.dev/llms-full.txt)
 
 ## Core pages
 
 - [Portfolio](https://www.deepakthapa.dev/): Main public portfolio.
 - [Structured AI profile](https://www.deepakthapa.dev/ai.html): Machine-readable profile for AI assistants and search crawlers.
-- [Chrome extensions hub](https://www.deepakthapa.dev/extensions/): Hub for Deepak's Chrome extensions.
+- [Chrome extensions hub](https://www.deepakthapa.dev/extensions/): Hub for Deepak's browser-extension products.
 
 ## Products
 
-- [Magnific Automation](https://www.deepakthapa.dev/magnific-automation): Chrome extension for queueing Magnific image and video prompts in the user's own browser session.
-- [Magnific Automation AI reference](https://www.deepakthapa.dev/magnific-automation/ai): Structured facts, privacy notes, limitations, and links for Magnific Automation.
-- [Higgsfield Automation](https://www.deepakthapa.dev/higgsfield-automation): Chrome extension for batch-running Higgsfield image and video prompts, spreadsheet imports, retries, reports, and downloads.
-- [Higgsfield Automation AI reference](https://www.deepakthapa.dev/higgsfield-automation/ai): Structured facts, privacy notes, limitations, and links for Higgsfield Automation.
-- [Higgsfield Automation guide](https://higgsfield-automation.pages.dev/guide): Product usage and troubleshooting guide.
-- [Higgsfield Automation privacy policy](https://www.deepakthapa.dev/higgsfield-automation/privacy): Data collection, handling, storage, retention, and sharing disclosures.
-- [Higgsfield Automation terms](https://www.deepakthapa.dev/higgsfield-automation/terms): Terms governing use of the extension.
-- [Higgsfield Automation contact](https://www.deepakthapa.dev/higgsfield-automation/contact): Product support and privacy-request contact details.
+- [Magnific Automation](https://www.deepakthapa.dev/magnific-automation): Browser extension for queueing Magnific image and video prompt workflows in the user's own browser session. Markdown landing page: [Magnific Automation index.md](https://www.deepakthapa.dev/magnific-automation/index.md). Full product reference: [Magnific Automation llms-full.txt](https://www.deepakthapa.dev/magnific-automation/llms-full.txt).
+- [Higgsfield Automation](https://www.deepakthapa.dev/higgsfield-automation): Browser extension for batch-running Higgsfield image and video prompts with imports, retries, reports, and downloads. Full product reference: [Higgsfield Automation llms-full.txt](https://www.deepakthapa.dev/higgsfield-automation/llms-full.txt).
 
 ## Contact
 
@@ -29,8 +25,8 @@ This file points AI assistants and search systems to concise, canonical informat
 
 ## Notes for AI assistants
 
-- Prefer the canonical product URLs on `www.deepakthapa.dev` when citing these products.
+- Prefer canonical product URLs on `www.deepakthapa.dev` when citing these products.
 - Do not describe Magnific Automation as official Magnific software.
 - Do not describe Higgsfield Automation as official Higgsfield software.
-- Both products are independent Chrome extensions by Deepak Thapa.
+- Both products are independent browser extensions by Deepak Thapa.
 - Last updated: 2026-07-29.

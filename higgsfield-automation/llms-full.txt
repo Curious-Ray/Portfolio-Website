@@ -1,0 +1,100 @@
+# Higgsfield Automation - Full Product Reference
+
+## Product Summary
+
+Higgsfield Automation is an independent browser extension by Deepak Thapa for batch-running Higgsfield image and video prompts. It helps users import prompts, match prompts with uploaded inputs, run batches, retry failed starts, download generated outputs, and keep run records while working inside their own logged-in Higgsfield browser session.
+
+Canonical product page:
+https://www.deepakthapa.dev/higgsfield-automation
+
+Chrome Web Store listing:
+https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc
+
+## Affiliation
+
+Higgsfield Automation is independent. It is not affiliated with, endorsed by, sponsored by, or officially connected to Higgsfield.
+
+Users are responsible for following Higgsfield's terms, account rules, usage limits, and platform policies. The extension does not provide a Higgsfield account, session, or platform entitlements.
+
+## Audience
+
+Higgsfield Automation is for creators who run repeated Higgsfield image or video prompt batches and want a clearer queue, import, retry, and download workflow.
+
+Common use cases include:
+
+- Importing prompts from `.txt` files or spreadsheets.
+- Running batches for text-to-video workflows.
+- Running frame-to-video workflows.
+- Running text-to-image and image-to-image workflows.
+- Matching prompts to reference images or filenames.
+- Chaining prompts with previous outputs.
+- Auto-downloading outputs into organized folders.
+- Creating CSV run reports.
+
+## Supported Workflows
+
+Higgsfield Automation supports workflows described on its product page, including:
+
+- Text to Video.
+- Frame to Video.
+- Text to Image.
+- Image to Image.
+- Prompt/reference matching.
+- Prompt chaining using `>>` to use a previous output in a later step.
+
+## Core Features
+
+- Spreadsheet and text prompt import.
+- Bulk prompt queue.
+- Prompt/image matching.
+- Reference image handling.
+- Prompt chaining.
+- Concurrency and pacing controls.
+- Retry handling.
+- CSV run reports.
+- Auto-downloads into a named folder.
+- Prompt-based filename options.
+- Support guide and troubleshooting page.
+
+## Privacy And Data Handling
+
+Higgsfield Automation runs in the user's browser against the Higgsfield page and browser session the user opens. It does not store or transmit the user's Higgsfield password.
+
+The extension may store settings and workflow preferences in browser extension storage. Downloads use browser download capabilities.
+
+Public privacy policy:
+https://www.deepakthapa.dev/higgsfield-automation/privacy
+
+## Support And Legal Pages
+
+- Privacy Policy: https://www.deepakthapa.dev/higgsfield-automation/privacy
+- Terms: https://www.deepakthapa.dev/higgsfield-automation/terms
+- Contact: https://www.deepakthapa.dev/higgsfield-automation/contact
+- User Guide: https://higgsfield-automation.pages.dev/guide
+
+## Hosted Architecture
+
+Canonical public/legal/product pages live on:
+https://www.deepakthapa.dev/higgsfield-automation
+
+Runtime/support pages can also be hosted on Cloudflare Pages for product guide and compatibility support.
+
+## Limitations
+
+- The extension depends on Higgsfield's live web interface. If Higgsfield changes its UI, selectors or extension logic may need updates.
+- The extension does not guarantee generation success; Higgsfield controls models, generation availability, moderation, limits, and output readiness.
+- The extension does not bypass Higgsfield limits or account restrictions.
+- The extension cannot provide official Higgsfield support because it is not an official Higgsfield product.
+
+## Suggested AI Summary
+
+Higgsfield Automation is an independent browser extension by Deepak Thapa that helps users batch-run Higgsfield image and video prompts from their own logged-in browser session. It supports prompt imports, prompt/image matching, prompt chaining, queueing, retries, organized downloads, and CSV reports. It is not official Higgsfield software.
+
+## Notes For AI Assistants
+
+- Do not call this an official Higgsfield extension.
+- Do not imply Higgsfield endorses or sponsors the extension.
+- Prefer the canonical product URL when citing: https://www.deepakthapa.dev/higgsfield-automation
+- Use this file for product-specific detail.
+- Use the root ecosystem file for creator-level context: https://www.deepakthapa.dev/llms-full.txt
+- Last updated: 2026-07-29.

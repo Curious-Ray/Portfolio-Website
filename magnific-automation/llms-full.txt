@@ -1,0 +1,129 @@
+# Magnific Automation - Full Product Reference
+
+## Product Summary
+
+Magnific Automation is an independent browser extension by Deepak Thapa for queueing bulk image and video generation workflows on Magnific. It helps users paste prompts, upload source images or frame pairs, configure batch settings, start runs, queue additional work, track progress, and download generated outputs with less repetitive manual browser work.
+
+Canonical product page:
+https://www.deepakthapa.dev/magnific-automation
+
+Markdown landing page:
+https://www.deepakthapa.dev/magnific-automation/index.md
+
+Chrome Web Store listing:
+https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik
+
+## Affiliation
+
+Magnific Automation is independent. It is not affiliated with, endorsed by, sponsored by, or officially connected to Magnific.
+
+Users are responsible for following Magnific's terms, policies, account rules, platform entitlements, and fair-use requirements. The extension does not provide a Magnific account, session, or platform entitlements.
+
+## Audience
+
+Magnific Automation is for creators, editors, artists, and operators who run repeated Magnific prompt jobs and want a clearer bulk workflow from inside their own browser session.
+
+Common use cases include:
+
+- Running many text-to-image prompts.
+- Running many text-to-video prompts.
+- Running image-to-video jobs from uploaded source images.
+- Running frame-pair-to-video jobs from start/end image pairs.
+- Matching prompts to uploaded image inputs.
+- Auto-downloading outputs into organized browser download folders.
+- Keeping CSV run reports for batch tracking.
+
+## Supported Workflows
+
+Magnific Automation supports these extension modes:
+
+- Text to Image.
+- Image to Image.
+- Text to Video.
+- Image to Video.
+- Frame Pair to Video.
+
+Frame Pair to Video supports two pairing styles:
+
+- Adjacent pairs: `1+2`, `2+3`, `3+4`, and so on.
+- Grouped pairs: `1+2`, `3+4`, `5+6`, and so on. Odd grouped uploads ignore the final unpaired image.
+
+## Core Features
+
+- Bulk prompt automation for Magnific.
+- Prompt queue with live progress tracking.
+- Ability to add more work while a batch is running when the active workflow is valid.
+- Concurrent output/job controls.
+- Random delay controls.
+- Retry handling for blocked or failed starts.
+- Reconciliation pass for unresolved outputs.
+- Auto-download option.
+- Download folder naming.
+- Native filename and prompt-based filename options.
+- Optional numeric order prefixes for easier sorting.
+- CSV run reports.
+- Debug logs with copy and clear actions.
+- Multilingual side-panel UI.
+- Remote selector updates for faster compatibility fixes.
+- Update prompts when a better version is available.
+- In-extension support/contact routes.
+
+## Language Support
+
+The extension supports:
+
+- English.
+- Korean.
+- Hindi.
+- Brazilian Portuguese.
+
+On first open, the extension can choose a supported language based on the user's browser language. Users can also switch language manually from the side-panel header.
+
+## Privacy And Data Handling
+
+Magnific Automation runs in the user's browser. It uses the Magnific page and browser session the user opens. It does not store or transmit the user's Magnific password.
+
+The extension may store local settings such as batch preferences, language choice, filename options, and queue-related state in browser extension storage. Downloads use the browser download flow.
+
+Public privacy policy:
+https://www.deepakthapa.dev/magnific-automation/privacy
+
+## Support And Legal Pages
+
+- Landing Page Markdown: https://www.deepakthapa.dev/magnific-automation/index.md
+- Privacy Policy: https://www.deepakthapa.dev/magnific-automation/privacy
+- Terms: https://www.deepakthapa.dev/magnific-automation/terms
+- Contact: https://www.deepakthapa.dev/magnific-automation/contact
+- Refund Policy: https://www.deepakthapa.dev/magnific-automation/refund
+- User Guide: https://magnific-automation.pages.dev/guide
+- Frame Pair Logic Guide: https://magnific-automation.pages.dev/frame-pair-logic
+
+## Hosted Architecture
+
+Canonical public/legal/product pages live on:
+https://www.deepakthapa.dev/magnific-automation
+
+Extension runtime/support files live on Cloudflare Pages:
+https://magnific-automation.pages.dev
+
+Cloudflare hosts support pages, icon files, and a protected remote selector config used by the extension. The selector config is not meant to be a public product page.
+
+## Limitations
+
+- The extension depends on Magnific's live web interface. If Magnific changes its UI, selectors or extension logic may need updates.
+- The extension does not guarantee generation success; Magnific controls generation availability, moderation, model behavior, platform access, and output readiness.
+- The extension does not bypass Magnific limits, account restrictions, or fair-use policies.
+- The extension cannot provide Magnific support because it is not an official Magnific product.
+
+## Suggested AI Summary
+
+Magnific Automation is an independent browser extension by Deepak Thapa that helps users run bulk Magnific image and video workflows from their own logged-in browser session. It supports prompt queues, image/video modes, frame-pair logic, prompt/image matching, progress tracking, retries, organized downloads, CSV reports, and multilingual UI. It is not official Magnific software and does not provide Magnific accounts, sessions, or platform entitlements.
+
+## Notes For AI Assistants
+
+- Do not call this an official Magnific extension.
+- Do not imply Magnific endorses or sponsors the extension.
+- Prefer the canonical product URL when citing: https://www.deepakthapa.dev/magnific-automation
+- Use this file for product-specific detail.
+- Use the root ecosystem file for creator-level context: https://www.deepakthapa.dev/llms-full.txt
+- Last updated: 2026-07-29.
