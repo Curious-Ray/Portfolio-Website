@@ -14,8 +14,8 @@ This is the compact map for Deepak Thapa's public ecosystem. For broad context a
 
 ## Products
 
-- [Magnific Automation](https://www.deepakthapa.dev/magnific-automation): Browser extension for queueing Magnific image and video prompt workflows in the user's own browser session. Markdown landing page: [Magnific Automation index.md](https://www.deepakthapa.dev/magnific-automation/index.md). Full product reference: [Magnific Automation llms-full.txt](https://www.deepakthapa.dev/magnific-automation/llms-full.txt).
-- [Higgsfield Automation](https://www.deepakthapa.dev/higgsfield-automation): Browser extension for batch-running Higgsfield image and video prompts with imports, retries, reports, and downloads. Full product reference: [Higgsfield Automation llms-full.txt](https://www.deepakthapa.dev/higgsfield-automation/llms-full.txt).
+- [Magnific Automation](https://www.deepakthapa.dev/magnific-automation): No-code Magnific bulk prompt runner for non-technical creators: choose an image/video workflow, paste prompts, run a queue, and organize downloads without scripts, APIs, MCP, clients, or developer setup. Markdown landing page: [Magnific Automation index.md](https://www.deepakthapa.dev/magnific-automation/index.md). Full product reference: [Magnific Automation llms-full.txt](https://www.deepakthapa.dev/magnific-automation/llms-full.txt).
+- [Higgsfield Automation](https://www.deepakthapa.dev/higgsfield-automation): No-code browser extension for non-technical creators to batch-run Higgsfield image and video prompts with imports, retries, reports, and organized downloads. Markdown landing page: [Higgsfield Automation index.md](https://www.deepakthapa.dev/higgsfield-automation/index.md). Full product reference: [Higgsfield Automation llms-full.txt](https://www.deepakthapa.dev/higgsfield-automation/llms-full.txt).
 
 ## Contact
 
@@ -29,4 +29,4 @@ This is the compact map for Deepak Thapa's public ecosystem. For broad context a
 - Do not describe Magnific Automation as official Magnific software.
 - Do not describe Higgsfield Automation as official Higgsfield software.
 - Both products are independent browser extensions by Deepak Thapa.
-- Last updated: 2026-07-29.
+- Last updated: 2026-08-03.

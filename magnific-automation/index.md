@@ -1,10 +1,10 @@
 # Magnific Automation
 
-> Magnific Automation is an independent browser extension that helps creators queue bulk Magnific image and video prompt workflows from their own browser session.
+> Magnific Automation is a no-code browser extension for running bulk Magnific image and video prompt queues: choose a workflow, paste prompts, and run the batch.
 
 ## What it does
 
-Magnific Automation reduces repetitive Magnific browser work by turning many prompt submissions into a tracked queue. Users paste prompts, choose a workflow, start the batch, and follow progress from the extension side panel. It supports image and video workflows, prompt/output matching, retry handling, and optional organized downloads. The extension works inside the user's own Magnific browser session and is not affiliated with Magnific.
+Magnific Automation reduces repetitive Magnific browser work by turning many prompt submissions into a tracked queue. Users do not need scripts, API keys, or developer setup: they open the extension side panel, choose the workflow, paste prompts, and start the batch. It supports image and video workflows, prompt/output matching, retry handling, and optional organized downloads. The extension works inside the user's own Magnific browser session and is not affiliated with Magnific.
 
 ## Key features
 
@@ -16,6 +16,7 @@ Magnific Automation reduces repetitive Magnific browser work by turning many pro
 - CSV run reports and debug logs.
 - Multilingual side-panel UI.
 - Remote compatibility updates for Magnific UI changes.
+- No-code browser workflow with no scripts, API keys, or developer setup required.
 
 ## Links
 
@@ -23,4 +24,4 @@ Magnific Automation reduces repetitive Magnific browser work by turning many pro
 - Guide: /magnific-automation/guide
 - Contact: /magnific-automation/contact
 
-Last updated: 2026-07-29.
+Last updated: 2026-08-03.
