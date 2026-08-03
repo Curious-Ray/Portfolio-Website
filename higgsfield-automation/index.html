@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Higgsfield Automation - Batch-run Higgsfield prompts</title>
-  <meta name="description" content="Higgsfield Automation is a Chrome extension for batch-running Higgsfield image and video prompts, importing spreadsheets, retrying failures, and auto-downloading results in your browser session." />
+  <meta name="description" content="Higgsfield Automation is a no-code Chrome extension for non-technical creators to batch-run Higgsfield image and video prompts, import spreadsheets, retry failures, and auto-download results in your browser session." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.deepakthapa.dev/higgsfield-automation" />
   <link rel="alternate" type="text/markdown" href="/higgsfield-automation/index.md" />
@@ -17,13 +17,13 @@
   </script>
 
   <meta property="og:title" content="Higgsfield Automation - Batch-run Higgsfield prompts" />
-  <meta property="og:description" content="Import prompts, choose a Higgsfield mode, and let the extension queue, retry, and download the batch in your browser." />
+  <meta property="og:description" content="No-code Higgsfield batch generation: import prompts, choose a mode, and let the extension queue, retry, and download results in your browser." />
   <meta property="og:image" content="https://www.deepakthapa.dev/higgsfield-automation/assets/marquee.png" />
   <meta property="og:type" content="product" />
   <meta property="og:url" content="https://www.deepakthapa.dev/higgsfield-automation" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Higgsfield Automation - Batch-run Higgsfield prompts" />
-  <meta name="twitter:description" content="Batch-run Higgsfield prompts and auto-download results in your Chrome browser session." />
+  <meta name="twitter:description" content="No-code batch generation for Higgsfield prompts in your Chrome browser session." />
   <meta name="twitter:image" content="https://www.deepakthapa.dev/higgsfield-automation/assets/marquee.png" />
   <meta name="theme-color" content="#070906" />
 
@@ -47,7 +47,7 @@
     "applicationCategory": "BrowserApplication",
     "operatingSystem": "Chrome, Chromium-based browsers",
     "browserRequirements": "Requires Google Chrome 114 or newer",
-    "description": "Higgsfield Automation batch-runs user-provided image and video prompts in the Higgsfield browser session the user opens in Chrome. It imports prompts from spreadsheets or text files, supports Text to Video, Frame to Video, Text to Image, and Image to Image, retries failed starts, and downloads generated outputs.",
+    "description": "Higgsfield Automation is a no-code Chrome extension for non-technical creators. It batch-runs user-provided image and video prompts in the Higgsfield browser session the user opens in Chrome, imports prompts from spreadsheets or text files, supports Text to Video, Frame to Video, Text to Image, and Image to Image, retries failed starts, and downloads generated outputs.",
     "downloadUrl": "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc",
     "softwareVersion": "1.0.3",
     "author": {
@@ -96,6 +96,11 @@
         "@type": "Question",
         "name": "Can I import prompts from a spreadsheet?",
         "acceptedAnswer": { "@type": "Answer", "text": "Yes. The extension can import .xlsx, .xls, .csv, and .txt prompt files and detect the likely prompt column." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to know MCP, APIs, or coding to use Higgsfield Automation?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Higgsfield Automation is built for non-technical creators. You choose a workflow, paste or import prompts, click Run, and the extension handles the repeated browser actions inside your Higgsfield session." }
       }
     ]
   }
@@ -889,18 +894,24 @@
             </div>
           </details>
           <details class="faq-details rise" style="--d: 200ms;">
+            <summary>Do I need MCP, APIs, or coding?</summary>
+            <div class="faq-content">
+              <p>No. Higgsfield Automation is built for non-technical creators. Choose a workflow, paste or import prompts, click Run, and the extension handles the repeated browser actions inside your Higgsfield session.</p>
+            </div>
+          </details>
+          <details class="faq-details rise" style="--d: 300ms;">
             <summary>Can it chain prompts together?</summary>
             <div class="faq-content">
               <p>Yes. Start a prompt with "&gt;&gt;" to feed the previous output into the next — useful for continuous shots or iterative edits.</p>
             </div>
           </details>
-          <details class="faq-details rise" style="--d: 300ms;">
+          <details class="faq-details rise" style="--d: 400ms;">
             <summary>Does it work without a Higgsfield account?</summary>
             <div class="faq-content">
               <p>No. You need a higgsfield.ai account signed in in your browser. The extension does not create an account or log in for you.</p>
             </div>
           </details>
-          <details class="faq-details rise" style="--d: 400ms;">
+          <details class="faq-details rise" style="--d: 500ms;">
             <summary>Is this official Higgsfield software?</summary>
             <div class="faq-content">
               <p>No. It is an independent Chrome extension by Deepak Thapa, not affiliated with or endorsed by Higgsfield.</p>

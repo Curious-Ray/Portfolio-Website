@@ -1,10 +1,10 @@
 # Higgsfield Automation
 
-> Higgsfield Automation is an independent browser extension that batch-runs Higgsfield image and video prompts from the user's own Higgsfield browser session.
+> Higgsfield Automation is a no-code browser extension that lets non-technical creators batch-run Higgsfield image and video prompts from their own Higgsfield browser session.
 
 ## What it does
 
-Higgsfield Automation turns repeated Higgsfield prompt work into a tracked batch workflow. Users import or type prompts, choose the workflow on Higgsfield, run the queue, and let the extension handle pacing, retries, downloads, and reporting. It works inside the Higgsfield page and browser session the user opens, so the user stays in control of their own Higgsfield settings and generated outputs.
+Higgsfield Automation turns repeated Higgsfield prompt work into a tracked batch workflow. Users import or type prompts, choose the workflow on Higgsfield, run the queue, and let the extension handle pacing, retries, downloads, and reporting. It works inside the Higgsfield page and browser session the user opens, so the user stays in control of their own Higgsfield settings and generated outputs. No MCP setup, API client, command-line tool, or coding workflow is required.
 
 ## Key features
 
@@ -24,4 +24,4 @@ Higgsfield Automation turns repeated Higgsfield prompt work into a tracked batch
 - Guide: /higgsfield-automation/guide
 - Contact: /higgsfield-automation/contact
 
-Last updated: 2026-07-29.
+Last updated: 2026-08-03.
