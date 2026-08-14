@@ -13,6 +13,12 @@ https://www.deepakthapa.dev/magnific-automation/index.md
 Chrome Web Store listing:
 https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik
 
+Microsoft Edge Add-ons listing:
+https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc
+
+Firefox Add-ons listing:
+https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/
+
 ## Affiliation
 
 Magnific Automation is independent. It is not affiliated with, endorsed by, sponsored by, or officially connected to Magnific.

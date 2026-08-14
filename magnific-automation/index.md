@@ -21,6 +21,8 @@ Magnific Automation reduces repetitive Magnific browser work by turning many pro
 ## Links
 
 - Chrome Web Store: https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik
+- Microsoft Edge Add-ons: https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc
+- Firefox Add-ons: https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/
 - Guide: /magnific-automation/guide
 - Contact: /magnific-automation/contact
 

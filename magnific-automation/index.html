@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Magnific Automation — No-code bulk prompts for Magnific</title>
-  <meta name="description" content="A no-code Chrome extension for bulk Magnific image and video workflows. Choose a workflow, paste prompts, start the queue, and keep everything inside your own browser session." />
+  <meta name="description" content="A no-code Chrome, Edge, and Firefox extension for bulk Magnific image and video workflows. Choose a workflow, paste prompts, start the queue, and keep everything inside your own browser session." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.deepakthapa.dev/magnific-automation" />
   <link rel="alternate" type="text/markdown" href="https://www.deepakthapa.dev/llms.txt" title="LLMs map" />
@@ -46,10 +46,15 @@
     "url": "https://www.deepakthapa.dev/magnific-automation",
     "image": "https://www.deepakthapa.dev/magnific-automation/assets/marquee.png",
     "applicationCategory": "BrowserApplication",
-    "operatingSystem": "Chrome, Chromium-based browsers",
-    "browserRequirements": "Requires Google Chrome or a Chromium-based browser that can install Chrome Web Store extensions",
-    "description": "Magnific Automation is an independent no-code Chrome extension that queues Magnific image and video prompts from a browser side panel. Users choose a workflow, paste prompts, start the queue, and keep the work inside their own logged-in Magnific session.",
+    "operatingSystem": "Chrome, Edge, Firefox, Chromium-based browsers",
+    "browserRequirements": "Requires Google Chrome, Microsoft Edge, Mozilla Firefox, or a Chromium-based browser such as Brave, Arc, or Opera",
+    "description": "Magnific Automation is an independent no-code browser extension that queues Magnific image and video prompts from a browser side panel. Users choose a workflow, paste prompts, start the queue, and keep the work inside their own logged-in Magnific session.",
     "downloadUrl": "https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik",
+    "installUrl": [
+      "https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik",
+      "https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc",
+      "https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/"
+    ],
     "author": {
       "@type": "Person",
       "name": "Deepak Thapa",
@@ -60,12 +65,29 @@
       "name": "Deepak Thapa",
       "url": "https://www.deepakthapa.dev/"
     },
-    "offers": {
-      "@type": "Offer",
-      "url": "https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Chrome Web Store",
+        "url": "https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "name": "Microsoft Edge Add-ons",
+        "url": "https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "name": "Firefox Browser Add-ons",
+        "url": "https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    ],
     "featureList": [
       "Bulk prompt queue",
       "No scripts, API keys, or developer setup required",
@@ -88,12 +110,12 @@
       {
         "@type": "Question",
         "name": "Is Magnific Automation made by Magnific?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Magnific Automation is an independent third-party Chrome extension and is not affiliated with, endorsed by, or connected to Magnific." }
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Magnific Automation is an independent third-party browser extension and is not affiliated with, endorsed by, or connected to Magnific." }
       },
       {
         "@type": "Question",
         "name": "Is Magnific Automation free?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The landing page presents Magnific Automation as free to install from the Chrome Web Store, with no credit card, trial expiry, upsell, or per-generation charge from the extension." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. The landing page presents Magnific Automation as free to install from the Chrome Web Store, Microsoft Edge Add-ons, and Firefox Add-ons, with no credit card, trial expiry, upsell, or per-generation charge from the extension." }
       },
       {
         "@type": "Question",
@@ -108,7 +130,7 @@
       {
         "@type": "Question",
         "name": "What browsers are supported?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Google Chrome and Chromium-based browsers that support Chrome Web Store extensions, including Brave, Edge, Arc, and Opera. Firefox uses a separate Mozilla Add-ons package when available. Safari is not currently supported." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Magnific Automation has its own listing on the Chrome Web Store, Microsoft Edge Add-ons, and Firefox Add-ons. Other Chromium-based browsers including Brave, Arc, and Opera can install the Chrome Web Store build directly. Safari is not currently supported." }
       }
     ]
   }
@@ -420,6 +442,38 @@
       flex-shrink: 0;
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
     }
+
+    /* ---- Multi-store install (Chrome / Firefox / Edge) ----------------------
+       Action economy: still ONE solid button per viewport. Script (G) retargets
+       that button to the visitor's own browser; the remaining stores sit under
+       it as quiet outline chips so they never read as a second primary CTA.
+       With JS off the static markup ships Chrome as primary + the others as
+       chips, so every store stays reachable either way. */
+    .pl-install { display: inline-flex; flex-direction: column; align-items: center; gap: 14px; }
+    .pl-hero__ctas .pl-install { align-items: flex-start; }
+
+    .pl-alt-stores {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      margin: 0;
+      font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.02em;
+      color: var(--text-muted);
+    }
+    .pl-alt-stores__lead { white-space: nowrap; }
+    .pl-alt-stores__link {
+      display: inline-flex; align-items: center; gap: 7px;
+      min-height: 40px; padding: 9px 14px;
+      border: 1px solid var(--border); border-radius: 999px;
+      background: var(--bg-card); color: var(--text-secondary);
+      font-weight: 600; white-space: nowrap;
+      transition: background var(--transition), border-color var(--transition), color var(--transition);
+    }
+    /* hover darkens the surface AND the label together — contrast rises, never drops */
+    .pl-alt-stores__link:hover {
+      background: #eef2f7; border-color: var(--border-strong); color: var(--text-primary);
+    }
+    .pl-alt-stores__link:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    .pl-alt-stores__ic { width: 15px; height: 15px; flex-shrink: 0; display: block; }
+    .pl-alt-stores__link[hidden] { display: none; }
 
     /* ---- 4. NAV ---- */
     .pl-nav {
@@ -991,6 +1045,8 @@
       .pl-hero { min-height: auto; padding: 100px 0 40px; }
       .pl-nav__links a:not(.btn) { display: none; }
       .pl-hero__title { font-size: clamp(34px, 9vw, 46px); }
+      /* full 44px touch targets for the store chips on phones */
+      .pl-alt-stores__link { min-height: 44px; padding: 11px 15px; }
       .pl-hero__wolf { width: 130px; right: -8px; bottom: -22px; }
       .pl-compare { border: 0; background: transparent; box-shadow: none; display: grid; gap: 12px; }
       .pl-compare__head { display: none; }
@@ -1199,6 +1255,21 @@
 <body>
   <div class="pl-bg" aria-hidden="true"></div>
 
+  <!-- Store marks, defined once and instanced with <use> by the nav badge and every
+       "also on" chip. Keeps ~10 install links from repeating the same path data.
+       Official vendor artwork (github.com/alrra/browser-logos). Gradient ids are
+       namespaced cr-/ff-/ed- because all three logos ship them numbered a, b, c. -->
+  <svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true" focusable="false">
+    <defs>
+      
+      <radialGradient id="ff-b" cx="87.4%" cy="-12.9%" r="128%" gradientTransform="matrix(.8 0 0 1 .18 .13)"><stop offset=".13" stop-color="#ffbd4f"/><stop offset=".28" stop-color="#ff980e"/><stop offset=".47" stop-color="#ff3750"/><stop offset=".78" stop-color="#eb0878"/><stop offset=".86" stop-color="#e50080"/></radialGradient><radialGradient id="ff-d" cx="49%" cy="40%" r="128%" gradientTransform="matrix(.82 0 0 1 .09 0)"><stop offset=".3" stop-color="#960e18"/><stop offset=".35" stop-color="#b11927" stop-opacity=".74"/><stop offset=".43" stop-color="#db293d" stop-opacity=".34"/><stop offset=".5" stop-color="#f5334b" stop-opacity=".1"/><stop offset=".53" stop-color="#ff3750" stop-opacity="0"/></radialGradient><radialGradient id="ff-e" cx="48%" cy="-12%" r="140%"><stop offset=".13" stop-color="#fff44f"/><stop offset=".53" stop-color="#ff980e"/></radialGradient><radialGradient id="ff-f" cx="22.76%" cy="110.11%" r="100%"><stop offset=".35" stop-color="#3a8ee6"/><stop offset=".67" stop-color="#9059ff"/><stop offset="1" stop-color="#c139e6"/></radialGradient><radialGradient id="ff-h" cx="52%" cy="33%" r="59%" gradientTransform="scale(.9 1)"><stop offset=".21" stop-color="#9059ff" stop-opacity="0"/><stop offset=".97" stop-color="#6e008b" stop-opacity=".6"/></radialGradient><radialGradient id="ff-i" cx="210%" cy="-100%" r="290%"><stop offset=".1" stop-color="#ffe226"/><stop offset=".79" stop-color="#ff7139"/></radialGradient><radialGradient id="ff-j" cx="84%" cy="-41%" r="180%"><stop offset=".11" stop-color="#fff44f"/><stop offset=".46" stop-color="#ff980e"/><stop offset=".72" stop-color="#ff3647"/><stop offset=".9" stop-color="#e31587"/></radialGradient><radialGradient id="ff-k" cx="16.1%" cy="-18.6%" r="348.8%" gradientTransform="matrix(.10453 .46743 -.99452 .04913 -.05 -.26)"><stop offset="0" stop-color="#fff44f"/><stop offset=".3" stop-color="#ff980e"/><stop offset=".57" stop-color="#ff3647"/><stop offset=".74" stop-color="#e31587"/></radialGradient><radialGradient id="ff-l" cx="18.9%" cy="-42.5%" r="238.4%"><stop offset=".14" stop-color="#fff44f"/><stop offset=".48" stop-color="#ff980e"/><stop offset=".66" stop-color="#ff3647"/><stop offset=".9" stop-color="#e31587"/></radialGradient><radialGradient id="ff-m" cx="159.3%" cy="-44.72%" r="313.1%"><stop offset=".09" stop-color="#fff44f"/><stop offset=".63" stop-color="#ff980e"/></radialGradient><linearGradient id="ff-a" x1="87.25%" x2="9.4%" y1="15.5%" y2="93.1%"><stop offset=".05" stop-color="#fff44f"/><stop offset=".37" stop-color="#ff980e"/><stop offset=".53" stop-color="#ff3647"/><stop offset=".7" stop-color="#e31587"/></linearGradient><linearGradient id="ff-n" x1="80%" x2="18%" y1="14%" y2="84%"><stop offset=".17" stop-color="#fff44f" stop-opacity=".8"/><stop offset=".6" stop-color="#fff44f" stop-opacity="0"/></linearGradient>
+      <linearGradient id="ed-b" x1="6870" x2="24704" y1="18705" y2="18705" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0c59a4"/><stop offset="1" stop-color="#114a8b"/></linearGradient><linearGradient id="ed-c" x1="16272" x2="5133" y1="10968" y2="23102" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#1b9de2"/><stop offset=".16" stop-color="#1595df"/><stop offset=".67" stop-color="#0680d7"/><stop offset="1" stop-color="#0078d4"/></linearGradient><radialGradient id="ed-d" cx="16720" cy="18747" r="9538" gradientUnits="userSpaceOnUse"><stop offset=".72" stop-opacity="0"/><stop offset=".95" stop-opacity=".53"/><stop offset="1"/></radialGradient><radialGradient id="ed-e" cx="7130" cy="19866" r="14324" gradientTransform="matrix(.14843 -.98892 .79688 .1196 -8759 25542)" gradientUnits="userSpaceOnUse"><stop offset=".76" stop-opacity="0"/><stop offset=".95" stop-opacity=".5"/><stop offset="1"/></radialGradient><radialGradient id="ed-f" cx="2523" cy="4680" r="20243" gradientTransform="matrix(-.03715 .99931 -2.12836 -.07913 13579 3530)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#35c1f1"/><stop offset=".11" stop-color="#34c1ed"/><stop offset=".23" stop-color="#2fc2df"/><stop offset=".31" stop-color="#2bc3d2"/><stop offset=".67" stop-color="#36c752"/></radialGradient><radialGradient id="ed-g" cx="24247" cy="7758" r="9734" gradientTransform="matrix(.28109 .95968 -.78353 .22949 24510 -16292)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#66eb6e"/><stop offset="1" stop-color="#66eb6e" stop-opacity="0"/></radialGradient>
+    </defs>
+    <symbol id="ic-chrome" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></symbol>
+    <symbol id="ic-firefox" viewBox="0 0 51500 51500"><path fill="url(#ff-a)" d="M47870 16735c-1044-2512-3160-5224-4820-6082 1352 2650 2134 5310 2433 7294l5 40c-2718-6773-7325-9505-11088-15452l-566-920a7372 7372 0 01-265-497 4370 4370 0 01-359-950 63 63 0 00-55-65 82 82 0 00-45 0l-12 7-17 10 10-14c-6037 3536-8085 10076-8274 13350a12025 12025 0 00-6614 2548 7136 7136 0 00-622-470 11134 11134 0 01-68-5873c-2468 1124-4390 2900-5785 4470h-10c-953-1206-886-5187-832-6018-10-52-710 363-802 425a17507 17507 0 00-2349 2012 21048 21048 0 00-2244 2692l-1 3v-3a20284 20284 0 00-3225 7280l-32 160a39700 39700 0 00-237 1500l-5 52a22907 22907 0 00-390 3316l-1 120c0 13270 10760 24030 24032 24030 11887 0 21756-8630 23690-19963l110-927c477-4120-53-8453-1560-12075zM20170 35545c113 53 220 112 334 164l16 10a12620 12620 0 01-350-174zm5506-14493zm19813-3060l-3-23 4 26z"/><path d="M47870 16735c-1044-2512-3160-5224-4820-6082 1352 2650 2134 5310 2433 7294 0-6 2 5 4 22l4 26c2268 6147 1032 12398-748 16218-2754 5910-9420 11967-19857 11670-11276-318-21210-8683-23064-19643-338-1728 0-2605 170-4008-207 1080-286 1394-390 3315l-2 123c0 13270 10760 24030 24032 24030 11887 0 21756-8630 23690-19963l110-927c477-4120-53-8453-1560-12075z" fill="url(#ff-b)"/><path d="M47870 16735c-1044-2512-3160-5224-4820-6082 1352 2650 2134 5310 2433 7294 0-6 2 5 4 22l4 26c2268 6147 1032 12398-748 16218-2754 5910-9420 11967-19857 11670-11276-318-21210-8683-23064-19643-338-1728 0-2605 170-4008-207 1080-286 1394-390 3315l-2 123c0 13270 10760 24030 24032 24030 11887 0 21756-8630 23690-19963l110-927c477-4120-53-8453-1560-12075z" fill="url(#ff-d)"/><path fill="url(#ff-e)" d="M36192 19560l150 110a13070 13070 0 00-2231-2911C26640 9290 32150 563 33080 120l10-13c-6037 3535-8085 10076-8273 13348 280-20 560-43 844-43 4505 0 8430 2477 10530 6150z"/><path d="M25677 21050c-40 598-2150 2660-2890 2660-6834 0-7943 4133-7943 4133 303 3480 2726 6348 5660 7865 134 70 270 130 405 193a13277 13277 0 00706 289 10674 10674 0 003127 603c11978 562 14300-14320 5655-18640 2213-385 4510 505 5794 1407-2100-3672-6025-6150-10530-6150-285 0-564 24-844 43a12025 12025 0 00-6614 2549c366 310 780 724 1650 1583 1630 1606 5813 3270 5822 3465z" fill="url(#ff-f)"/><path d="M25677 21050c-40 598-2150 2660-2890 2660-6834 0-7943 4133-7943 4133 303 3480 2726 6348 5660 7865 134 70 270 130 405 193a13277 13277 0 00706 289 10674 10674 0 003127 603c11978 562 14300-14320 5655-18640 2213-385 4510 505 5794 1407-2100-3672-6025-6150-10530-6150-285 0-564 24-844 43a12025 12025 0 00-6614 2549c366 310 780 724 1650 1583 1630 1606 5813 3270 5822 3465z" fill="url(#ff-h)"/><path fill="url(#ff-i)" d="M17083 15204a24404 24404 0 01498 330 11134 11134 0 01-67-5874c-2470 1125-4390 2900-5785 4470 115-3 3600-66 5354 1074z"/><path fill="url(#ff-j)" d="M1822 26240c1855 10960 11788 19325 23063 19644 10437 296 17104-5762 19858-11670 1780-3820 3016-10070 748-16218v-2l-4-24c-2-17-4-28-4-22l5 40c853 5566-1980 10958-6405 14604l-13 30c-8625 7023-16878 4237-18550 3097a14410 14410 0 01-350-174c-5028-2403-7105-6984-6660-10913-4245 0-5693-3580-5693-3580s3812-2718 8836-355c4653 2190 9023 355 9023 354-10-195-4192-1860-5822-3465-872-860-1285-1272-1652-1583a7136 7136 0 00-622-470 28293 28293 0 00-498-330c-1753-1140-5240-1076-5355-1073h-10c-953-1207-886-5188-832-6020-10-50-710 363-802 426a17507 17507 0 00-2349 2012 21048 21048 0 00-2244 2692l-1 3v-3a20284 20284 0 00-3225 7280c-10 52-865 3784-444 5720z"/><path fill="url(#ff-k)" d="M34110 16760a13070 13070 0 012231 2910l360 296c5450 5020 2594 12120 2380 12626 4426-3646 7258-9038 6405-14604-2716-6774-7323-9506-11086-15453l-566-920a7372 7372 0 01-265-497 4370 4370 0 01-359-950 63 63 0 00-55-65 82 82 0 00-45 0l-12 7-17 10c-930 443-6440 9170 1030 16640z"/><path fill="url(#ff-l)" d="M36702 19965a4743 4743 0 00-360-295l-150-110c-1283-900-3580-1792-5794-1407 8644 4322 6323 19203-5655 18640a10674 10674 0 01-3127-603 13451 13451 0 01-706-289 9064 9064 0 01-405-193l16 10c1670 1140 9924 3925 18550-3097l13-30c213-506 3068-7606-2380-12626z"/><path fill="url(#ff-m)" d="M14844 27844s1110-4133 7943-4133c740 0 2850-2062 2890-2660s-4370 1836-9023-354c-5024-2363-8836 354-8836 354s1448 3580 5693 3580c-445 3930 1632 8510 6660 10913 113 53 218 112 334 164-2935-1517-5358-4384-5660-7865z"/><path fill="url(#ff-n)" d="M47870 16735c-1044-2512-3160-5224-4820-6082 1352 2650 2134 5310 2433 7294l5 40c-2718-6773-7325-9505-11088-15452l-566-920a7372 7372 0 01-265-497 4370 4370 0 01-359-950 63 63 0 00-55-65 82 82 0 00-45 0l-12 7-17 10 10-14c-6037 3536-8085 10076-8274 13350 280-20 560-43 845-43 4505 0 8430 2477 10530 6148-1284-900-3580-1792-5795-1407 8644 4322 6323 19203-5655 18640a10674 10674 0 01-3127-603 13451 13451 0 01-706-289 9064 9064 0 01-405-193l17 10a14410 14410 0 01-350-174c112 53 218 112 333 164-2935-1517-5358-4384-5660-7865 0 0 1108-4133 7942-4133 740 0 2850-2062 2890-2660-10-195-4190-1860-5822-3465-870-860-1285-1272-1650-1583a7136 7136 0 00-623-470 11134 11134 0 01-67-5873c-2470 1124-4390 2900-5785 4470h-10c-953-1207-886-5187-832-6020-10-50-710 363-802 426a17507 17507 0 00-2349 2012 21048 21048 0 00-2243 2692l-1 3v-3a20284 20284 0 00-3225 7280l-32 160a39787 39787 0 00-277 1515c-2 18 2-17 0 0a27956 27956 0 00-355 3353l-3 122c0 13270 10760 24030 24032 24030 11887 0 21756-8630 23690-19963l110-927c477-4120-53-8453-1560-12075zm-2384 1234l4 26v-2l-4-24z"/></symbol>
+    <symbol id="ic-edge" viewBox="0 0 27600 27600"><path d="M24105 20053a9345 9345 0 01-1053 472 10202 10202 0 01-3590 646c-4732 0-8855-3255-8855-7432 0-1175 680-2193 1643-2729-4280 180-5380 4640-5380 7253 0 7387 6810 8137 8276 8137 791 0 1984-230 2704-456l130-44a12834 12834 0 006660-5282c220-350-168-757-535-565z" fill="url(#ed-b)"/><path d="M24105 20053a9345 9345 0 01-1053 472 10202 10202 0 01-3590 646c-4732 0-8855-3255-8855-7432 0-1175 680-2193 1643-2729-4280 180-5380 4640-5380 7253 0 7387 6810 8137 8276 8137 791 0 1984-230 2704-456l130-44a12834 12834 0 006660-5282c220-350-168-757-535-565z" fill="url(#ed-d)" opacity=".35"/><path d="M11571 25141a7913 7913 0 01-2273-2137 8145 8145 0 01-1514-4740 8093 8093 0 013093-6395 8082 8082 0 011373-859c312-148 846-414 1554-404a3236 3236 0 012569 1297 3184 3184 0 01636 1866c0-21 2446-7960-8005-7960-4390 0-8004 4166-8004 7820 0 2319 538 4170 1212 5604a12833 12833 0 007684 6757 12795 12795 0 003908 610c1414 0 2774-233 4045-656a7575 7575 0 01-6278-803z" fill="url(#ed-c)"/><path d="M11571 25141a7913 7913 0 01-2273-2137 8145 8145 0 01-1514-4740 8093 8093 0 013093-6395 8082 8082 0 011373-859c312-148 846-414 1554-404a3236 3236 0 012569 1297 3184 3184 0 01636 1866c0-21 2446-7960-8005-7960-4390 0-8004 4166-8004 7820 0 2319 538 4170 1212 5604a12833 12833 0 007684 6757 12795 12795 0 003908 610c1414 0 2774-233 4045-656a7575 7575 0 01-6278-803z" fill="url(#ed-e)" opacity=".4"/><path d="M16231 15886c-80 105-330 250-330 566 0 260 170 512 472 723 1438 1003 4149 868 4156 868a5954 5954 0 003027-839 6147 6147 0 001133-850 6180 6180 0 001910-4437c26-2242-796-3732-1133-4392-2120-4141-6694-6525-11668-6525-7011 0-12703 5635-12798 12620 47-3654 3679-6605 7996-6605 350 0 2346 34 4200 1007 1634 858 2490 1894 3086 2921 618 1067 728 2415 728 2952s-271 1333-780 1990z" fill="url(#ed-f)"/><path d="M16231 15886c-80 105-330 250-330 566 0 260 170 512 472 723 1438 1003 4149 868 4156 868a5954 5954 0 003027-839 6147 6147 0 001133-850 6180 6180 0 001910-4437c26-2242-796-3732-1133-4392-2120-4141-6694-6525-11668-6525-7011 0-12703 5635-12798 12620 47-3654 3679-6605 7996-6605 350 0 2346 34 4200 1007 1634 858 2490 1894 3086 2921 618 1067 728 2415 728 2952s-271 1333-780 1990z" fill="url(#ed-g)"/></symbol>
+  </svg>
+
   <!-- NAV -->
   <nav class="pl-nav" id="nav">
     <div class="pl-nav__inner">
@@ -1210,7 +1281,7 @@
         <a href="#features">Features</a>
         <a href="#how">How it works</a>
         <a href="#faq">FAQ</a>
-        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan btn--sm"><span class="btn-google-badge"><svg viewBox="0 0 24 24" width="11" height="11" style="display: block;"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg></span>Add to Chrome</a>
+        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan btn--sm" data-install-primary data-install-format="Add to {store}"><span class="btn-google-badge"><svg viewBox="0 0 24 24" width="11" height="11" style="display: block;" data-install-mark><use href="#ic-chrome" /></svg></span><span data-install-label>Add to Chrome</span></a>
       </div>
     </div>
     <div class="pl-nav__progress" id="nav-progress"></div>
@@ -1224,7 +1295,15 @@
           <h1 class="pl-hero__title reveal" style="--d:200ms">Bulk Magnific prompts <span class="accent">without scripts.</span></h1>
           <p class="pl-hero__sub reveal" style="--d:300ms">Choose a workflow, paste prompts once, and start the queue. Magnific Automation runs inside your browser session, downloads outputs, and keeps each file matched to its prompt.</p>
           <div class="pl-hero__ctas reveal" style="--d:400ms">
-            <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Add to Chrome (Free)</a>
+            <div class="pl-install">
+              <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan" data-install-primary data-install-format="Add to {store} (Free)"><span data-install-label>Add to Chrome (Free)</span></a>
+              <p class="pl-alt-stores" data-alt-stores>
+                <span class="pl-alt-stores__lead">Also on</span>
+                <a class="pl-alt-stores__link" data-store="chrome" href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" hidden><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-chrome" /></svg>Chrome</a>
+                <a class="pl-alt-stores__link" data-store="firefox" href="https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/" target="_blank" rel="noopener"><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-firefox" /></svg>Firefox</a>
+                <a class="pl-alt-stores__link" data-store="edge" href="https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc" target="_blank" rel="noopener"><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-edge" /></svg>Edge</a>
+              </p>
+            </div>
           </div>
 
           <div class="pl-stats reveal" style="--d:500ms">
@@ -1252,22 +1331,30 @@
   <section class="pl-band pl-proof-band">
   <div class="container">
     <div class="pl-trust">
-      <span>Works in <b>Chrome, Edge, Brave, Arc, Opera</b></span>
+      <span>Works in <b>Chrome, Firefox, Edge, Brave, Arc, Opera</b></span>
       <span>Uses <b>your Magnific session</b></span>
       <span><b>No password handling</b></span>
     </div>
     <div class="pl-proof-stack">
       <div class="pl-proof-panel reveal reveal--left">
         <h2 class="pl-proof-title">What you can verify today.</h2>
-        <p class="pl-proof-copy">No inflated install counts, no fake testimonials. The launch proof is the actual product: a live demo, a public Chrome Web Store listing, and a privacy model you can understand before installing.</p>
+        <p class="pl-proof-copy">No inflated install counts, no fake testimonials. The launch proof is the actual product: a live demo, public store listings you can read first, and a privacy model you can understand before installing.</p>
         <ul class="pl-proof-list">
           <li><span class="pl-proof-ic">1</span><span><b>Watch it run.</b> The demo shows the actual batch workflow from prompt list to automated generation.</span></li>
-          <li><span class="pl-proof-ic">2</span><span><b>Install from Chrome Web Store.</b> The listing is public, so you can inspect the extension page before adding it.</span></li>
+          <li><span class="pl-proof-ic">2</span><span><b>Install from an official store.</b> The Chrome Web Store, Edge Add-ons, and Firefox Add-ons listings are public, so you can inspect the extension page before adding it.</span></li>
           <li><span class="pl-proof-ic">3</span><span><b>Your own session.</b> It runs inside your browser using your logged-in Magnific account.</span></li>
           <li><span class="pl-proof-ic">4</span><span><b>No password handling.</b> The extension does not collect or transmit your Magnific credentials.</span></li>
         </ul>
         <div class="pl-proof-ctas">
-          <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Add to Chrome (Free)</a>
+          <div class="pl-install">
+            <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan" data-install-primary data-install-format="Add to {store} (Free)"><span data-install-label>Add to Chrome (Free)</span></a>
+            <p class="pl-alt-stores" data-alt-stores>
+              <span class="pl-alt-stores__lead">Also on</span>
+              <a class="pl-alt-stores__link" data-store="chrome" href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" hidden><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-chrome" /></svg>Chrome</a>
+              <a class="pl-alt-stores__link" data-store="firefox" href="https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/" target="_blank" rel="noopener"><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-firefox" /></svg>Firefox</a>
+              <a class="pl-alt-stores__link" data-store="edge" href="https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc" target="_blank" rel="noopener"><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-edge" /></svg>Edge</a>
+            </p>
+          </div>
         </div>
       </div>
       <div class="pl-video-panel reveal reveal--zoom" style="--d:300ms">
@@ -1442,7 +1529,7 @@
       <p class="section__label reveal">// HOW IT WORKS</p>
       <h2 class="section__title reveal" style="--d:60ms">Three steps. <span class="accent">That's the whole product.</span></h2>
       <div class="pl-steps">
-        <div class="pl-step reveal" style="--d:0ms"><div class="pl-step__n">1</div><h3 class="pl-step__title">Install &amp; open Magnific</h3><p class="pl-step__body">Add the extension to Chrome, log into Magnific, and open the image or video generator.</p></div>
+        <div class="pl-step reveal" style="--d:0ms"><div class="pl-step__n">1</div><h3 class="pl-step__title">Install &amp; open Magnific</h3><p class="pl-step__body">Add the extension to your browser, log into Magnific, and open the image or video generator.</p></div>
         <div class="pl-step reveal" style="--d:140ms"><div class="pl-step__n">2</div><h3 class="pl-step__title">Paste your prompt list</h3><p class="pl-step__body">One prompt per line. Choose the workflow, concurrency and delay from the side panel.</p></div>
         <div class="pl-step reveal" style="--d:280ms"><div class="pl-step__n">3</div><h3 class="pl-step__title">Press start, walk away</h3><p class="pl-step__body">The queue runs in order and downloads as it goes. No scripts, API keys, or developer setup.</p></div>
       </div>
@@ -1509,7 +1596,15 @@
       </div>
       <div class="pl-result reveal" style="--d:120ms">✦ Save hours of clicking · scale your output without scaling your effort ✦</div>
       <div class="pl-section-cta reveal" style="--d:180ms">
-        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Add to Chrome (Free)</a>
+        <div class="pl-install">
+          <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan" data-install-primary data-install-format="Add to {store} (Free)"><span data-install-label>Add to Chrome (Free)</span></a>
+          <p class="pl-alt-stores" data-alt-stores>
+            <span class="pl-alt-stores__lead">Also on</span>
+            <a class="pl-alt-stores__link" data-store="chrome" href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" hidden><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-chrome" /></svg>Chrome</a>
+            <a class="pl-alt-stores__link" data-store="firefox" href="https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/" target="_blank" rel="noopener"><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-firefox" /></svg>Firefox</a>
+            <a class="pl-alt-stores__link" data-store="edge" href="https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc" target="_blank" rel="noopener"><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-edge" /></svg>Edge</a>
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -1523,13 +1618,13 @@
         <div class="pl-faq__item reveal">
           <button class="pl-faq__q" aria-expanded="false">Is Magnific Automation made by Magnific?</button>
           <div class="pl-faq__a-wrapper">
-            <p class="pl-faq__a">No. Magnific Automation is an independent third-party Chrome extension, not affiliated with, endorsed by, or connected to Magnific. It's a browser tool that automates actions you'd otherwise do manually on Magnific using your own account.</p>
+            <p class="pl-faq__a">No. Magnific Automation is an independent third-party browser extension, not affiliated with, endorsed by, or connected to Magnific. It's a browser tool that automates actions you'd otherwise do manually on Magnific using your own account.</p>
           </div>
         </div>
         <div class="pl-faq__item reveal">
           <button class="pl-faq__q" aria-expanded="false">Is it really free?</button>
           <div class="pl-faq__a-wrapper">
-            <p class="pl-faq__a">Yes — 100% free. No credit card, no trial that expires, no upsell, and no per-generation charge. Install it from the Chrome Web Store and use it.</p>
+            <p class="pl-faq__a">Yes — 100% free. No credit card, no trial that expires, no upsell, and no per-generation charge. Install it from the Chrome Web Store, Edge Add-ons, or Firefox Add-ons and use it.</p>
           </div>
         </div>
         <div class="pl-faq__item reveal">
@@ -1553,7 +1648,7 @@
         <div class="pl-faq__item reveal">
           <button class="pl-faq__q" aria-expanded="false">How long does setup take?</button>
           <div class="pl-faq__a-wrapper">
-            <p class="pl-faq__a">Install the Chrome extension, open Magnific, log in, paste one prompt per line, choose your workflow, and start the queue. There are no scripts, API keys, or developer setup to configure.</p>
+            <p class="pl-faq__a">Install the extension, open Magnific, log in, paste one prompt per line, choose your workflow, and start the queue. There are no scripts, API keys, or developer setup to configure.</p>
           </div>
         </div>
         <div class="pl-faq__item reveal">
@@ -1565,7 +1660,7 @@
         <div class="pl-faq__item reveal">
           <button class="pl-faq__q" aria-expanded="false">What if Magnific changes their UI and it breaks?</button>
           <div class="pl-faq__a-wrapper">
-            <p class="pl-faq__a">When Magnific rolls out meaningful UI changes, the extension gets patched and pushed to the Chrome Web Store, and updates are free.</p>
+            <p class="pl-faq__a">When Magnific rolls out meaningful UI changes, the extension gets patched and pushed to every store it ships on, and updates are free.</p>
           </div>
         </div>
         <div class="pl-faq__item reveal">
@@ -1577,7 +1672,7 @@
         <div class="pl-faq__item reveal">
           <button class="pl-faq__q" aria-expanded="false">What browsers are supported?</button>
           <div class="pl-faq__a-wrapper">
-            <p class="pl-faq__a">Google Chrome and Chromium-based browsers that support Chrome Web Store extensions are supported, including Brave, Edge, Arc, and Opera. Firefox uses a separate Mozilla Add-ons package when available. Safari is not currently supported.</p>
+            <p class="pl-faq__a">Chrome, Edge, and Firefox each have their own official listing, so you install the build signed for your browser. Other Chromium-based browsers — Brave, Arc, and Opera — can install the Chrome Web Store build directly. Safari is not currently supported.</p>
           </div>
         </div>
         <div class="pl-faq__item reveal">
@@ -1597,7 +1692,15 @@
         <img class="pl-cta-band__wolf" src="assets/wolf.png" alt="" width="96" height="96" />
         <h2 class="pl-cta-band__title">Stop babysitting the generate button.</h2>
         <p class="pl-cta-band__sub">Install free, choose a workflow, paste your prompts, and let the queue do the clicking. No scripts or API keys.</p>
-        <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan">Add to Chrome (Free)</a>
+        <div class="pl-install">
+          <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" class="btn btn--cyan" data-install-primary data-install-format="Add to {store} (Free)"><span data-install-label>Add to Chrome (Free)</span></a>
+          <p class="pl-alt-stores" data-alt-stores>
+            <span class="pl-alt-stores__lead">Also on</span>
+            <a class="pl-alt-stores__link" data-store="chrome" href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener" hidden><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-chrome" /></svg>Chrome</a>
+            <a class="pl-alt-stores__link" data-store="firefox" href="https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/" target="_blank" rel="noopener"><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-firefox" /></svg>Firefox</a>
+            <a class="pl-alt-stores__link" data-store="edge" href="https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc" target="_blank" rel="noopener"><svg class="pl-alt-stores__ic" aria-hidden="true"><use href="#ic-edge" /></svg>Edge</a>
+          </p>
+        </div>
         <div class="pl-stats pl-stats--footer">
           <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true">👥</span><span class="pl-stat__k">100+ users</span></div>
           <div class="pl-stat"><span class="pl-stat__ic" aria-hidden="true" style="color:var(--success)">★</span><span class="pl-stat__k">5.0</span></div>
@@ -1618,9 +1721,11 @@
         <a href="contact">Contact</a>
         <a href="ai">AI Reference</a>
         <a href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener">Chrome Web Store</a>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/" target="_blank" rel="noopener">Firefox Add-ons</a>
+        <a href="https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc" target="_blank" rel="noopener">Edge Add-ons</a>
         <a href="https://deepakthapa.dev">← Back to deepakthapa.dev</a>
       </div>
-      <p>© <span id="year"></span> Deepak Thapa · Magnific Automation is an independent Chrome extension and is not affiliated with Magnific.</p>
+      <p>© <span id="year"></span> Deepak Thapa · Magnific Automation is an independent browser extension and is not affiliated with Magnific.</p>
     </div>
   </footer>
 
@@ -2219,6 +2324,63 @@
             wrapper.style.height = '0px';
           }
         });
+      });
+    })();
+  </script>
+
+  <script>
+    // (G) INSTALL CTA — send each visitor to the store they can actually install from.
+    //     The static HTML ships Chrome as the primary button with Firefox + Edge in the
+    //     "Also on" rail, so the page is already correct with JS disabled or blocked.
+    //     When JS runs we promote the visitor's own browser into the button and demote
+    //     Chrome into the rail. The rail always lists the two stores NOT in the button,
+    //     so there is still exactly one loud install action per viewport.
+    (function () {
+      var STORES = {
+        chrome: {
+          label: 'Chrome', icon: '#ic-chrome',
+          url: 'https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik'
+        },
+        firefox: {
+          label: 'Firefox', icon: '#ic-firefox',
+          url: 'https://addons.mozilla.org/en-US/firefox/addon/magnific-automation-in-bulk/'
+        },
+        edge: {
+          label: 'Edge', icon: '#ic-edge',
+          url: 'https://microsoftedge.microsoft.com/addons/detail/hllhdgmdiknaaepbkkleojkenfdgflgc'
+        }
+      };
+
+      function detect() {
+        var ua = navigator.userAgent;
+        // Edge MUST be tested before Chrome — Edge's UA string still contains "Chrome".
+        if (/Edg(?:A|iOS)?\//.test(ua)) return 'edge';
+        if (/Firefox\/|FxiOS\//.test(ua)) return 'firefox';
+        // Brave, Arc, Opera and Vivaldi are Chromium and install from the Chrome Web Store.
+        return 'chrome';
+      }
+
+      var current = detect();
+      var store = STORES[current];
+      if (!store) return;
+
+      // Point the primary button at the visitor's own store and relabel it.
+      [].slice.call(document.querySelectorAll('[data-install-primary]')).forEach(function (btn) {
+        btn.href = store.url;
+
+        var label = btn.querySelector('[data-install-label]');
+        if (label) {
+          var fmt = btn.getAttribute('data-install-format') || 'Add to {store}';
+          label.textContent = fmt.replace('{store}', store.label);
+        }
+
+        var mark = btn.querySelector('[data-install-mark] use');
+        if (mark) mark.setAttribute('href', store.icon);
+      });
+
+      // Rail shows every store EXCEPT the one now sitting in the button.
+      [].slice.call(document.querySelectorAll('[data-alt-stores] .pl-alt-stores__link')).forEach(function (link) {
+        link.hidden = link.getAttribute('data-store') === current;
       });
     })();
   </script>
