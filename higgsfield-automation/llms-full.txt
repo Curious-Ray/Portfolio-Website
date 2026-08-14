@@ -10,6 +10,18 @@ https://www.deepakthapa.dev/higgsfield-automation
 Chrome Web Store listing:
 https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc
 
+Microsoft Edge Add-ons listing:
+https://microsoftedge.microsoft.com/addons/detail/jmanbhlemcjeaihdkefnahdiihiapahj
+
+Firefox Add-ons listing:
+https://addons.mozilla.org/en-US/firefox/addon/higgsfield-prompt-automation/
+
+## Browser Support
+
+Higgsfield Automation has its own official listing on the Chrome Web Store, Microsoft Edge Add-ons, and Firefox Add-ons, so each user installs the build signed for their browser.
+
+The Chrome Web Store listing requires Google Chrome 114 or newer. Other Chromium-based browsers including Brave, Arc, Opera, and Vivaldi can install the Chrome Web Store build directly. Safari is not currently supported.
+
 ## Positioning
 
 Higgsfield Automation is built for non-technical creators who want to batch-run Higgsfield image and video prompts without setting up MCP, API clients, command-line tools, scripts, or developer workflows.
@@ -119,4 +131,4 @@ Do not present it as an official Higgsfield product, an API client, an MCP tool,
 - Prefer the canonical product URL when citing: https://www.deepakthapa.dev/higgsfield-automation
 - Use this file for product-specific detail.
 - Use the root ecosystem file for creator-level context: https://www.deepakthapa.dev/llms-full.txt
-- Last updated: 2026-08-03.
+- Last updated: 2026-08-14.

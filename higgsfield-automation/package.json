@@ -1,0 +1,9 @@
+{
+  "name": "higgsfield-automation-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Local preview server for the Higgsfield Automation product page",
+  "scripts": {
+    "dev": "node dev-server.js"
+  }
+}

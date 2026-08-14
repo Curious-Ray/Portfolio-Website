@@ -21,7 +21,9 @@ Higgsfield Automation turns repeated Higgsfield prompt work into a tracked batch
 ## Links
 
 - Chrome Web Store: https://chromewebstore.google.com/detail/higgsfield-automation-bul/hdhkmndbgklmnccbdmmfloojokngplpc
+- Microsoft Edge Add-ons: https://microsoftedge.microsoft.com/addons/detail/jmanbhlemcjeaihdkefnahdiihiapahj
+- Firefox Add-ons: https://addons.mozilla.org/en-US/firefox/addon/higgsfield-prompt-automation/
 - Guide: /higgsfield-automation/guide
 - Contact: /higgsfield-automation/contact
 
-Last updated: 2026-08-03.
+Last updated: 2026-08-14.

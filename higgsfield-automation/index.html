@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Higgsfield Automation - Batch-run Higgsfield prompts</title>
-  <meta name="description" content="Higgsfield Automation is a no-code Chrome extension for non-technical creators to batch-run Higgsfield image and video prompts, import spreadsheets, retry failures, and auto-download results in your browser session." />
+  <meta name="description" content="Higgsfield Automation is a no-code Chrome, Edge, and Firefox extension for non-technical creators to batch-run Higgsfield image and video prompts, import spreadsheets, retry failures, and auto-download results in your browser session." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://www.deepakthapa.dev/higgsfield-automation" />
   <link rel="alternate" type="text/markdown" href="/higgsfield-automation/index.md" />
@@ -23,7 +23,7 @@
   <meta property="og:url" content="https://www.deepakthapa.dev/higgsfield-automation" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Higgsfield Automation - Batch-run Higgsfield prompts" />
-  <meta name="twitter:description" content="No-code batch generation for Higgsfield prompts in your Chrome browser session." />
+  <meta name="twitter:description" content="No-code batch generation for Higgsfield prompts in your Chrome, Edge, or Firefox browser session." />
   <meta name="twitter:image" content="https://www.deepakthapa.dev/higgsfield-automation/assets/marquee.png" />
   <meta name="theme-color" content="#070906" />
 
@@ -45,10 +45,15 @@
     "url": "https://www.deepakthapa.dev/higgsfield-automation",
     "image": "https://www.deepakthapa.dev/higgsfield-automation/assets/marquee.png",
     "applicationCategory": "BrowserApplication",
-    "operatingSystem": "Chrome, Chromium-based browsers",
-    "browserRequirements": "Requires Google Chrome 114 or newer",
-    "description": "Higgsfield Automation is a no-code Chrome extension for non-technical creators. It batch-runs user-provided image and video prompts in the Higgsfield browser session the user opens in Chrome, imports prompts from spreadsheets or text files, supports Text to Video, Frame to Video, Text to Image, and Image to Image, retries failed starts, and downloads generated outputs.",
+    "operatingSystem": "Chrome, Edge, Firefox, Chromium-based browsers",
+    "browserRequirements": "Requires Google Chrome 114 or newer, Microsoft Edge, Mozilla Firefox, or a Chromium-based browser such as Brave, Arc, or Opera",
+    "description": "Higgsfield Automation is a no-code Chrome, Edge, and Firefox extension for non-technical creators. It batch-runs user-provided image and video prompts in the Higgsfield browser session the user opens, imports prompts from spreadsheets or text files, supports Text to Video, Frame to Video, Text to Image, and Image to Image, retries failed starts, and downloads generated outputs.",
     "downloadUrl": "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc",
+    "installUrl": [
+      "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc",
+      "https://microsoftedge.microsoft.com/addons/detail/jmanbhlemcjeaihdkefnahdiihiapahj",
+      "https://addons.mozilla.org/en-US/firefox/addon/higgsfield-prompt-automation/"
+    ],
     "softwareVersion": "1.0.3",
     "author": {
       "@type": "Person",
@@ -60,10 +65,29 @@
       "name": "Deepak Thapa",
       "url": "https://www.deepakthapa.dev/"
     },
-    "offers": {
-      "@type": "Offer",
-      "url": "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc"
-    },
+    "offers": [
+      {
+        "@type": "Offer",
+        "name": "Chrome Web Store",
+        "url": "https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "name": "Microsoft Edge Add-ons",
+        "url": "https://microsoftedge.microsoft.com/addons/detail/jmanbhlemcjeaihdkefnahdiihiapahj",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      {
+        "@type": "Offer",
+        "name": "Firefox Browser Add-ons",
+        "url": "https://addons.mozilla.org/en-US/firefox/addon/higgsfield-prompt-automation/",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    ],
     "featureList": [
       "Bulk prompt queue",
       "Spreadsheet and text prompt import",
@@ -85,12 +109,17 @@
       {
         "@type": "Question",
         "name": "Is Higgsfield Automation affiliated with Higgsfield?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. Higgsfield Automation is an independent Chrome extension and is not affiliated with or endorsed by Higgsfield." }
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Higgsfield Automation is an independent browser extension and is not affiliated with or endorsed by Higgsfield." }
+      },
+      {
+        "@type": "Question",
+        "name": "Which browsers is Higgsfield Automation available for?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Chrome, Microsoft Edge, and Mozilla Firefox each have their own official listing, so you install the build signed for your browser. Other Chromium-based browsers including Brave, Arc, and Opera can install the Chrome Web Store build directly. Safari is not currently supported." }
       },
       {
         "@type": "Question",
         "name": "Does Higgsfield Automation store my Higgsfield password?",
-        "acceptedAnswer": { "@type": "Answer", "text": "No. It uses the Higgsfield page already open in your Chrome browser session and does not store or transmit your Higgsfield login credentials." }
+        "acceptedAnswer": { "@type": "Answer", "text": "No. It uses the Higgsfield page already open in your browser session and does not store or transmit your Higgsfield login credentials." }
       },
       {
         "@type": "Question",
@@ -230,6 +259,44 @@
     .btn__particles { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
     .btn--primary .btn__label { position: relative; z-index: 1; }
 
+    /* ---------- multi-store install (Chrome / Edge / Firefox) ----------
+       Action economy holds: still exactly ONE solid button per viewport.
+       The install script retargets that button to the visitor's own browser;
+       the two remaining stores sit beneath it as quiet outline chips so they
+       never read as a second primary CTA. With JS off the static markup ships
+       Chrome as primary and the other two as chips, so every store stays
+       reachable either way. */
+    .install { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+
+    .alt-stores {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+      margin: 0;
+      font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.02em;
+      color: var(--soft);
+    }
+    .alt-stores__lead { white-space: nowrap; }
+    .alt-stores__link {
+      display: inline-flex; align-items: center; gap: 7px;
+      min-height: 44px; padding: 10px 15px;
+      border: 1px solid var(--line-2); border-radius: 999px;
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--muted);
+      font-weight: 700; white-space: nowrap;
+      transition: background 0.3s var(--ease), border-color 0.3s var(--ease), color 0.3s var(--ease);
+    }
+    /* hover lifts the surface AND the label together — contrast rises, never drops */
+    .alt-stores__link:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.24);
+      color: var(--ink);
+    }
+    /* Official browser marks (assets/browser-*.svg). Kept as separate files rather
+       than inlined symbols: all three ship generic gradient ids (a, b, c ...) that
+       would collide in a single document. The class must win over the global
+       `img { height: auto }` rule, so both axes are pinned here. */
+    .alt-stores__ic { width: 16px; height: 16px; flex-shrink: 0; display: block; }
+    .alt-stores__link[hidden] { display: none; }
+
     /* in-context text links (privacy / guide) — deliberately not buttons */
     .text-links { display: flex; flex-wrap: wrap; gap: 24px; margin-top: 28px; }
     .text-links a {
@@ -268,24 +335,23 @@
     .hero { position: relative; min-height: 100dvh; padding: clamp(100px, 12vh, 140px) 0 60px; display: flex; align-items: center; justify-content: center; overflow: hidden; isolation: isolate; }
     .hero__wall {
       position: absolute; inset: -6% 0 -6% auto; width: 56%; z-index: -3;
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-content: center; padding-left: 2vw;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-content: start; padding-left: 2vw;
       -webkit-mask-image: linear-gradient(90deg, transparent, #000 38%, #000 100%);
       mask-image: linear-gradient(90deg, transparent, #000 38%, #000 100%);
       opacity: 0.42; will-change: transform;
     }
-    .hero__wall .col { display: grid; gap: 14px; will-change: transform; }
+    /* NOTE: hero columns carry THREE identical .col__set blocks (not two).
+       The visible window sits partway down the wall and the marquee shifts
+       content by up to one full set — two sets is not enough coverage and
+       the column end becomes visible before the wrap (the "flash"). */
+    .hero__wall .col { will-change: transform; }
+    .hero__wall .col__set { display: grid; gap: 14px; padding-bottom: 14px; }
     .hero__wall .col:nth-child(2) { margin-top: -46px; }
-    .hero__wall img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--line); object-fit: cover; }
-    /* Hero wall looping vertical scroll */
-    @keyframes wall-scroll-up   { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-    @keyframes wall-scroll-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
+    .hero__wall img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--line); object-fit: cover; background: #0c110a; }
     @keyframes bot-float {
       0%, 100% { transform: translateY(0) rotate(0deg); }
       50% { transform: translateY(-8px) rotate(1deg); }
     }
-    .hero__wall .col:nth-child(1) { animation: wall-scroll-up   28s linear infinite; }
-    .hero__wall .col:nth-child(2) { animation: wall-scroll-down 32s linear infinite; }
-    .hero__wall .col:nth-child(3) { animation: wall-scroll-up   24s linear infinite; }
     .hero__scrim {
       position: absolute; inset: 0; z-index: -2; pointer-events: none;
       background:
@@ -309,93 +375,120 @@
     .hero__copy { max-width: 54ch; margin-top: 24px; color: #d7e4cd; font-size: clamp(17px, 1.9vw, 21px); line-height: 1.5; text-align: left; }
     .hero__actions { margin-top: 32px; }
 
+    /* hero proof strip — same numbers as the bottom CTA stats */
+    .hero__proof { display: flex; flex-wrap: wrap; align-items: center; gap: clamp(16px, 2.6vw, 30px); margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--line-2); }
+    .proof-stat { display: grid; gap: 4px; }
+    .proof-stat b { display: inline-flex; align-items: center; font-family: var(--font-display); font-size: clamp(21px, 2.4vw, 28px); font-weight: 700; line-height: 1; letter-spacing: -0.01em; color: var(--lime); text-shadow: 0 0 24px rgba(var(--lime-rgb), 0.18); }
+    .proof-stat b svg { width: 0.68em; height: 0.68em; margin-right: 0.32em; fill: var(--lime); }
+    .proof-stat span { font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+    .proof-stat + .proof-stat { position: relative; padding-left: clamp(16px, 2.6vw, 30px); }
+    .proof-stat + .proof-stat::before { content: ""; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 1px; height: 28px; background: var(--line-2); }
+
 
     /* ---------- how it works (pinned sequence) ---------- */
     .sequence { background: linear-gradient(180deg, rgba(17, 22, 15, 0.5), rgba(7, 9, 6, 0)); border-top: 1px solid var(--line); }
+    .sequence::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 56px 56px;
+      -webkit-mask-image: linear-gradient(180deg, #000, transparent 72%);
+      mask-image: linear-gradient(180deg, #000, transparent 72%);
+    }
     .sequence__grid { display: grid; grid-template-columns: minmax(0, 1.06fr) minmax(340px, 0.94fr); gap: clamp(30px, 5vw, 70px); align-items: start; }
     .sequence__visual { position: sticky; top: clamp(104px, 8vw, 148px); min-width: 0; }
     .sequence__visual .eyebrow { margin-bottom: 14px; }
     .sequence__visual .section-title { margin-bottom: 10px; }
     .sequence__visual .section-copy { margin-bottom: 36px; }
     .device { position: relative; border: 1px solid var(--line-2); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); box-shadow: var(--shadow); overflow: hidden; }
-    .device__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 0 16px; border-bottom: 1px solid var(--line); color: var(--soft); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
-    .device__dots { display: inline-flex; gap: 6px; }
+    .device__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 46px; padding: 0 16px; border-bottom: 1px solid var(--line); color: var(--soft); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; }
+    .device__dots { display: inline-flex; gap: 6px; flex: 0 0 auto; }
     .device__dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--line-2); }
     .device__dots i:first-child { background: var(--lime); box-shadow: 0 0 10px var(--glow); }
-    .device__status { display: inline-flex; align-items: center; gap: 8px; color: var(--lime); }
+    .device__url { flex: 1 1 auto; min-width: 0; display: inline-flex; align-items: center; gap: 8px; max-width: 280px; padding: 6px 13px; border: 1px solid var(--line); border-radius: 999px; background: rgba(255, 255, 255, 0.03); color: var(--muted); letter-spacing: 0.02em; text-transform: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .device__url svg { flex: 0 0 auto; width: 11px; height: 11px; stroke: var(--soft); }
+    .device__status { display: inline-flex; align-items: center; gap: 8px; color: var(--lime); flex: 0 0 auto; }
     .device__status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 12px var(--glow); animation: pulse 2s ease-in-out infinite; }
     @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
     .device__stage { position: relative; aspect-ratio: 16 / 10; background: var(--stage-bg); overflow: hidden; }
-    .device__stage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 0.7s var(--ease), transform 1.1s var(--ease); }
-    .device__stage img.is-active { opacity: 1; transform: scale(1); }
-    .device__caption { position: absolute; left: 16px; right: 16px; bottom: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 16px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.58); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
+    .device__stage > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.04); transition: opacity 0.7s var(--ease), transform 1.1s var(--ease); }
+    .device__stage > img.is-active { opacity: 1; transform: scale(1); }
+    .device__scan { position: absolute; left: 0; right: 0; top: -12%; height: 12%; z-index: 2; pointer-events: none; background: linear-gradient(180deg, transparent, rgba(var(--lime-rgb), 0.12) 55%, rgba(var(--lime-rgb), 0.38)); border-bottom: 1px solid rgba(var(--lime-rgb), 0.55); animation: device-scan 5.4s var(--ease) infinite; }
+    @keyframes device-scan { 0% { top: -12%; opacity: 0; } 12% { opacity: 1; } 78% { opacity: 1; } 94%, 100% { top: 104%; opacity: 0; } }
+    .device__caption { position: absolute; left: 16px; right: 16px; bottom: 16px; z-index: 3; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 16px; border: 1px solid var(--line-2); border-radius: var(--radius-sm); background: rgba(0, 0, 0, 0.58); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px); font-family: var(--font-mono); font-size: 12px; font-weight: 700; }
     .device__caption b { color: var(--lime); font-weight: 700; }
+    .device__rail { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-top: 1px solid var(--line); background: rgba(255, 255, 255, 0.015); }
+    .device__thumb { position: relative; flex: 0 0 auto; width: 62px; aspect-ratio: 16 / 10; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; opacity: 0.38; filter: saturate(0.4); transition: opacity 0.45s var(--ease), border-color 0.45s var(--ease), filter 0.45s var(--ease), box-shadow 0.45s var(--ease); }
+    .device__thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .device__thumb.is-active { opacity: 1; filter: none; border-color: rgba(var(--lime-rgb), 0.55); box-shadow: 0 0 0 1px rgba(var(--lime-rgb), 0.35), 0 0 18px rgba(var(--lime-rgb), 0.16); }
+    .device__progress { position: relative; flex: 1 1 auto; height: 3px; margin-left: 6px; border-radius: 999px; background: rgba(255, 255, 255, 0.08); overflow: hidden; }
+    .device__progress i { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, var(--lime), var(--lime-soft)); box-shadow: 0 0 12px var(--glow); transform: scaleX(0.25); transform-origin: 0 50%; transition: transform 0.6s var(--ease); }
     .sequence__steps { display: grid; gap: 20px; padding-top: var(--steps-offset, 200px); padding-bottom: 0; }
     .step { min-height: 54vh; display: flex; align-items: flex-start; padding-top: 4vh; opacity: 0.5; transition: opacity 0.5s var(--ease); }
     .step:first-child { min-height: 54vh; padding-top: 4vh; }
     .step:last-child { min-height: auto; }
     .step.is-active { opacity: 1; }
-    .step__inner { width: 100%; padding: clamp(26px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.022); transition: border-color 0.5s var(--ease), background 0.5s var(--ease), transform 0.5s var(--ease); will-change: transform, border-color, background-color; }
-    .step.is-active .step__inner { border-color: rgba(var(--lime-rgb), 0.28); background: rgba(var(--lime-rgb), 0.03); transform: translate3d(6px, 0, 0); }
-    .step__index { display: inline-flex; margin-bottom: 16px; color: var(--soft); font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.5s var(--ease); }
+    .step__inner { position: relative; overflow: hidden; width: 100%; padding: clamp(26px, 4vw, 40px); border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.022); transition: border-color 0.5s var(--ease), background 0.5s var(--ease), transform 0.5s var(--ease), box-shadow 0.5s var(--ease); will-change: transform, border-color, background-color; }
+    .step__inner::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(180deg, var(--lime), rgba(var(--lime-rgb), 0.12)); transform: scaleY(0); transform-origin: 50% 0; transition: transform 0.55s var(--ease); }
+    .step.is-active .step__inner { border-color: rgba(var(--lime-rgb), 0.28); background: rgba(var(--lime-rgb), 0.03); transform: translate3d(6px, 0, 0); box-shadow: 0 24px 60px -30px rgba(0, 0, 0, 0.8), 0 0 40px rgba(var(--lime-rgb), 0.05); }
+    .step.is-active .step__inner::before { transform: scaleY(1); }
+    .step__num { position: absolute; top: -16px; right: 6px; font-family: var(--font-display); font-size: clamp(92px, 10vw, 134px); font-weight: 700; line-height: 1; letter-spacing: -0.04em; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.07); pointer-events: none; transition: -webkit-text-stroke-color 0.5s var(--ease); }
+    .step.is-active .step__num { -webkit-text-stroke-color: rgba(var(--lime-rgb), 0.22); }
+    .step__head { position: relative; display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+    .step__icon { display: grid; place-items: center; flex: 0 0 auto; width: 46px; height: 46px; border: 1px solid var(--line-2); border-radius: 12px; color: var(--muted); background: rgba(255, 255, 255, 0.02); transition: color 0.5s var(--ease), border-color 0.5s var(--ease), background 0.5s var(--ease), box-shadow 0.5s var(--ease); }
+    .step__icon svg { width: 21px; height: 21px; }
+    .step.is-active .step__icon { color: var(--lime); border-color: rgba(var(--lime-rgb), 0.45); background: rgba(var(--lime-rgb), 0.06); box-shadow: 0 0 24px rgba(var(--lime-rgb), 0.12); }
+    .step__index { display: inline-flex; color: var(--soft); font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.5s var(--ease); }
     .step.is-active .step__index { color: var(--lime); }
-    .step h3 { font-size: clamp(27px, 3.4vw, 42px); line-height: 1.03; letter-spacing: -0.02em; }
-    .step p { margin-top: 14px; color: var(--muted); font-size: 17px; }
-    .step__tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .step h3 { position: relative; font-size: clamp(27px, 3.4vw, 42px); line-height: 1.03; letter-spacing: -0.02em; }
+    .step p { position: relative; margin-top: 14px; color: var(--muted); font-size: 17px; }
+    .step__tags { position: relative; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
     .tag { display: inline-flex; align-items: center; min-height: 30px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 999px; color: var(--muted); font-family: var(--font-mono); font-size: 11px; font-weight: 700; }
     .step.is-active .tag { border-color: rgba(var(--lime-rgb), 0.24); color: var(--lime-soft); }
 
     /* ---------- video demo ---------- */
-    .demo-grid { display: grid; place-items: center; text-align: center; }
-    .video-wrap {
-      position: relative;
-      border: 1px solid var(--line-2);
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)), var(--surface);
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      aspect-ratio: 16 / 9;
-      width: 100%;
-      max-width: 860px;
-      margin-top: 40px;
-      will-change: transform;
-      transition: border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
-    }
-    .video-wrap::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0;
-      background: radial-gradient(circle 240px at 50% 50%, rgba(var(--lime-rgb), 0.12), transparent 70%);
-      transition: opacity 0.4s var(--ease);
-    }
-    .video-wrap:hover {
-      border-color: rgba(var(--lime-rgb), 0.24);
-      box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.95), 0 0 40px rgba(var(--lime-rgb), 0.05);
-    }
-    .video-wrap:hover::before {
-      opacity: 1;
-    }
-    .video-wrap iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
+    .demo__grid { display: grid; grid-template-columns: minmax(0, 0.84fr) minmax(0, 1.16fr); gap: clamp(34px, 5vw, 72px); align-items: center; }
+    .demo__points { display: grid; margin: 30px 0 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+    .demo__points li { display: flex; align-items: center; gap: 14px; padding: 13px 2px; border-bottom: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+    .demo__points li svg { flex: 0 0 auto; width: 15px; height: 15px; stroke: var(--lime); }
+    .demo__points li b { color: var(--ink); font-weight: 600; }
+    .demo__stage-wrap { position: relative; min-width: 0; }
+    .demo__glow { position: absolute; inset: -9% -11%; z-index: -1; pointer-events: none; background: radial-gradient(45% 45% at 50% 55%, rgba(var(--lime-rgb), 0.13), transparent 70%); filter: blur(12px); }
+    .device--demo { transform: perspective(1500px) rotateY(-4.5deg) rotateX(1deg); transform-origin: 50% 50%; transition: transform 0.7s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease); }
+    .demo__stage-wrap:hover .device--demo { transform: perspective(1500px) rotateY(0deg) rotateX(0deg); border-color: rgba(var(--lime-rgb), 0.26); box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.95), 0 0 50px rgba(var(--lime-rgb), 0.06); }
+    .device__rec { display: inline-flex; align-items: center; gap: 7px; color: #ff6b6b; flex: 0 0 auto; }
+    .device__rec::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #ff5d5d; box-shadow: 0 0 10px rgba(255, 93, 93, 0.8); animation: pulse 1.6s ease-in-out infinite; }
+    .video-wrap { position: relative; aspect-ratio: 16 / 9; background: var(--stage-bg); overflow: hidden; }
+    .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 
     /* ---------- modes ---------- */
-    .modes { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 44px; }
-    .mode-card { --mx: 50%; --my: 50%; position: relative; min-height: 220px; padding: 24px; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01)), var(--surface); overflow: hidden; transition: transform 0.4s var(--ease), border-color 0.4s var(--ease); }
-    .mode-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; background: radial-gradient(circle 180px at var(--mx) var(--my), rgba(var(--lime-rgb), 0.16), transparent 70%); transition: opacity 0.4s var(--ease); }
-    .mode-card:hover { transform: translateY(-6px); border-color: rgba(var(--lime-rgb), 0.2); }
+    .modes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 44px; }
+    .mode-card { --mx: 50%; --my: 50%; position: relative; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01)), var(--surface); overflow: hidden; transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease); }
+    .mode-card::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: 0; background: radial-gradient(circle 220px at var(--mx) var(--my), rgba(var(--lime-rgb), 0.12), transparent 70%); transition: opacity 0.4s var(--ease); }
+    .mode-card::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; z-index: 1; background: linear-gradient(90deg, transparent, var(--lime), transparent); transform: scaleX(0); transition: transform 0.5s var(--ease); }
+    .mode-card:hover { transform: translateY(-6px); border-color: rgba(var(--lime-rgb), 0.24); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.85); }
     .mode-card:hover::before { opacity: 1; }
-    .mode-card__tag { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 50px; height: 50px; border: 1px solid var(--line-2); border-radius: 12px; color: var(--ink); font-family: var(--font-mono); font-size: 13px; font-weight: 700; transition: color 0.4s var(--ease), border-color 0.4s var(--ease); }
-    .mode-card:hover .mode-card__tag { color: var(--lime); border-color: rgba(var(--lime-rgb), 0.4); }
-    .mode-card h3 { position: relative; margin-top: 22px; font-size: 23px; line-height: 1.05; letter-spacing: -0.01em; }
-    .mode-card p { position: relative; margin-top: 12px; color: var(--muted); font-size: 15px; }
+    .mode-card:hover::after { transform: scaleX(1); }
+    .mode-card__visual { position: relative; display: grid; place-items: center; min-height: 148px; padding: 18px; border-bottom: 1px solid var(--line); background:
+        radial-gradient(60% 90% at 50% 100%, rgba(var(--lime-rgb), 0.05), transparent 70%),
+        linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+      background-size: auto, 28px 28px, 28px 28px;
+    }
+    .mode-card__visual svg { width: 74%; max-width: 250px; height: auto; color: var(--soft); transition: color 0.45s var(--ease), filter 0.45s var(--ease); }
+    .mode-card:hover .mode-card__visual svg { color: var(--lime-soft); filter: drop-shadow(0 0 14px rgba(var(--lime-rgb), 0.25)); }
+    .mode-card__body { position: relative; padding: 22px 24px 24px; }
+    .mode-card__top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .mode-card__tag { display: inline-flex; align-items: center; justify-content: center; min-width: 50px; height: 34px; padding: 0 12px; border: 1px solid var(--line-2); border-radius: 9px; color: var(--ink); font-family: var(--font-mono); font-size: 12px; font-weight: 700; letter-spacing: 0.06em; transition: color 0.35s var(--ease), background 0.35s var(--ease), border-color 0.35s var(--ease); }
+    .mode-card:hover .mode-card__tag { color: var(--lime-ink); background: var(--lime); border-color: var(--lime); }
+    .mode-card__arrow { color: var(--soft); transition: color 0.4s var(--ease), transform 0.4s var(--ease); }
+    .mode-card__arrow svg { display: block; width: 20px; height: 20px; }
+    .mode-card:hover .mode-card__arrow { color: var(--lime); transform: translateX(4px); }
+    .mode-card h3 { margin-top: 18px; font-size: 24px; line-height: 1.05; letter-spacing: -0.01em; }
+    .mode-card p { margin-top: 10px; color: var(--muted); font-size: 15px; }
+    .mode-card__meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .mode-card__meta span { display: inline-flex; align-items: center; min-height: 26px; padding: 0 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--soft); font-family: var(--font-mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; }
 
     /* ---------- gallery (scrolling wall) ---------- */
     .gallery { position: relative; overflow: hidden; background: #05070420; border-block: 1px solid var(--line); }
@@ -405,39 +498,32 @@
       -webkit-mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
       mask-image: linear-gradient(180deg, transparent, #000 8%, #000 92%, transparent);
     }
-    .wall .wall-col { display: grid; gap: 14px; align-content: start; will-change: transform; }
-    .wall .wall-col img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--line); object-fit: cover; }
-    @keyframes gallery-scroll-up   { 0% { transform: translateY(0); } 100% { transform: translateY(-50%); } }
-    @keyframes gallery-scroll-down { 0% { transform: translateY(-50%); } 100% { transform: translateY(0); } }
-    .wall .wall-col:nth-child(1) { animation: gallery-scroll-up   22s linear infinite; }
-    .wall .wall-col:nth-child(2) { animation: gallery-scroll-down 26s linear infinite; }
-    .wall .wall-col:nth-child(3) { animation: gallery-scroll-up   20s linear infinite; }
-    .wall .wall-col:nth-child(4) { animation: gallery-scroll-down 24s linear infinite; }
+    .wall .wall-col { will-change: transform; }
+    .wall .wall-col__set { display: grid; gap: 14px; padding-bottom: 14px; align-content: start; }
+    .wall .wall-col img { width: 100%; border-radius: var(--radius-sm); border: 1px solid var(--line); object-fit: cover; background: #0c110a; }
 
     /* ---------- trust ---------- */
     .trust { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); gap: clamp(34px, 7vw, 80px); align-items: center; }
-    .bot-wrap { position: relative; min-height: 480px; display: grid; place-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: radial-gradient(90% 70% at 30% 20%, rgba(var(--lime-rgb), 0.1), transparent 55%), var(--surface); }
-    .bot-wrap::before, .bot-wrap::after { content: ""; position: absolute; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, rgba(var(--lime-rgb), 0.45), transparent); }
-    .bot-wrap::before { top: 28%; transform: rotate(-12deg); }
-    .bot-wrap::after { bottom: 26%; transform: rotate(9deg); }
-    .bot-wrap img { position: relative; z-index: 2; width: min(82%, 440px); filter: drop-shadow(0 30px 54px rgba(var(--lime-rgb), 0.14)); animation: bot-float 6s ease-in-out infinite; will-change: transform; }
-    .trust-facts { display: grid; gap: 0; margin-top: 30px; }
-    .trust-fact { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 16px; align-items: center; padding: 18px 0; border-top: 1px solid var(--line); font-size: 17px; color: var(--ink); }
-    .trust-fact:last-child { border-bottom: 1px solid var(--line); }
-    .trust-fact svg { width: 20px; height: 20px; }
-    .trust-fact svg path {
-      stroke: var(--lime);
-      stroke-dasharray: 24;
-      stroke-dashoffset: 24;
-      transition: stroke-dashoffset 0.6s var(--ease);
-      transition-delay: calc(var(--d, 0ms) + 150ms);
-    }
-    .engine-gsap .trust-fact svg path {
-      transition: none;
-    }
-    .js:not(.engine-gsap) .trust-fact.rise.is-in svg path {
-      stroke-dashoffset: 0;
-    }
+    .bot-wrap { position: relative; min-height: 520px; display: grid; place-items: center; overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius); background: radial-gradient(90% 70% at 50% 32%, rgba(var(--lime-rgb), 0.09), transparent 60%), var(--surface); }
+    .bot-wrap__grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px); background-size: 40px 40px; -webkit-mask-image: radial-gradient(72% 72% at 50% 50%, #000, transparent); mask-image: radial-gradient(72% 72% at 50% 50%, #000, transparent); }
+    .bot-wrap__ring { position: absolute; left: 50%; top: 50%; border: 1px dashed rgba(var(--lime-rgb), 0.22); border-radius: 50%; transform: translate(-50%, -50%); animation: ring-spin 42s linear infinite; }
+    .bot-wrap__ring--1 { width: 62%; aspect-ratio: 1; }
+    .bot-wrap__ring--2 { width: 88%; aspect-ratio: 1; animation-duration: 64s; animation-direction: reverse; border-color: rgba(255, 255, 255, 0.08); }
+    @keyframes ring-spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+    .bot-wrap img { position: relative; z-index: 2; width: min(74%, 400px); filter: drop-shadow(0 30px 54px rgba(var(--lime-rgb), 0.16)); animation: bot-float 6s ease-in-out infinite; will-change: transform; }
+    .bot-chip { position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: 8px; padding: 8px 13px; border: 1px solid var(--line-2); border-radius: 999px; background: rgba(7, 9, 6, 0.72); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); color: var(--muted); font-family: var(--font-mono); font-size: 11px; font-weight: 700; letter-spacing: 0.04em; animation: bot-float 7s ease-in-out infinite; }
+    .bot-chip i { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 8px var(--glow); }
+    .bot-chip--1 { top: 12%; left: 8%; animation-delay: -1.2s; }
+    .bot-chip--2 { top: 24%; right: 7%; animation-delay: -3.4s; }
+    .bot-chip--3 { bottom: 12%; left: 12%; animation-delay: -5.1s; }
+    .trust-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin-top: 34px; }
+    .trust-fact { position: relative; padding: 20px; border: 1px solid var(--line); border-radius: var(--radius); background: rgba(255, 255, 255, 0.02); transition: border-color 0.4s var(--ease), background 0.4s var(--ease), transform 0.4s var(--ease); }
+    .trust-fact:hover { border-color: rgba(var(--lime-rgb), 0.22); background: rgba(var(--lime-rgb), 0.025); transform: translateY(-3px); }
+    .trust-fact__icon { display: grid; place-items: center; width: 40px; height: 40px; margin-bottom: 14px; border: 1px solid var(--line-2); border-radius: 10px; background: rgba(255, 255, 255, 0.02); }
+    .trust-fact__icon svg { width: 19px; height: 19px; }
+    .trust-fact__icon svg path { stroke: var(--lime); }
+    .trust-fact h3 { font-family: var(--font-display); font-size: 16.5px; line-height: 1.25; letter-spacing: -0.01em; }
+    .trust-fact p { margin-top: 8px; color: var(--muted); font-size: 13.5px; line-height: 1.5; }
 
     /* ---------- faq ---------- */
     .faq { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(34px, 7vw, 82px); align-items: start; }
@@ -529,13 +615,15 @@
     /* ---------- responsive ---------- */
     @media (max-width: 1040px) {
       .modes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .sequence__grid, .trust, .faq, .cta__inner, .gallery__head { grid-template-columns: 1fr; }
+      .sequence__grid, .trust, .faq, .cta__inner, .gallery__head, .demo__grid { grid-template-columns: 1fr; }
       .sequence__visual { position: relative; top: auto; }
       .step { min-height: auto; }
+      .demo__stage-wrap { width: 100%; max-width: 780px; margin: 0 auto; }
+      .device--demo { transform: none; }
       .hero__wall { width: 68%; opacity: 0.3; }
       .wall { grid-template-columns: repeat(3, 1fr); height: 440px; }
       .wall .wall-col:nth-child(4) { display: none; }
-      .bot-wrap { min-height: 400px; }
+      .bot-wrap { min-height: 440px; }
     }
     @media (max-width: 768px) {
       :root { --pad: 20px; }
@@ -551,7 +639,13 @@
       .wall { grid-template-columns: repeat(2, 1fr); height: 360px; }
       .wall .wall-col:nth-child(3) { display: none; }
       .wall .wall-col:nth-child(4) { display: none; }
-      .device__caption { position: static; margin: 0; border-radius: 0; border-inline: 0; border-bottom: 0; }
+      .device__caption { left: 10px; right: 10px; bottom: 10px; padding: 10px 12px; }
+      .device__thumb { width: 44px; }
+      .trust-facts { grid-template-columns: 1fr; }
+      .bot-wrap { min-height: 380px; }
+      .bot-chip { font-size: 10px; padding: 7px 11px; }
+      .bot-chip--3 { display: none; }
+      .demo__points li { font-size: 14px; }
       .footer__inner { display: grid; }
       .cta__stats { grid-template-columns: 1fr; gap: 12px; margin-top: 36px; }
     }
@@ -567,7 +661,8 @@
       opacity: 0;
     }
     .js-loading .hero__copy,
-    .js-loading .hero__actions {
+    .js-loading .hero__actions,
+    .js-loading .hero__proof {
       opacity: 0;
     }
     .js-loading [data-hero-line] {
@@ -602,13 +697,15 @@
     @keyframes pl-hero-line-slide { to { transform: none; } }
 
     html.js:not(.engine-gsap) .hero__copy,
-    html.js:not(.engine-gsap) .hero__actions {
+    html.js:not(.engine-gsap) .hero__actions,
+    html.js:not(.engine-gsap) .hero__proof {
       opacity: 0;
       transform: translateY(18px);
       animation: pl-hero-fade-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
     html.js:not(.engine-gsap) .hero__copy { animation-delay: 100ms; }
     html.js:not(.engine-gsap) .hero__actions { animation-delay: 200ms; }
+    html.js:not(.engine-gsap) .hero__proof { animation-delay: 300ms; }
 
     @keyframes pl-hero-fade-rise { to { opacity: 1; transform: none; } }
   </style>
@@ -626,7 +723,7 @@
         <a href="#modes">Modes</a>
         <a href="#gallery">Gallery</a>
         <a href="#privacy">Privacy</a>
-        <a href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener" class="btn btn--primary"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label">Install</span></a>
+        <a href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener" class="btn btn--primary" data-install-primary><span class="btn__dot" aria-hidden="true"></span><span class="btn__label">Install</span></a>
       </div>
     </div>
     <div class="nav__progress" id="progress"></div>
@@ -637,24 +734,64 @@
     <section class="hero" id="top" data-od-id="hero">
       <div class="hero__wall" id="hero-wall" aria-hidden="true">
         <div class="col">
-          <img src="assets/civitai/gen-03.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-09.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-03.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-09.jpg" alt="" loading="eager" />
+          <div class="col__set">
+            <img src="assets/civitai/gen-03.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-09.jpg" width="800" height="1067" alt="" loading="eager" />
+            <img src="assets/civitai/gen-05.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-01.jpg" width="800" height="1027" alt="" loading="eager" />
+          </div>
+          <div class="col__set">
+            <img src="assets/civitai/gen-03.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-09.jpg" width="800" height="1067" alt="" loading="eager" />
+            <img src="assets/civitai/gen-05.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-01.jpg" width="800" height="1027" alt="" loading="eager" />
+          </div>
+          <div class="col__set">
+            <img src="assets/civitai/gen-03.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-09.jpg" width="800" height="1067" alt="" loading="eager" />
+            <img src="assets/civitai/gen-05.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-01.jpg" width="800" height="1027" alt="" loading="eager" />
+          </div>
         </div>
         <div class="col">
-          <img src="assets/civitai/gen-13.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-07.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-11.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-13.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-07.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-11.jpg" alt="" loading="eager" />
+          <div class="col__set">
+            <img src="assets/civitai/gen-13.jpg" width="800" height="1200" alt="" loading="eager" />
+            <img src="assets/civitai/gen-07.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-11.jpg" width="800" height="1200" alt="" loading="eager" />
+            <img src="assets/civitai/gen-02.jpg" width="800" height="1169" alt="" loading="eager" />
+          </div>
+          <div class="col__set">
+            <img src="assets/civitai/gen-13.jpg" width="800" height="1200" alt="" loading="eager" />
+            <img src="assets/civitai/gen-07.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-11.jpg" width="800" height="1200" alt="" loading="eager" />
+            <img src="assets/civitai/gen-02.jpg" width="800" height="1169" alt="" loading="eager" />
+          </div>
+          <div class="col__set">
+            <img src="assets/civitai/gen-13.jpg" width="800" height="1200" alt="" loading="eager" />
+            <img src="assets/civitai/gen-07.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-11.jpg" width="800" height="1200" alt="" loading="eager" />
+            <img src="assets/civitai/gen-02.jpg" width="800" height="1169" alt="" loading="eager" />
+          </div>
         </div>
         <div class="col">
-          <img src="assets/civitai/gen-12.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-04.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-12.jpg" alt="" loading="eager" />
-          <img src="assets/civitai/gen-04.jpg" alt="" loading="eager" />
+          <div class="col__set">
+            <img src="assets/civitai/gen-12.jpg" width="800" height="1200" alt="" loading="eager" />
+            <img src="assets/civitai/gen-04.jpg" width="800" height="1400" alt="" loading="eager" />
+            <img src="assets/civitai/gen-08.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-06.jpg" width="800" height="1169" alt="" loading="eager" />
+          </div>
+          <div class="col__set">
+            <img src="assets/civitai/gen-12.jpg" width="800" height="1200" alt="" loading="eager" />
+            <img src="assets/civitai/gen-04.jpg" width="800" height="1400" alt="" loading="eager" />
+            <img src="assets/civitai/gen-08.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-06.jpg" width="800" height="1169" alt="" loading="eager" />
+          </div>
+          <div class="col__set">
+            <img src="assets/civitai/gen-12.jpg" width="800" height="1200" alt="" loading="eager" />
+            <img src="assets/civitai/gen-04.jpg" width="800" height="1400" alt="" loading="eager" />
+            <img src="assets/civitai/gen-08.jpg" width="800" height="1169" alt="" loading="eager" />
+            <img src="assets/civitai/gen-06.jpg" width="800" height="1169" alt="" loading="eager" />
+          </div>
         </div>
       </div>
       <div class="hero__scrim" aria-hidden="true"></div>
@@ -671,8 +808,22 @@
           <p class="hero__copy" data-hero>
             Import prompts, choose a Higgsfield mode, and let the extension queue, retry, and download the batch in your browser.
           </p>
-          <div class="button-row hero__actions" data-hero>
-            <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label">Install on Chrome</span></a>
+          <div class="install hero__actions" data-hero>
+            <div class="button-row">
+              <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener" data-install-primary data-install-format="Install on {store}"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label" data-install-label>Install on Chrome</span></a>
+            </div>
+            <p class="alt-stores" data-alt-stores>
+              <span class="alt-stores__lead">Also on</span>
+              <a class="alt-stores__link" data-store="chrome" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener" hidden><img class="alt-stores__ic" src="assets/browser-chrome.svg" width="16" height="16" alt="" />Chrome</a>
+              <a class="alt-stores__link" data-store="edge" href="https://microsoftedge.microsoft.com/addons/detail/jmanbhlemcjeaihdkefnahdiihiapahj" target="_blank" rel="noopener"><img class="alt-stores__ic" src="assets/browser-edge.svg" width="16" height="16" alt="" />Edge</a>
+              <a class="alt-stores__link" data-store="firefox" href="https://addons.mozilla.org/en-US/firefox/addon/higgsfield-prompt-automation/" target="_blank" rel="noopener"><img class="alt-stores__ic" src="assets/browser-firefox.svg" width="16" height="16" alt="" />Firefox</a>
+            </p>
+          </div>
+
+          <div class="hero__proof">
+            <div class="proof-stat"><b>1000+</b><span>Installs</span></div>
+            <div class="proof-stat"><b>10,000+</b><span>Images</span></div>
+            <div class="proof-stat"><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.1 1.2-6.5L2.5 9.4l6.6-.9 2.9-6z"/></svg>4.5+</b><span>Stars</span></div>
           </div>
 
         </div>
@@ -689,7 +840,7 @@
           <div class="device" id="workflow-device">
             <div class="device__bar">
               <span class="device__dots" aria-hidden="true"><i></i><i></i><i></i></span>
-              <span>Higgsfield Automation</span>
+              <span class="device__url"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.7-3.8-9s1.3-6.4 3.8-9z"/></svg>higgsfield.ai — side panel</span>
               <span class="device__status">Live</span>
             </div>
             <div class="device__stage">
@@ -697,10 +848,18 @@
               <img src="assets/shot-2-batch-sm.png" srcset="assets/shot-2-batch-sm.png 640w, assets/shot-2-batch.png 1280w" sizes="(max-width: 900px) 100vw, 52vw" alt="Higgsfield Automation batch size control screen" data-shot="1" loading="lazy" />
               <img src="assets/shot-3-queue-sm.png" srcset="assets/shot-3-queue-sm.png 640w, assets/shot-3-queue.png 1280w" sizes="(max-width: 900px) 100vw, 52vw" alt="Higgsfield Automation safe prompt queue screen" data-shot="2" loading="lazy" />
               <img src="assets/shot-5-downloads-sm.png" srcset="assets/shot-5-downloads-sm.png 640w, assets/shot-5-downloads.png 1280w" sizes="(max-width: 900px) 100vw, 52vw" alt="Higgsfield Automation organized downloads and reports screen" data-shot="3" loading="lazy" />
+              <div class="device__scan" aria-hidden="true"></div>
+              <div class="device__caption">
+                <span id="device-caption">Import prompt sources</span>
+                <b id="device-step">01 / 04</b>
+              </div>
             </div>
-            <div class="device__caption">
-              <span id="device-caption">Import prompt sources</span>
-              <b id="device-step">01 / 04</b>
+            <div class="device__rail" aria-hidden="true">
+              <span class="device__thumb is-active" data-shot-thumb="0"><img src="assets/shot-1-bulk-sm.png" alt="" loading="lazy" /></span>
+              <span class="device__thumb" data-shot-thumb="1"><img src="assets/shot-2-batch-sm.png" alt="" loading="lazy" /></span>
+              <span class="device__thumb" data-shot-thumb="2"><img src="assets/shot-3-queue-sm.png" alt="" loading="lazy" /></span>
+              <span class="device__thumb" data-shot-thumb="3"><img src="assets/shot-5-downloads-sm.png" alt="" loading="lazy" /></span>
+              <span class="device__progress"><i id="device-progress-fill"></i></span>
             </div>
           </div>
         </div>
@@ -708,7 +867,11 @@
         <div class="sequence__steps" id="sequence-steps">
           <article class="step is-active" data-step="0" data-caption="Import prompt sources">
             <div class="step__inner">
-              <span class="step__index">01 / Source</span>
+              <span class="step__num" aria-hidden="true">01</span>
+              <div class="step__head">
+                <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M12 11v6"/><path d="M9.5 14.5 12 17l2.5-2.5"/></svg></span>
+                <span class="step__index">01 / Source</span>
+              </div>
               <h3>Start with a list.</h3>
               <p>Paste blocks, drop a text file, or import a spreadsheet — it finds the prompt column for you.</p>
               <div class="step__tags"><span class="tag">XLSX</span><span class="tag">CSV</span><span class="tag">TXT</span></div>
@@ -716,7 +879,11 @@
           </article>
           <article class="step" data-step="1" data-caption="Choose the generation mode">
             <div class="step__inner">
-              <span class="step__index">02 / Mode</span>
+              <span class="step__num" aria-hidden="true">02</span>
+              <div class="step__head">
+                <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h9"/><path d="M19 7h1"/><path d="M15.5 4.8v4.4"/><path d="M4 17h3"/><path d="M13 17h7"/><path d="M9.5 14.8v4.4"/></svg></span>
+                <span class="step__index">02 / Mode</span>
+              </div>
               <h3>Pick the Higgsfield workflow.</h3>
               <p>Text-only prompts, image references, first/last frames, or still image generation.</p>
               <div class="step__tags"><span class="tag">T2V</span><span class="tag">F2V</span><span class="tag">T2I</span><span class="tag">I2I</span></div>
@@ -724,7 +891,11 @@
           </article>
           <article class="step" data-step="2" data-caption="Run the queue with pacing">
             <div class="step__inner">
-              <span class="step__index">03 / Queue</span>
+              <span class="step__num" aria-hidden="true">03</span>
+              <div class="step__head">
+                <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16"/><path d="M4 12h6"/><path d="M4 18h6"/><path d="M14 9.5l7 4.5-7 4.5v-9z"/></svg></span>
+                <span class="step__index">03 / Queue</span>
+              </div>
               <h3>Let it run while you move on.</h3>
               <p>Set concurrency, pacing, outputs per prompt, and retries. Cancel mid-run anytime.</p>
               <div class="step__tags"><span class="tag">Concurrency</span><span class="tag">Delay</span><span class="tag">Retries</span><span class="tag">Live log</span></div>
@@ -732,7 +903,11 @@
           </article>
           <article class="step" data-step="3" data-caption="Download organized outputs">
             <div class="step__inner">
-              <span class="step__index">04 / Output</span>
+              <span class="step__num" aria-hidden="true">04</span>
+              <div class="step__head">
+                <span class="step__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5h6l2 2.5h10V20H3V6.5z"/><path d="M12 11.5V17"/><path d="M9.7 14.8 12 17l2.3-2.2"/></svg></span>
+                <span class="step__index">04 / Output</span>
+              </div>
               <h3>Finish with files you can find.</h3>
               <p>Auto-download to a named folder with prompt-based filenames and a CSV run report.</p>
               <div class="step__tags"><span class="tag">Folder name</span><span class="tag">Prompt filenames</span><span class="tag">CSV report</span></div>
@@ -744,18 +919,36 @@
 
     <!-- VIDEO DEMO -->
     <section class="section section--tight" id="demo" data-od-id="demo">
-      <div class="container demo-grid rise">
-        <p class="eyebrow">See it in action</p>
-        <h2 class="section-title">Video Walkthrough</h2>
-        <p class="section-copy">Watch the extension queue, pace, and automate generations on higgsfield.ai with real cost calculations.</p>
-        <div class="video-wrap">
-          <iframe
-            src="https://www.youtube.com/embed/DFyNAXC-YN4?rel=0"
-            title="Higgsfield Automation Demo Video"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen>
-          </iframe>
+      <div class="container demo__grid rise">
+        <div class="demo__intro">
+          <p class="eyebrow">See it in action</p>
+          <h2 class="section-title">Video Walkthrough</h2>
+          <p class="section-copy">Watch the extension queue, pace, and automate generations on higgsfield.ai with real cost calculations.</p>
+          <ul class="demo__points">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h13"/><path d="M12 6l6 6-6 6"/></svg><span><b>Prompt import</b> — spreadsheets, CSV, and text files</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h13"/><path d="M12 6l6 6-6 6"/></svg><span><b>Queue pacing</b> — concurrency, delays, and retries</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h13"/><path d="M12 6l6 6-6 6"/></svg><span><b>Live run log</b> — every action, as it happens</span></li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12h13"/><path d="M12 6l6 6-6 6"/></svg><span><b>Cost math</b> — real per-generation calculations</span></li>
+          </ul>
+        </div>
+        <div class="demo__stage-wrap">
+          <div class="demo__glow" aria-hidden="true"></div>
+          <div class="device device--demo">
+            <div class="device__bar">
+              <span class="device__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="device__url"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M10 9.5l5 2.5-5 2.5v-5z"/></svg>Walkthrough — batch run on higgsfield.ai</span>
+              <span class="device__rec">REC</span>
+            </div>
+            <div class="video-wrap">
+              <iframe
+                src="https://www.youtube.com/embed/DFyNAXC-YN4?rel=0"
+                title="Higgsfield Automation Demo Video"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -769,24 +962,84 @@
       <div class="container">
         <div class="modes">
           <article class="mode-card rise" style="--d: 0ms;">
-            <span class="mode-card__tag">T2V</span>
-            <h3>Text to Video</h3>
-            <p>Prompt-only video batches, with multiple variations per prompt.</p>
+            <div class="mode-card__visual" aria-hidden="true">
+              <svg viewBox="0 0 240 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22h68"/><path d="M12 38h54"/><path d="M12 54h61"/>
+                <path d="M96 38h30"/><path d="M118 32l8 6-8 6"/>
+                <path d="M146 14h80v50h-80z"/><path d="M146 24h80"/><path d="M146 54h80"/>
+                <path d="M179 31l17 8.5-17 8.5v-17z"/>
+              </svg>
+            </div>
+            <div class="mode-card__body">
+              <div class="mode-card__top">
+                <span class="mode-card__tag">T2V</span>
+                <span class="mode-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span>
+              </div>
+              <h3>Text to Video</h3>
+              <p>Prompt-only video batches, with multiple variations per prompt.</p>
+              <div class="mode-card__meta"><span>Prompt-only</span><span>Variations</span></div>
+            </div>
           </article>
           <article class="mode-card rise" style="--d: 100ms;">
-            <span class="mode-card__tag">F2V</span>
-            <h3>Frame to Video</h3>
-            <p>Map start or start/end frames to prompts in the queue.</p>
+            <div class="mode-card__visual" aria-hidden="true">
+              <svg viewBox="0 0 240 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 20h42v36H12z"/>
+                <path d="M62 20h42v36H62z" stroke-dasharray="4 4"/>
+                <path d="M114 38h24"/><path d="M132 32l6 6-6 6"/>
+                <path d="M152 14h76v50h-76z"/>
+                <path d="M182 31l17 8.5-17 8.5v-17z"/>
+              </svg>
+            </div>
+            <div class="mode-card__body">
+              <div class="mode-card__top">
+                <span class="mode-card__tag">F2V</span>
+                <span class="mode-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span>
+              </div>
+              <h3>Frame to Video</h3>
+              <p>Map start or start/end frames to prompts in the queue.</p>
+              <div class="mode-card__meta"><span>Start / end frames</span><span>Matched prompts</span></div>
+            </div>
           </article>
           <article class="mode-card rise" style="--d: 200ms;">
-            <span class="mode-card__tag">T2I</span>
-            <h3>Text to Image</h3>
-            <p>Batch image generation with clean, prompt-based folder naming.</p>
+            <div class="mode-card__visual" aria-hidden="true">
+              <svg viewBox="0 0 240 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22h68"/><path d="M12 38h54"/><path d="M12 54h61"/>
+                <path d="M96 38h26"/><path d="M114 32l8 6-8 6"/>
+                <path d="M140 14h40v28h-40z"/><path d="M188 14h40v28h-40z"/>
+                <path d="M140 50h40v28h-40z"/><path d="M188 50h40v28h-40z"/>
+              </svg>
+            </div>
+            <div class="mode-card__body">
+              <div class="mode-card__top">
+                <span class="mode-card__tag">T2I</span>
+                <span class="mode-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span>
+              </div>
+              <h3>Text to Image</h3>
+              <p>Batch image generation with clean, prompt-based folder naming.</p>
+              <div class="mode-card__meta"><span>Batch images</span><span>Prompt filenames</span></div>
+            </div>
           </article>
           <article class="mode-card rise" style="--d: 300ms;">
-            <span class="mode-card__tag">I2I</span>
-            <h3>Image to Image</h3>
-            <p>Match references by order or filename, then run the batch.</p>
+            <div class="mode-card__visual" aria-hidden="true">
+              <svg viewBox="0 0 240 90" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 20h50v38H10z"/><path d="M10 48l12-10 9 7 11-9 18 12"/>
+                <path d="M70 39h12"/><path d="M76 33v12"/>
+                <path d="M94 30h34"/><path d="M94 44h26"/>
+                <path d="M136 39h22"/><path d="M152 33l6 6-6 6"/>
+                <path d="M170 14h60v50h-60z"/>
+                <path d="M200 26v12"/><path d="M194 32h12"/>
+                <path d="M214 46v6"/><path d="M211 49h6"/>
+              </svg>
+            </div>
+            <div class="mode-card__body">
+              <div class="mode-card__top">
+                <span class="mode-card__tag">I2I</span>
+                <span class="mode-card__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M13 6l6 6-6 6"/></svg></span>
+              </div>
+              <h3>Image to Image</h3>
+              <p>Match references by order or filename, then run the batch.</p>
+              <div class="mode-card__meta"><span>Reference match</span><span>By order / filename</span></div>
+            </div>
           </article>
         </div>
       </div>
@@ -807,44 +1060,56 @@
       <div class="container">
         <div class="wall" id="gallery-wall">
           <div class="wall-col">
-            <img src="assets/civitai/gen-01.jpg" alt="AI-generated character portrait" loading="eager" />
-            <img src="assets/civitai/gen-05.jpg" alt="AI-generated scene" loading="eager" />
-            <img src="assets/civitai/gen-09.jpg" alt="AI-generated fantasy scene" loading="eager" />
-            <img src="assets/civitai/gen-13.jpg" alt="AI-generated stylized portrait" loading="eager" />
-            <!-- duplicate for seamless loop -->
-            <img src="assets/civitai/gen-01.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-05.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-09.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-13.jpg" alt="" loading="eager" aria-hidden="true" />
+            <div class="wall-col__set">
+              <img src="assets/civitai/gen-01.jpg" width="800" height="1027" alt="AI-generated character portrait" loading="eager" />
+              <img src="assets/civitai/gen-05.jpg" width="800" height="1169" alt="AI-generated scene" loading="eager" />
+              <img src="assets/civitai/gen-09.jpg" width="800" height="1067" alt="AI-generated fantasy scene" loading="eager" />
+              <img src="assets/civitai/gen-13.jpg" width="800" height="1200" alt="AI-generated stylized portrait" loading="eager" />
+            </div>
+            <div class="wall-col__set" aria-hidden="true">
+              <img src="assets/civitai/gen-01.jpg" width="800" height="1027" alt="" loading="eager" />
+              <img src="assets/civitai/gen-05.jpg" width="800" height="1169" alt="" loading="eager" />
+              <img src="assets/civitai/gen-09.jpg" width="800" height="1067" alt="" loading="eager" />
+              <img src="assets/civitai/gen-13.jpg" width="800" height="1200" alt="" loading="eager" />
+            </div>
           </div>
           <div class="wall-col">
-            <img src="assets/civitai/gen-02.jpg" alt="AI-generated character" loading="eager" />
-            <img src="assets/civitai/gen-06.jpg" alt="AI-generated illustration" loading="eager" />
-            <img src="assets/civitai/gen-10.jpg" alt="AI-generated concept art" loading="eager" />
-            <img src="assets/civitai/gen-14.jpg" alt="AI-generated portrait" loading="eager" />
-            <!-- duplicate for seamless loop -->
-            <img src="assets/civitai/gen-02.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-06.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-10.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-14.jpg" alt="" loading="eager" aria-hidden="true" />
+            <div class="wall-col__set">
+              <img src="assets/civitai/gen-02.jpg" width="800" height="1169" alt="AI-generated character" loading="eager" />
+              <img src="assets/civitai/gen-06.jpg" width="800" height="1169" alt="AI-generated illustration" loading="eager" />
+              <img src="assets/civitai/gen-10.jpg" width="800" height="1600" alt="AI-generated concept art" loading="eager" />
+              <img src="assets/civitai/gen-14.jpg" width="800" height="1125" alt="AI-generated portrait" loading="eager" />
+            </div>
+            <div class="wall-col__set" aria-hidden="true">
+              <img src="assets/civitai/gen-02.jpg" width="800" height="1169" alt="" loading="eager" />
+              <img src="assets/civitai/gen-06.jpg" width="800" height="1169" alt="" loading="eager" />
+              <img src="assets/civitai/gen-10.jpg" width="800" height="1600" alt="" loading="eager" />
+              <img src="assets/civitai/gen-14.jpg" width="800" height="1125" alt="" loading="eager" />
+            </div>
           </div>
           <div class="wall-col">
-            <img src="assets/civitai/gen-03.jpg" alt="AI-generated portrait" loading="eager" />
-            <img src="assets/civitai/gen-07.jpg" alt="AI-generated illustration" loading="eager" />
-            <img src="assets/civitai/gen-11.jpg" alt="AI-generated art" loading="eager" />
-            <!-- duplicate for seamless loop -->
-            <img src="assets/civitai/gen-03.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-07.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-11.jpg" alt="" loading="eager" aria-hidden="true" />
+            <div class="wall-col__set">
+              <img src="assets/civitai/gen-03.jpg" width="800" height="1169" alt="AI-generated portrait" loading="eager" />
+              <img src="assets/civitai/gen-07.jpg" width="800" height="1169" alt="AI-generated illustration" loading="eager" />
+              <img src="assets/civitai/gen-11.jpg" width="800" height="1200" alt="AI-generated art" loading="eager" />
+            </div>
+            <div class="wall-col__set" aria-hidden="true">
+              <img src="assets/civitai/gen-03.jpg" width="800" height="1169" alt="" loading="eager" />
+              <img src="assets/civitai/gen-07.jpg" width="800" height="1169" alt="" loading="eager" />
+              <img src="assets/civitai/gen-11.jpg" width="800" height="1200" alt="" loading="eager" />
+            </div>
           </div>
           <div class="wall-col">
-            <img src="assets/civitai/gen-04.jpg" alt="AI-generated cinematic scene" loading="eager" />
-            <img src="assets/civitai/gen-08.jpg" alt="AI-generated creature" loading="eager" />
-            <img src="assets/civitai/gen-12.jpg" alt="AI-generated concept art" loading="eager" />
-            <!-- duplicate for seamless loop -->
-            <img src="assets/civitai/gen-04.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-08.jpg" alt="" loading="eager" aria-hidden="true" />
-            <img src="assets/civitai/gen-12.jpg" alt="" loading="eager" aria-hidden="true" />
+            <div class="wall-col__set">
+              <img src="assets/civitai/gen-04.jpg" width="800" height="1400" alt="AI-generated cinematic scene" loading="eager" />
+              <img src="assets/civitai/gen-08.jpg" width="800" height="1169" alt="AI-generated creature" loading="eager" />
+              <img src="assets/civitai/gen-12.jpg" width="800" height="1200" alt="AI-generated concept art" loading="eager" />
+            </div>
+            <div class="wall-col__set" aria-hidden="true">
+              <img src="assets/civitai/gen-04.jpg" width="800" height="1400" alt="" loading="eager" />
+              <img src="assets/civitai/gen-08.jpg" width="800" height="1169" alt="" loading="eager" />
+              <img src="assets/civitai/gen-12.jpg" width="800" height="1200" alt="" loading="eager" />
+            </div>
           </div>
         </div>
       </div>
@@ -854,16 +1119,38 @@
     <section class="section" id="privacy" data-od-id="privacy">
       <div class="container trust">
         <div class="bot-wrap rise" aria-hidden="true">
+          <div class="bot-wrap__grid"></div>
+          <span class="bot-wrap__ring bot-wrap__ring--1"></span>
+          <span class="bot-wrap__ring bot-wrap__ring--2"></span>
           <img src="assets/higgsbot.png" alt="" loading="lazy" />
+          <span class="bot-chip bot-chip--1"><i></i>Session-local</span>
+          <span class="bot-chip bot-chip--2"><i></i>No tracking</span>
+          <span class="bot-chip bot-chip--3"><i></i>You stay signed in</span>
         </div>
         <div>
           <p class="eyebrow rise" style="--d: 0ms;">Trust model</p>
           <h2 class="section-title rise" style="--d: 100ms;">Automation that stays in your browser.</h2>
           <div class="trust-facts">
-            <div class="trust-fact rise" style="--d: 200ms;"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Runs in your Higgsfield browser session</span></div>
-            <div class="trust-fact rise" style="--d: 300ms;"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>No Higgsfield password storage</span></div>
-            <div class="trust-fact rise" style="--d: 400ms;"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>No analytics or ad tracking</span></div>
-            <div class="trust-fact rise" style="--d: 500ms;"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12.5l4 4 10-10" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Firebase only for extension sign-in</span></div>
+            <div class="trust-fact rise" style="--d: 200ms;">
+              <span class="trust-fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5h18v13H3z"/><path d="M3 9.5h18"/><path d="M6 7.4h.01"/><path d="M8.8 7.4h.01"/></svg></span>
+              <h3>Runs in your browser session</h3>
+              <p>It drives the higgsfield.ai tab you opened. Nothing runs on our servers.</p>
+            </div>
+            <div class="trust-fact rise" style="--d: 300ms;">
+              <span class="trust-fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11V8a6 6 0 0 1 12 0v3"/><path d="M4.5 11h15v9.5h-15z"/><path d="M12 14.5v2.5"/></svg></span>
+              <h3>No password storage</h3>
+              <p>Your Higgsfield login stays between you and Higgsfield — never seen, never stored.</p>
+            </div>
+            <div class="trust-fact rise" style="--d: 400ms;">
+              <span class="trust-fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12z"/><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M4.5 4.5l15 15"/></svg></span>
+              <h3>No analytics or ad tracking</h3>
+              <p>No trackers, no ads, and no usage beacons inside the extension.</p>
+            </div>
+            <div class="trust-fact rise" style="--d: 500ms;">
+              <span class="trust-fact__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5.2c0 4.4-3 7.8-7 9.8-4-2-7-5.4-7-9.8V6l7-3z"/><path d="M9 11.8l2.2 2.2 4-4.2"/></svg></span>
+              <h3>Firebase for sign-in only</h3>
+              <p>Firebase is used just to sign you in to the extension itself — nothing else.</p>
+            </div>
           </div>
           <div class="text-links rise" style="--d: 600ms;">
             <a href="privacy">Read privacy policy</a>
@@ -884,7 +1171,7 @@
           <details open class="faq-details rise" style="--d: 0ms;">
             <summary>What browsers are supported?</summary>
             <div class="faq-content">
-              <p>The Chrome Web Store listing requires Google Chrome 114 or newer. Other Chromium browsers work if they support installing Chrome Web Store extensions.</p>
+              <p>Chrome, Microsoft Edge, and Mozilla Firefox each have their own official listing, so you install the build signed for your browser. The Chrome Web Store listing requires Chrome 114 or newer; other Chromium browsers such as Brave, Arc, and Opera can install that same build. Safari is not currently supported.</p>
             </div>
           </details>
           <details class="faq-details rise" style="--d: 100ms;">
@@ -914,7 +1201,7 @@
           <details class="faq-details rise" style="--d: 500ms;">
             <summary>Is this official Higgsfield software?</summary>
             <div class="faq-content">
-              <p>No. It is an independent Chrome extension by Deepak Thapa, not affiliated with or endorsed by Higgsfield.</p>
+              <p>No. It is an independent browser extension by Deepak Thapa, not affiliated with or endorsed by Higgsfield.</p>
             </div>
           </details>
         </div>
@@ -924,10 +1211,10 @@
     <!-- CTA -->
     <section class="cta" id="install" data-od-id="cta">
       <div class="cta__bg" aria-hidden="true">
-        <img src="assets/civitai/gen-09.jpg" alt="" loading="lazy" />
-        <img src="assets/civitai/gen-13.jpg" alt="" loading="lazy" />
-        <img src="assets/civitai/gen-05.jpg" alt="" loading="lazy" />
-        <img src="assets/civitai/gen-11.jpg" alt="" loading="lazy" />
+        <img src="assets/civitai/gen-09.jpg" width="800" height="1067" alt="" loading="lazy" />
+        <img src="assets/civitai/gen-13.jpg" width="800" height="1200" alt="" loading="lazy" />
+        <img src="assets/civitai/gen-05.jpg" width="800" height="1169" alt="" loading="lazy" />
+        <img src="assets/civitai/gen-11.jpg" width="800" height="1200" alt="" loading="lazy" />
       </div>
       <div class="cta__scrim" aria-hidden="true"></div>
       <div class="container cta__inner">
@@ -935,14 +1222,22 @@
           <h2>Turn the repetitive Higgsfield tab into a <em>queue.</em></h2>
           <p>Install the extension, open higgsfield.ai, import your prompts, and run the batch in your own session.</p>
         </div>
-        <div class="button-row rise">
-          <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label">Install on Chrome</span></a>
+        <div class="install rise">
+          <div class="button-row">
+            <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener" data-install-primary data-install-format="Install on {store}"><span class="btn__dot" aria-hidden="true"></span><span class="btn__label" data-install-label>Install on Chrome</span></a>
+          </div>
+          <p class="alt-stores" data-alt-stores>
+            <span class="alt-stores__lead">Also on</span>
+            <a class="alt-stores__link" data-store="chrome" href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener" hidden><img class="alt-stores__ic" src="assets/browser-chrome.svg" width="16" height="16" alt="" />Chrome</a>
+            <a class="alt-stores__link" data-store="edge" href="https://microsoftedge.microsoft.com/addons/detail/jmanbhlemcjeaihdkefnahdiihiapahj" target="_blank" rel="noopener"><img class="alt-stores__ic" src="assets/browser-edge.svg" width="16" height="16" alt="" />Edge</a>
+            <a class="alt-stores__link" data-store="firefox" href="https://addons.mozilla.org/en-US/firefox/addon/higgsfield-prompt-automation/" target="_blank" rel="noopener"><img class="alt-stores__ic" src="assets/browser-firefox.svg" width="16" height="16" alt="" />Firefox</a>
+          </p>
         </div>
       </div>
       <div class="container">
         <div class="cta__stats">
           <div class="stat-card rise" style="--d: 0ms;">
-            <div class="stat-num">100+</div>
+            <div class="stat-num">1000+</div>
             <div class="stat-label">Installs</div>
           </div>
           <div class="stat-card rise" style="--d: 100ms;">
@@ -960,7 +1255,7 @@
 
   <footer class="footer">
     <div class="container footer__inner">
-      <p>Copyright <span id="year"></span> Deepak Thapa. Independent Chrome extension. Not affiliated with Higgsfield.</p>
+      <p>Copyright <span id="year"></span> Deepak Thapa. Independent browser extension. Not affiliated with Higgsfield.</p>
       <div class="footer__links">
         <a href="https://deepakthapa.dev">deepakthapa.dev</a>
         <a href="https://higgsfield-automation.pages.dev/guide">Guide</a>
@@ -969,6 +1264,8 @@
         <a href="contact">Contact</a>
         <a href="ai">AI Reference</a>
         <a href="https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener">Chrome Web Store</a>
+        <a href="https://microsoftedge.microsoft.com/addons/detail/jmanbhlemcjeaihdkefnahdiihiapahj" target="_blank" rel="noopener">Edge Add-ons</a>
+        <a href="https://addons.mozilla.org/en-US/firefox/addon/higgsfield-prompt-automation/" target="_blank" rel="noopener">Firefox Add-ons</a>
       </div>
     </div>
   </footer>
@@ -1021,9 +1318,58 @@
       }, { passive: true });
       onScroll();
 
+      /* ---- seamless image walls: pixel-perfect modulo wrap ----
+         Each column contains two identical sets. We measure ONE set's
+         exact pixel height and scroll with modulo arithmetic, so the
+         wrap point is mathematically invisible — no percentage
+         rounding, no gap math, no keyframe restart jump. */
+      (function initWalls() {
+        if (reduce) return;
+        var configs = [
+          { sel: '#hero-wall .col:nth-child(1)', setSel: '.col__set', dur: 28, dir: 1 },
+          { sel: '#hero-wall .col:nth-child(2)', setSel: '.col__set', dur: 32, dir: -1 },
+          { sel: '#hero-wall .col:nth-child(3)', setSel: '.col__set', dur: 24, dir: 1 },
+          { sel: '#gallery-wall .wall-col:nth-child(1)', setSel: '.wall-col__set', dur: 22, dir: 1 },
+          { sel: '#gallery-wall .wall-col:nth-child(2)', setSel: '.wall-col__set', dur: 26, dir: -1 },
+          { sel: '#gallery-wall .wall-col:nth-child(3)', setSel: '.wall-col__set', dur: 20, dir: 1 },
+          { sel: '#gallery-wall .wall-col:nth-child(4)', setSel: '.wall-col__set', dur: 24, dir: -1 }
+        ];
+        var walls = [];
+        configs.forEach(function (c) {
+          var el = doc.querySelector(c.sel);
+          var set = el ? el.querySelector(c.setSel) : null;
+          if (el && set) walls.push({ el: el, set: set, dur: c.dur, dir: c.dir, h: 0, pos: 0 });
+        });
+        if (!walls.length) return;
+
+        function measure() {
+          walls.forEach(function (w) { w.h = w.set.offsetHeight; });
+        }
+        measure();
+        win.addEventListener('resize', measure, { passive: true });
+        win.addEventListener('load', measure);
+
+        var lastT = performance.now();
+        function frame(now) {
+          var dt = Math.min(0.05, (now - lastT) / 1000);
+          lastT = now;
+          for (var i = 0; i < walls.length; i++) {
+            var w = walls[i];
+            if (!w.h) continue;
+            w.pos = (w.pos + (w.h / w.dur) * dt) % w.h;
+            var y = w.dir > 0 ? -w.pos : w.pos - w.h;
+            w.el.style.transform = 'translate3d(0,' + y.toFixed(2) + 'px,0)';
+          }
+          win.requestAnimationFrame(frame);
+        }
+        win.requestAnimationFrame(frame);
+      })();
+
       /* ---- workflow step -> device image (shared by GSAP + fallback) ---- */
       var steps = [].slice.call(doc.querySelectorAll('.step'));
       var shots = [].slice.call(doc.querySelectorAll('[data-shot]'));
+      var thumbs = [].slice.call(doc.querySelectorAll('[data-shot-thumb]'));
+      var fill = doc.getElementById('device-progress-fill');
       var cap = doc.getElementById('device-caption'), cnt = doc.getElementById('device-step');
       var total = steps.length;
       function setShot(i) {
@@ -1032,6 +1378,8 @@
 
         shots.forEach(function (s) { s.classList.toggle('is-active', Number(s.getAttribute('data-shot')) === i); });
         steps.forEach(function (s) { s.classList.toggle('is-active', Number(s.getAttribute('data-step')) === i); });
+        thumbs.forEach(function (t) { t.classList.toggle('is-active', Number(t.getAttribute('data-shot-thumb')) === i); });
+        if (fill) fill.style.transform = 'scaleX(' + ((i + 1) / total) + ')';
 
         var newCap = a.getAttribute('data-caption') || '';
         var newCnt = String(i + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
@@ -1244,6 +1592,7 @@
           tl.from('[data-hero-line]', { yPercent: 115, duration: 1.0, stagger: 0.08 })
             .from('.hero__copy', { y: 16, autoAlpha: 0, duration: 0.8 }, 0.15)
             .from('.hero__actions', { y: 12, autoAlpha: 0, duration: 0.7 }, '-=0.55')
+            .from('.hero__proof', { y: 12, autoAlpha: 0, duration: 0.7 }, '-=0.5')
             .from('.hero__wall', { autoAlpha: 0, duration: 1.4 }, 0.25);
 
           /* 2 — hero parallax on scroll (hand off from native handler) */
@@ -1281,16 +1630,21 @@
             ease: 'power3.out',
             scrollTrigger: { trigger: '#privacy .trust-facts', start: 'top 88%', once: true }
           });
-          gsap.fromTo('#privacy .trust-fact svg path',
-            { strokeDasharray: 24, strokeDashoffset: 24 },
-            {
+          var tfPaths = gsap.utils.toArray('#privacy .trust-fact svg path');
+          tfPaths.forEach(function (p) {
+            var L = 0;
+            try { L = p.getTotalLength(); } catch (e) { L = 0; }
+            if (L > 0) { p.style.strokeDasharray = String(L); p.style.strokeDashoffset = String(L); }
+          });
+          if (tfPaths.length) {
+            gsap.to(tfPaths, {
               strokeDashoffset: 0,
-              duration: 0.55,
-              stagger: 0.07,
+              duration: 0.8,
+              stagger: 0.04,
               ease: 'power2.out',
               scrollTrigger: { trigger: '#privacy .trust-facts', start: 'top 88%', once: true }
-            }
-          );
+            });
+          }
 
           /* FAQ details stagger */
           gsap.from('#faq .faq-details', {
@@ -1393,7 +1747,7 @@
         root.classList.remove('js-loading');
         /* no GSAP: reveal everything, drive steps with IntersectionObserver */
         [].slice.call(doc.querySelectorAll('.rise, .stat-card')).forEach(function (el) { el.style.opacity = '1'; });
-        [].slice.call(doc.querySelectorAll('.hero__copy, .hero__actions')).forEach(function (el) { el.style.opacity = '1'; });
+        [].slice.call(doc.querySelectorAll('.hero__copy, .hero__actions, .hero__proof')).forEach(function (el) { el.style.opacity = '1'; });
         [].slice.call(doc.querySelectorAll('[data-hero-line]')).forEach(function (el) { el.style.transform = 'none'; });
         [].slice.call(doc.querySelectorAll('.hero__wall')).forEach(function (el) { el.style.opacity = '0.42'; });
         if ('IntersectionObserver' in win && !isNarrow) {
@@ -1420,6 +1774,59 @@
       }
 
       win.HIGGSFIELD_AUTOMATION_CHROME_WEB_STORE_URL = CWS;
+    })();
+  </script>
+
+  <script>
+    /* INSTALL CTA — send each visitor to the store they can actually install from.
+       The static HTML ships Chrome as the primary button with Edge + Firefox in the
+       "Also on" rail, so the page is already correct with JS disabled or blocked.
+       When JS runs we promote the visitor's own browser into the button and demote
+       Chrome into the rail. The rail always lists the two stores NOT in the button,
+       so there is still exactly one loud install action per viewport.
+       Runs before the particle emitter so the canvas measures the final label width. */
+    (function () {
+      var STORES = {
+        chrome: {
+          label: 'Chrome',
+          url: 'https://chromewebstore.google.com/detail/hdhkmndbgklmnccbdmmfloojokngplpc'
+        },
+        edge: {
+          label: 'Edge',
+          url: 'https://microsoftedge.microsoft.com/addons/detail/jmanbhlemcjeaihdkefnahdiihiapahj'
+        },
+        firefox: {
+          label: 'Firefox',
+          url: 'https://addons.mozilla.org/en-US/firefox/addon/higgsfield-prompt-automation/'
+        }
+      };
+
+      function detect() {
+        var ua = navigator.userAgent;
+        /* Edge MUST be tested before Chrome — Edge's UA string still contains "Chrome". */
+        if (/Edg(?:A|iOS)?\//.test(ua)) return 'edge';
+        if (/Firefox\/|FxiOS\//.test(ua)) return 'firefox';
+        /* Brave, Arc, Opera and Vivaldi are Chromium and install from the Chrome Web Store. */
+        return 'chrome';
+      }
+
+      var current = detect();
+      var store = STORES[current];
+      if (!store) return;
+
+      /* Point the primary button at the visitor's own store and relabel it. */
+      [].slice.call(document.querySelectorAll('[data-install-primary]')).forEach(function (btn) {
+        btn.href = store.url;
+
+        var label = btn.querySelector('[data-install-label]');
+        var fmt = btn.getAttribute('data-install-format');
+        if (label && fmt) label.textContent = fmt.replace('{store}', store.label);
+      });
+
+      /* Rail shows every store EXCEPT the one now sitting in the button. */
+      [].slice.call(document.querySelectorAll('[data-alt-stores] .alt-stores__link')).forEach(function (link) {
+        link.hidden = link.getAttribute('data-store') === current;
+      });
     })();
   </script>
 
