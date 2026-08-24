@@ -1,0 +1,9 @@
+{
+  "name": "flow-automation-site",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Local preview server for the Flow Automation product page",
+  "scripts": {
+    "dev": "node dev-server.js"
+  }
+}

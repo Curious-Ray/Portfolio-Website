@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Flow Automation - Batch-run Google Flow prompts</title>
+  <meta name="description" content="Flow Automation is a no-code browser extension for non-technical creators to batch-run Google Flow video prompts: import spreadsheets, queue Text to Video, Frames to Video, and Ingredients to Video jobs, retry failures, and auto-download results in your own browser session." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://www.deepakthapa.dev/flow-automation" />
+  <link rel="alternate" type="text/markdown" href="/flow-automation/index.md" />
+  <link rel="alternate" type="text/plain" href="https://www.deepakthapa.dev/flow-automation/llms-full.txt" title="Flow Automation full LLM reference" />
+
+  <meta property="og:title" content="Flow Automation - Batch-run Google Flow prompts" />
+  <meta property="og:description" content="No-code bulk generation for Google Flow: paste a prompt list, pick a workflow, and let the extension queue, pace, retry, and download every shot in your browser." />
+  <meta property="og:type" content="product" />
+  <meta property="og:url" content="https://www.deepakthapa.dev/flow-automation" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Flow Automation - Batch-run Google Flow prompts" />
+  <meta name="twitter:description" content="No-code batch generation for Google Flow prompts in your own browser session." />
+  <meta property="og:image" content="https://www.deepakthapa.dev/flow-automation/assets/og-marquee.jpg" />
+  <meta name="twitter:image" content="https://www.deepakthapa.dev/flow-automation/assets/og-marquee.jpg" />
+  <meta name="theme-color" content="#060607" />
+
+  <link rel="icon" type="image/png" sizes="128x128" href="assets/logo-128.png" />
+  <link rel="apple-touch-icon" href="assets/logo-128.png" />
+
+  <!-- Chrome listing is live. TODO: swap the Edge href when that listing goes live. -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/site.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Flow Automation - Bulk Prompt Runner for Google Flow",
+    "url": "https://www.deepakthapa.dev/flow-automation",
+    "installUrl": "https://chromewebstore.google.com/detail/kfkojfkfjlmaemjocdidplabaaglgggi",
+    "downloadUrl": "https://chromewebstore.google.com/detail/kfkojfkfjlmaemjocdidplabaaglgggi",
+    "softwareVersion": "1.0.1",
+    "applicationCategory": "BrowserApplication",
+    "operatingSystem": "Chrome, Edge, Chromium-based browsers",
+    "browserRequirements": "Requires Google Chrome, Microsoft Edge, or a Chromium-based browser such as Brave, Arc, or Opera",
+    "description": "Flow Automation is an independent no-code browser extension for non-technical creators. It batch-runs user-provided prompts in the Google Flow browser session the user opens, imports prompts from spreadsheets or text files, supports Text to Video, Frames to Video, and Ingredients to Video workflows, retries failed starts, and downloads generated outputs into organized folders.",
+    "author": { "@type": "Person", "name": "Deepak Thapa", "url": "https://www.deepakthapa.dev/" },
+    "publisher": { "@type": "Person", "name": "Deepak Thapa", "url": "https://www.deepakthapa.dev/" },
+    "featureList": [
+      "Bulk prompt queue for Google Flow",
+      "Spreadsheet, CSV, and text prompt import",
+      "Text to Video, Frames to Video, and Ingredients to Video modes",
+      "Auto-downloads into a named folder",
+      "Prompt-based filename options",
+      "Pacing, retries, and CSV run reports",
+      "Reference image matching by prompt or filename"
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is Flow Automation affiliated with Google or Flow?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. Flow Automation is an independent browser extension by Deepak Thapa. It is not affiliated with, endorsed by, or sponsored by Google, and it is not an official Google Flow product." }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need an API key or developer setup?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. The extension works inside the Flow page and browser session you open yourself. There is no API key, MCP, script, or command-line setup." }
+      },
+      {
+        "@type": "Question",
+        "name": "Does Flow Automation provide Flow access or credits?",
+        "acceptedAnswer": { "@type": "Answer", "text": "No. You use your own Google account and your own Flow access. The extension does not provide accounts, subscriptions, credits, or platform entitlements, and it does not bypass Flow limits or policies." }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens to my prompts and downloads?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Everything runs locally in your browser. Prompts stay in extension storage on your machine, generations happen in your own Flow session, and downloads use the normal browser download flow into folders you choose." }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <!-- ================= NAV ================= -->
+  <header class="nav" id="nav">
+    <div class="wrap nav__row">
+      <a class="brand" href="#top">
+        <img class="brand__mark" src="assets/logo-128.png" width="32" height="32" alt="" />
+        <span>Flow Automation<small>For Google Flow</small></span>
+      </a>
+
+      <nav class="nav__links" aria-label="Primary">
+        <a href="#workflows">Workflows</a>
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <div class="nav__cta">
+        <a class="btn btn--ghost btn--sm" href="contact">Contact</a>
+        <a class="btn btn--primary btn--sm" href="https://chromewebstore.google.com/detail/kfkojfkfjlmaemjocdidplabaaglgggi" target="_blank" rel="noopener">Add to Chrome</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ================= HERO ================= -->
+    <section class="hero" id="top">
+      <div class="wrap">
+        <span class="chip reveal"><span class="tag">NEW</span> Text, Frames, and Ingredients batches in one queue</span>
+
+        <h1 class="display reveal" style="--d: 80ms;">One prompt list. A full <span class="grad">shot board.</span></h1>
+
+        <p class="hero__sub reveal" style="--d: 160ms;">
+          Paste your shot list, pick a workflow, and the extension queues, paces, retries, and
+          downloads every generation &mdash; inside the Flow session you already have open.
+          No API keys, no scripts, no setup.
+        </p>
+
+        <div class="hero__ctas reveal" style="--d: 240ms;">
+          <a class="btn btn--primary" href="https://chromewebstore.google.com/detail/kfkojfkfjlmaemjocdidplabaaglgggi" target="_blank" rel="noopener">
+            Add to Chrome &mdash; free
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a class="btn btn--ghost" href="#how">See how a batch runs</a>
+        </div>
+
+
+
+        <div class="family reveal" style="--d: 320ms;">
+          <div class="family__pills">
+            <span class="family__pill">
+              <img src="assets/family/flow.webp" width="24" height="24" alt="" />
+              Google Flow <em>you are here</em>
+            </span>
+            <a class="family__pill" href="https://chromewebstore.google.com/detail/higgsfield-automation-bul/hdhkmndbgklmnccbdmmfloojokngplpc" target="_blank" rel="noopener">
+              <img src="assets/family/higgsfield.webp" width="24" height="24" alt="" />
+              Higgsfield
+            </a>
+            <a class="family__pill" href="https://chromewebstore.google.com/detail/magnific-automation-bulk/fpclkjidhbhdoeeokmjdlkcncdcmgeik" target="_blank" rel="noopener">
+              <img src="assets/family/magnific.webp" width="24" height="24" alt="" />
+              Magnific
+            </a>
+          </div>
+
+          <!-- PLACEHOLDER portraits (randomuser.me) - swap for real users or remove before launch -->
+          <div class="avatars" aria-hidden="true">
+            <img src="assets/avatars/women-68.webp" width="46" height="46" alt="" />
+            <img src="assets/avatars/men-32.webp" width="46" height="46" alt="" />
+            <img src="assets/avatars/women-44.webp" width="46" height="46" alt="" />
+            <img src="assets/avatars/men-75.webp" width="46" height="46" alt="" />
+            <img src="assets/avatars/men-11.webp" width="46" height="46" alt="" />
+          </div>
+          <p class="family__count">Join <b>1,000+ creators</b> using Deepak Thapa's automation extensions</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= LEAD PRODUCT SHOT ================= -->
+    <section class="mock">
+      <div class="wrap">
+        <div class="browser reveal">
+          <img src="assets/shots/dashboard-concept.webp" width="1672" height="941" fetchpriority="high" decoding="async" alt="Automation overview dashboard: time saved, productivity trend, and per-platform scores" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= WORKFLOWS ================= -->
+    <section class="section section--soft" id="workflows">
+      <div class="wrap">
+        <div class="section__head section__head--center">
+          <span class="eyebrow reveal">Supported workflows</span>
+          <h2 class="h2 reveal" style="--d: 80ms;">One panel for the shots you repeat</h2>
+          <p class="lead reveal" style="--d: 160ms;">Every Flow creation mode that benefits from batching, driven from the same queue.</p>
+        </div>
+
+        <div class="grid grid--3">
+          <article class="card card--tint-blue reveal">
+            <span class="tag">Mode 01</span>
+            <h3 class="h3">Text to Video</h3>
+            <p>Queue written prompts and let Flow render each one while you keep editing.</p>
+            <ul>
+              <li>Repeat runs per prompt for variation pulls</li>
+              <li>Per-row aspect and duration notes stay attached</li>
+              <li>Built for b-roll, backgrounds, and mood shots</li>
+            </ul>
+          </article>
+
+          <article class="card reveal" style="--d: 100ms;">
+            <span class="tag">Mode 02</span>
+            <h3 class="h3">Frames to Video</h3>
+            <p>Animate between a start and end frame. Upload frame sets once; the extension pairs them per row.</p>
+            <ul>
+              <li>Adjacent pairing: 1+2, 2+3, 3+4</li>
+              <li>Grouped pairing: 1+2, 3+4, 5+6</li>
+              <li>Filename matching keeps frames with their shot</li>
+            </ul>
+          </article>
+
+          <article class="card card--tint-violet reveal" style="--d: 200ms;">
+            <span class="tag">Mode 03</span>
+            <h3 class="h3">Ingredients to Video</h3>
+            <p>Feed reference images &mdash; characters, locations, styles &mdash; and batch prompts against them.</p>
+            <ul>
+              <li>Prompt-to-image matching by filename</li>
+              <li>Reusable ingredient sets across the batch</li>
+              <li>Consistent subjects across every shot</li>
+            </ul>
+          </article>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= FEATURES ================= -->
+    <section class="section" id="features">
+      <div class="wrap">
+        <div class="section__head">
+          <span class="eyebrow reveal">Built for repetition</span>
+          <h2 class="h2 reveal" style="--d: 80ms;">The boring parts, handled</h2>
+          <p class="lead reveal" style="--d: 160ms;">Pacing, retries, naming, and filing are where batches eat your evening. That is what the extension takes over.</p>
+        </div>
+
+        <div class="grid grid--3">
+          <article class="card reveal">
+            <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></div>
+            <h3 class="h3">Spreadsheet &amp; CSV import</h3>
+            <p>Bring prompts from Sheets exports, <code>.csv</code> files, or plain text. Rows map straight into the queue.</p>
+          </article>
+
+          <article class="card reveal" style="--d: 60ms;">
+            <div class="icon icon--violet"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+            <h3 class="h3">Pacing &amp; random delays</h3>
+            <p>Control how fast shots submit, with optional randomized spacing that keeps batches human-paced.</p>
+          </article>
+
+          <article class="card reveal" style="--d: 120ms;">
+            <div class="icon icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.3"/><path d="M21 3v6h-6"/></svg></div>
+            <h3 class="h3">Automatic retries</h3>
+            <p>Blocked or failed starts get retried instead of silently dying. A reconciliation pass chases unresolved outputs.</p>
+          </article>
+
+          <article class="card reveal">
+            <div class="icon icon--green"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg></div>
+            <h3 class="h3">Organized auto-downloads</h3>
+            <p>Outputs land in a folder you name, with prompt-based filenames and optional numeric order prefixes.</p>
+          </article>
+
+          <article class="card reveal" style="--d: 60ms;">
+            <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 15l4-4 3 3 5-6"/></svg></div>
+            <h3 class="h3">CSV run reports</h3>
+            <p>Every batch ends with a report: what ran, what retried, what downloaded, and what needs another pass.</p>
+          </article>
+
+          <article class="card reveal" style="--d: 120ms;">
+            <div class="icon icon--violet"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6M12 19h8"/></svg></div>
+            <h3 class="h3">Live action log</h3>
+            <p>A readable log of every click, wait, and download &mdash; copyable for debugging when a shot misbehaves.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= HOW IT WORKS ================= -->
+    <section class="section" id="how">
+      <div class="wrap">
+        <div class="section__head section__head--center">
+          <span class="eyebrow reveal">How a batch runs</span>
+          <h2 class="h2 reveal" style="--d: 80ms;">From shot list to finished folder</h2>
+          <p class="lead reveal" style="--d: 160ms;">Four steps, one side panel. The extension handles the clicking, waiting, and downloading in between.</p>
+        </div>
+
+        <div class="tour">
+          <div class="tour-row reveal">
+            <div class="tour-text">
+              <div class="n" aria-hidden="true">1</div>
+              <h3>Import your prompt list</h3>
+              <p>Paste prompts directly or import a spreadsheet, <code>.csv</code>, or text file. Each row becomes a queued shot with its own settings &mdash; no reformatting, no manual re-entry.</p>
+            </div>
+            <div class="tour-shot">
+              <img src="assets/shots/3-queue-prompts-safely.webp" width="1280" height="800" loading="lazy" decoding="async" alt="The prompt queue filled with imported rows, each carrying its own state" />
+            </div>
+          </div>
+          <div class="tour-row flip reveal">
+            <div class="tour-text">
+              <div class="n" aria-hidden="true">2</div>
+              <h3>Choose the Flow workflow</h3>
+              <p>Pick Text to Video, Frames to Video, or Ingredients to Video on the Flow project you have open. The extension mirrors the mode you select and matches reference images to prompts by filename.</p>
+            </div>
+            <div class="tour-shot">
+              <img src="assets/shots/4-match-media-to-prompts.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Reference media matched to individual prompts in the panel" />
+            </div>
+          </div>
+          <div class="tour-row reveal">
+            <div class="tour-text">
+              <div class="n" aria-hidden="true">3</div>
+              <h3>Run the queue</h3>
+              <p>Start the batch and let the panel pace submissions, respect random delays, and retry failed starts automatically. A live action log shows exactly what happened on every shot.</p>
+            </div>
+            <div class="tour-shot">
+              <img src="assets/shots/2-control-every-batch.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Output count, concurrency, safe mode, and the start control" />
+            </div>
+          </div>
+          <div class="tour-row flip reveal">
+            <div class="tour-text">
+              <div class="n" aria-hidden="true">4</div>
+              <h3>Collect organized results</h3>
+              <p>Finished generations auto-download into a named folder with prompt-based filenames and optional numeric prefixes. A <code>.csv</code> run report records what succeeded, what retried, and what needs another pass.</p>
+            </div>
+            <div class="tour-shot">
+              <img src="assets/shots/5-download-organized-results.webp" width="1280" height="800" loading="lazy" decoding="async" alt="Folder, file type, run report, and the download control" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PRIVACY BAND ================= -->
+    <section class="band" id="privacy">
+      <div class="wrap">
+        <div class="band__head">
+          <span class="eyebrow reveal">Privacy by architecture</span>
+          <h2 class="h2 reveal" style="--d: 80ms;">Automation that stays in your browser</h2>
+          <p class="reveal" style="--d: 160ms;">
+            Flow Automation works inside the Flow tab and session you open yourself. It never sees your
+            Google password, and your prompts never leave your machine for a third-party server.
+          </p>
+        </div>
+
+        <ul class="band__list reveal" style="--d: 200ms;">
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+            <span><b>Your session, your account.</b> Generations run through the Flow access you already have. The extension provides no accounts, credits, or entitlements.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <span><b>Local-only storage.</b> Queue state and preferences live in browser extension storage on your device.</span>
+          </li>
+          <li>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>
+            <span><b>Browser-native downloads.</b> Files save through the normal browser download flow, into folders you choose.</span>
+          </li>
+        </ul>
+
+        <div class="reveal" style="--d: 260ms; margin-top: 30px;">
+          <a class="btn btn--glow" href="privacy">Read the privacy policy</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ ================= -->
+    <section class="section section--soft" id="faq">
+      <div class="wrap">
+        <div class="section__head section__head--center">
+          <span class="eyebrow reveal">Before you install</span>
+          <h2 class="h2 reveal" style="--d: 80ms;">Frequently asked questions</h2>
+        </div>
+
+        <div class="faq reveal" style="--d: 160ms;">
+          <details open>
+            <summary>Is Flow Automation affiliated with Google or Flow?<span class="plus" aria-hidden="true">+</span></summary>
+            <p>No. Flow Automation is an independent browser extension by Deepak Thapa. It is not affiliated with, endorsed by, sponsored by, or officially connected to Google, and it is not an official Google Flow product. You are responsible for following Flow's terms, policies, and fair-use requirements.</p>
+          </details>
+          <details>
+            <summary>Do I need an API key, MCP, or any developer setup?<span class="plus" aria-hidden="true">+</span></summary>
+            <p>No. That is the point of the extension. Open a Flow project in your browser, open the side panel, import your prompts, and run the queue. No API keys, scripts, command-line tools, or coding workflow required.</p>
+          </details>
+          <details>
+            <summary>Does it give me Flow access or credits?<span class="plus" aria-hidden="true">+</span></summary>
+            <p>No. You use your own Google account and your own Flow access. The extension does not provide accounts, subscriptions, or credits, and it does not bypass Flow limits, moderation, or fair-use policies. Generation success is controlled by Flow, not by the extension.</p>
+          </details>
+          <details>
+            <summary>Which workflows can I batch?<span class="plus" aria-hidden="true">+</span></summary>
+            <p>Text to Video, Frames to Video (with adjacent or grouped start/end frame pairing), and Ingredients to Video (with prompt-to-reference-image matching). You can also queue more work while a batch is running.</p>
+          </details>
+          <details>
+            <summary>Which browsers are supported?<span class="plus" aria-hidden="true">+</span></summary>
+            <p>The Chrome listing is <a href="https://chromewebstore.google.com/detail/kfkojfkfjlmaemjocdidplabaaglgggi" target="_blank" rel="noopener">live on the Chrome Web Store</a>, and other Chromium-based browsers such as Brave, Arc, and Opera can install the same build. A signed Microsoft Edge listing is still in review. Firefox is not supported: Flow requires trusted browser input that the extension can only produce on Chromium.</p>
+          </details>
+          <details>
+            <summary>What happens to my prompts and generated files?<span class="plus" aria-hidden="true">+</span></summary>
+            <p>Everything runs locally. Prompts and queue state stay in extension storage on your machine, generations happen inside your own Flow session, and finished files download through your browser into the folder you named. See the <a href="privacy">privacy policy</a> for details.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="cta" id="install">
+      <div class="wrap">
+        <img class="cta__bot reveal" src="assets/flowbot.webp" width="128" height="135" loading="lazy" decoding="async" alt="" />
+        <h2 class="h2 reveal" style="--d: 40ms;">Turn the repetitive Flow tab into a render queue</h2>
+        <p class="reveal" style="--d: 80ms;">Live on the Chrome Web Store, and installable on any Chromium browser. The Edge listing is still in review &mdash; join the waitlist and you will get the link the moment it lands.</p>
+
+        <div class="stores reveal" style="--d: 160ms;">
+          <a class="store-btn store-btn--live" href="https://chromewebstore.google.com/detail/kfkojfkfjlmaemjocdidplabaaglgggi" target="_blank" rel="noopener">
+            <img src="assets/chrome-logo.svg" width="28" height="28" alt="" />
+            <span><small>Available now on</small><b>Chrome Web Store</b></span>
+          </a>
+          <!-- TODO: swap for the real Edge listing URL when published -->
+          <a class="store-btn" href="mailto:thapadeepak726@gmail.com?subject=Flow%20Automation%20waitlist%20(Edge)">
+            <img src="assets/edge-logo.svg" width="28" height="28" alt="" />
+            <span><small>In review for</small><b>Edge Add-ons</b></span>
+          </a>
+        </div>
+
+        <p class="cta__note">Independent extension &middot; Not affiliated with Google</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="foot">
+    <div class="wrap">
+      <div class="foot__grid">
+        <div>
+          <a class="brand" href="#top">
+            <img class="brand__mark" src="assets/logo-128.png" width="32" height="32" alt="" />
+            <span>Flow Automation<small>For Google Flow</small></span>
+          </a>
+          <p class="foot__blurb">An independent no-code browser extension for batch-running Google Flow prompts.</p>
+        </div>
+
+        <div>
+          <h6>Product</h6>
+          <ul>
+            <li><a href="#workflows">Workflows</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="https://chromewebstore.google.com/detail/kfkojfkfjlmaemjocdidplabaaglgggi" target="_blank" rel="noopener">Chrome Web Store</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h6>Legal</h6>
+          <ul>
+            <li><a href="privacy">Privacy policy</a></li>
+            <li><a href="terms">Terms of use</a></li>
+            <li><a href="#privacy">Data handling</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h6>More</h6>
+          <ul>
+            <li><a href="contact">Contact</a></li>
+            <li><a href="index.md">Markdown version</a></li>
+            <li><a href="llms-full.txt">LLM reference</a></li>
+            <li><a href="https://www.deepakthapa.dev/">deepakthapa.dev</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="foot__legal">
+        Copyright <span id="year">2026</span> Deepak Thapa. Flow Automation is an independent browser extension and is not
+        affiliated with, endorsed by, or sponsored by Google. Google Flow is a product of Google; all product names and
+        trademarks belong to their respective owners. You are responsible for following Flow's terms and fair-use policies.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    "use strict";
+
+    /* ---------- year ---------- */
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* ---------- sticky nav state ---------- */
+    var nav = document.getElementById("nav");
+    function onScroll() {
+      nav.classList.toggle("scrolled", (window.scrollY || document.documentElement.scrollTop) > 8);
+    }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+
+    /* ---------- scroll reveal ---------- */
+    var reveals = Array.prototype.slice.call(document.querySelectorAll(".reveal"));
+    if (!("IntersectionObserver" in window)) {
+      reveals.forEach(function (el) { el.classList.add("in"); });
+    } else {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
+        });
+      }, { rootMargin: "0px 0px -8% 0px", threshold: 0.12 });
+      reveals.forEach(function (el) { io.observe(el); });
+
+      /* Failsafe: never leave content stuck at opacity 0 if the observer
+         never delivers (hidden tab, background render, blocked callback). */
+      setTimeout(function () {
+        if (!document.querySelector(".reveal.in")) {
+          reveals.forEach(function (el) { el.classList.add("in"); });
+        }
+      }, 1600);
+    }
+
+  })();
+  </script>
+</body>
+</html>
